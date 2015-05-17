@@ -1,3 +1,6 @@
 eclipse.preferences.version=1
-encoding//ui/Main.py=utf-8
+encoding//services/MonkeyGetBitmapService.py=utf-8
+encoding//services/ShowScreenService.py=utf-8
+encoding//services/StartMonkeyService.py=utf-8
+encoding//ui/Main.pyw=utf-8
 encoding//widget/TabPage.py=utf-8
