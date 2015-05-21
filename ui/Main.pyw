@@ -77,7 +77,7 @@ class MyClass(object):
         panel2Page1 = TabPage.TabPage(nb)
 #         panel2Page1.SetBackgroundColour("#ff0000")
         buttonCon = wx.Button(panel2Page1,wx.ID_ANY,u'连接手机',(5,5),wx.Size(70,25))
-        frame.Bind(wx.EVT_BUTTON,lambda evt, mark=0 : self.startConnect(frame, buttonCon, img, width, height, bitmap, backgroundImage, panel1),buttonCon)
+        frame.Bind(wx.EVT_BUTTON,lambda evt, mark=0 : self.startConnect(frame, buttonCon, img, width, height, bitmap, backgroundImage, panel1,panel2Txt1),buttonCon)
         buttonDisCon = wx.Button(panel2Page1,wx.ID_ANY,u'中断连接',(80,5),wx.Size(70,25))
         frame.Bind(wx.EVT_BUTTON,lambda evt, mark=0 : self.endConnect(buttonCon, self.connectThread),buttonDisCon)
         panel2panel0 = wx.Panel(panel2Page1,wx.ID_ANY,(5,35),wx.Size(145,80),wx.BORDER_SIMPLE | wx.TE_MULTILINE )
@@ -114,7 +114,7 @@ class MyClass(object):
         
         
          #连接手机并开始屏幕的同步显示
-    def startConnect(self,frame,buttonCon,img,width,height,bitmap,backgroundImage,panel1):
+    def startConnect(self,frame,buttonCon,img,width,height,bitmap,backgroundImage,panel1,panel2Txt1):
         #通过judge判断设置是否连接，如果连接着就会返回一个3个元素的数组，没有则返回2个元素的数组
         judge = os.popen('adb devices').readlines()
         if len(judge) == 3:
@@ -132,7 +132,7 @@ class MyClass(object):
             monkeyrunnerThread = StartMonkeyService.StartMonkeyService()
             monkeyrunnerThread.start()
             
-            self.connectThread = ShowScreenService.ShowScreenService(img,height,width,bitmap,backgroundImage,panel1,self.freshRate)
+            self.connectThread = ShowScreenService.ShowScreenService(img,height,width,bitmap,backgroundImage,panel1,panel2Txt1,self.freshRate)
             self.connectThread.start()
         else:
             dialog = wx.MessageDialog(frame,'请连接你的android手机！'.decode('UTF-8'),'消息'.decode('UTF-8'),wx.OK_DEFAULT)

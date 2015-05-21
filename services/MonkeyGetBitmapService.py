@@ -29,12 +29,16 @@ class MonkeyGetBitmapService(threading.Thread):
                 print'creat the path'
                 os.makedirs('D:\\screenshot\\')
                 
-            file = open('D:\\screenshot\\info.txt','w')        
-            file.write(self.info)
-            file.close()
+#             file1 = open('D:\\screenshot\\info.txt','w')        
+#             file1.write(self.info)
+#             file1.close()
+
+            file1 = open('D:\\screenshot\\info.txt','w')
+            file1.write(name + '\n')
+            file1.write(width + '\n')
+            file1.write(height + '\n')
             
-        except Exception as err:
-            print err
+        except:
             print 'fail to connect the androidPhone'
             print '请点击中断连接，结束不必要的线程！'.decode('UTF-8')
 
