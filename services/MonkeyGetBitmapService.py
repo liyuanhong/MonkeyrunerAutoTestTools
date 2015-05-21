@@ -13,6 +13,16 @@ class MonkeyGetBitmapService(threading.Thread):
         print 'start monkeyrunner'
         try:
             self.device = MonkeyRunner.waitForConnection()
+            name = self.device.getProperty('build.model')
+            width = self.device.getProperty('display.width')
+            height = self.device.getProperty('display.height')
+            
+#             self.info = {"namme":name,"width":width,"height":height}
+#             print self.info
+
+            print "aaaaaaaaaaaaaaaaaaaaaaa"
+            
+            
             self.path = 'D:\\screenshot\\'
             self.filename = 'monkeyPic'
             if os.path.exists(self.path):

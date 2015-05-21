@@ -147,10 +147,32 @@ class MyClass(object):
     
     #转换手机屏幕尺寸，以适应屏幕的显示
     def getPerfectWith(self,width,height):
-        pass
+        if 360 < width and width <= 480:
+            return width*3/4
+        elif 480 < width and width <= 720:
+            return width*1/2
+        elif 720 < width and width <= 1080:
+            return width*1/3
+        elif 1080 < width and width <= 1440:
+            return width*1/3
+        elif 1440 < width:
+            return width*1440/width
+        else:
+            return width
     
     #转换手机屏幕尺寸，以适应屏幕的显示
     def getPerfectHeight(self,width,height):
-        pass
+        if 360 < width and width <= 480:
+            return height*3/4
+        elif 480 < width and width <= 720:
+            return height*1/2
+        elif 720 < width and width <= 1080:
+            return height*1/3
+        elif 1080 < width and width <= 1440:
+            return height*1/3
+        elif 1440 < width:
+            return height*1440/width
+        else:
+            return height
     
 MyClass("").show();
