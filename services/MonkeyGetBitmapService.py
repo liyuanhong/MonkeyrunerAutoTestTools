@@ -17,10 +17,8 @@ class MonkeyGetBitmapService(threading.Thread):
             width = self.device.getProperty('display.width')
             height = self.device.getProperty('display.height')
             
-#             self.info = {"namme":name,"width":width,"height":height}
-#             print self.info
-
-            print "aaaaaaaaaaaaaaaaaaaaaaa"
+            self.info = {"namme":name,"width":width,"height":height}
+            print self.info
             
             
             self.path = 'D:\\screenshot\\'
@@ -30,7 +28,13 @@ class MonkeyGetBitmapService(threading.Thread):
             else:
                 print'creat the path'
                 os.makedirs('D:\\screenshot\\')
-        except:
+                
+            file = open('D:\\screenshot\\info.txt','w')        
+            file.write(self.info)
+            file.close()
+            
+        except Exception as err:
+            print err
             print 'fail to connect the androidPhone'
             print '请点击中断连接，结束不必要的线程！'.decode('UTF-8')
 
