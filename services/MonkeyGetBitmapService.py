@@ -33,14 +33,22 @@ class MonkeyGetBitmapService(threading.Thread):
 #             file1.write(self.info)
 #             file1.close()
 
+            file2 = open('D:\\screenshot\\infoCtrl.txt','w')
+            file2.write('0')
+            file2.close()
+
             file1 = open('D:\\screenshot\\info.txt','w')
             file1.write(name + '\n')
             file1.write(width + '\n')
             file1.write(height + '\n')
+            file1.close()
+            
+            file2 = open('D:\\screenshot\\infoCtrl.txt','w')
+            file2.write('1')
+            file2.close()
             
         except:
             print 'fail to connect the androidPhone'
-            print '请点击中断连接，结束不必要的线程！'.decode('UTF-8')
 
 
     def run(self):
@@ -48,15 +56,15 @@ class MonkeyGetBitmapService(threading.Thread):
         while self.ctrl == 1:
             file = open('D:\\screenshot\\ctrl.txt','w')
             file.write('0')
-            print '0'
+#             print '0'
             file.close()
             result = self.device.takeSnapshot()
             result.writeToFile (self.path + self.filename + '.png', 'png')
             file = open('D:\\screenshot\\ctrl.txt','w')
             file.write('1')
             file.close()
-            print '1'
-            print 'thread is running'
+#             print '1'
+#             print 'thread is running'
             time.sleep(0.2)
 
     def closeThread(self):

@@ -10,6 +10,7 @@ import wx
 from widget import  TabPage
 from services import StartMonkeyService,ShowScreenService
 from wx import Size
+from bean import ScreenRate
 
 class MyClass(object):
 
@@ -20,6 +21,10 @@ class MyClass(object):
         self.freshRate = 0.05
         #动态显示手机屏幕的线程
         self.connectThread = None
+        #定义屏幕操作的类型，0表示点击，1表示滑动
+        self.eventType = 0
+        #定义显示与真实屏幕的比例
+        self.screenRate = ScreenRate.ScreenRate()
     
     #显示主窗体
     def show(self):
@@ -57,16 +62,16 @@ class MyClass(object):
     def addPage1Layout(self,frame,page1):
         page1BoxSizer = wx.BoxSizer(wx.HORIZONTAL)
         page1.SetSizer(page1BoxSizer)
-        panel1 = wx.Panel(page1,wx.ID_ANY,size = wx.Size(360,640))
-#         panel1.SetBackgroundColour("#aaaa00")
+        self.panel1 = wx.Panel(page1,wx.ID_ANY,size = wx.Size(360,640))
+        self.panel1.SetBackgroundColour("#aaaa00")
         
         img = wx.Image('..\\pic\\阳光小秒拍.png'.decode('utf-8'),wx.BITMAP_TYPE_PNG,-1)
-        height = img.GetHeight()
-        width = img.GetWidth()
-        img.Rescale(width/2,height/2)
+        self.height = img.GetHeight()
+        self.width = img.GetWidth()
+        img.Rescale(self.width/2,self.height/2)
         bitmap = img.ConvertToBitmap()               
-        panel1.SetAutoLayout(True)
-        backgroundImage = wx.StaticBitmap(panel1,wx.ID_ANY,bitmap)
+        self.panel1.SetAutoLayout(True)
+        backgroundImage = wx.StaticBitmap(self.panel1,wx.ID_ANY,bitmap)
         
         page1BoxSizer2 = wx.BoxSizer(wx.VERTICAL)        
         panel2 = wx.Panel(page1,wx.ID_ANY,size = wx.Size(540,300))
@@ -77,15 +82,18 @@ class MyClass(object):
         panel2Page1 = TabPage.TabPage(nb)
 #         panel2Page1.SetBackgroundColour("#ff0000")
         buttonCon = wx.Button(panel2Page1,wx.ID_ANY,u'连接手机',(5,5),wx.Size(70,25))
-        frame.Bind(wx.EVT_BUTTON,lambda evt, mark=0 : self.startConnect(frame, buttonCon, img, width, height, bitmap, backgroundImage, panel1,panel2Txt1),buttonCon)
+        frame.Bind(wx.EVT_BUTTON,lambda evt, mark=0 : self.startConnect(frame, buttonCon, img, self.width, self.height, bitmap, backgroundImage, self.panel1,panel2Txt1),buttonCon)
         buttonDisCon = wx.Button(panel2Page1,wx.ID_ANY,u'中断连接',(80,5),wx.Size(70,25))
         frame.Bind(wx.EVT_BUTTON,lambda evt, mark=0 : self.endConnect(buttonCon, self.connectThread),buttonDisCon)
+        #给背景图片添加点击事件，而不是给panel添加事件
+        backgroundImage.Bind(wx.EVT_LEFT_DOWN,self.getMousePos)
+        
+        
         panel2panel0 = wx.Panel(panel2Page1,wx.ID_ANY,(5,35),wx.Size(145,80),wx.BORDER_SIMPLE | wx.TE_MULTILINE )
 #         panel2panel0.SetBackgroundColour("#ff0000")
         panel2Txt1 = wx.TextCtrl(panel2panel0,wx.ID_ANY,u"phone:sanxing\nwidth:720\nheight:1280",(0,0),wx.Size(145,80),wx.TE_MULTILINE | wx.TE_NO_VSCROLL)
         panel2Txt1.SetEditable(False)
-
-
+        
 
 
         panel2Page2 = TabPage.TabPage(nb)
@@ -102,7 +110,7 @@ class MyClass(object):
         scriptArea = wx.TextCtrl(panel3,wx.ID_ANY,size = wx.Size(508,317),pos = (10,22),style = wx.BORDER_SIMPLE | wx.TE_MULTILINE | wx.HSCROLL)
         scriptArea.SetFont(wx.Font(11, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL))
          
-        page1BoxSizer.Add(panel1)
+        page1BoxSizer.Add(self.panel1)
         page1BoxSizer.Add(page1BoxSizer2)
         page1BoxSizer2.Add(panel2)
         page1BoxSizer2.Add(panel3)
@@ -132,8 +140,35 @@ class MyClass(object):
             monkeyrunnerThread = StartMonkeyService.StartMonkeyService()
             monkeyrunnerThread.start()
             
-            self.connectThread = ShowScreenService.ShowScreenService(img,height,width,bitmap,backgroundImage,panel1,panel2Txt1,self.freshRate)
+            self.connectThread = ShowScreenService.ShowScreenService(img,height,width,bitmap,backgroundImage,panel1,panel2Txt1,self.screenRate,self.freshRate)
+            
+            while not os.path.exists('D:\\screenshot\\infoCtrl.txt'):
+                print "aaaaaa"
+                pass           
+            
+            flag = 0
+            while  flag != 1:
+                file2 = open('D:\\screenshot\\infoCtrl.txt','r')
+                if file2.read() == '1':
+                    flag = 1
+                file2.close()
+
             self.connectThread.start()
+            
+            file2 = open('D:\\screenshot\\infoCtrl.txt','w')
+            file2.write('0')
+            file2.close()
+            
+            print self.width
+            print self.height
+            
+#             width = self.getPerfectWith(self.width, self.height)
+#             height = self.getPerfectHeight(self.width, self.height)
+#             print width
+#             print height
+#             self.panel1.SetSize(wx.Size(360,640))
+#             print self.panel1.GetBestSize()
+#             self.panel1.Refresh()
         else:
             dialog = wx.MessageDialog(frame,'请连接你的android手机！'.decode('UTF-8'),'消息'.decode('UTF-8'),wx.OK_DEFAULT)
             dialog.ShowModal()
@@ -154,7 +189,7 @@ class MyClass(object):
         elif 720 < width and width <= 1080:
             return width*1/3
         elif 1080 < width and width <= 1440:
-            return width*1/3
+            return width*1/4
         elif 1440 < width:
             return width*1440/width
         else:
@@ -169,10 +204,17 @@ class MyClass(object):
         elif 720 < width and width <= 1080:
             return height*1/3
         elif 1080 < width and width <= 1440:
-            return height*1/3
+            return height*1/4
         elif 1440 < width:
             return height*1440/width
         else:
             return height
     
+    def getMousePos(self,event):
+        point = event.GetPosition()
+        print point
+        print point[0]/self.screenRate.getScreenRate()
+        print point[1]/self.screenRate.getScreenRate()
+        
+        
 MyClass("").show();
