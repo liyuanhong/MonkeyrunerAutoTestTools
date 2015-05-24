@@ -21,10 +21,14 @@ class MyClass(object):
         self.freshRate = 0.05
         #动态显示手机屏幕的线程
         self.connectThread = None
-        #定义屏幕操作的类型，0表示点击，1表示滑动
+        #定义屏幕操作的类型，0表示点击，1表示滑动，2表示左右滑动，3表示上下滑动，4表示长按
         self.eventType = 0
         #定义显示与真实屏幕的比例
         self.screenRate = ScreenRate.ScreenRate()
+        #定义拖动的起始点
+        self.startPosition = (0,0)
+        #定义拖动的结束点
+        self.endPosition = (0,0)
     
     #显示主窗体
     def show(self):
@@ -43,6 +47,7 @@ class MyClass(object):
         self.addMenu(menuBar,frame);
         
         frame.SetMenuBar(menuBar);
+        frame.Bind(wx.EVT_CLOSE,self.closeWinEVT)
         frame.Show()
         win.MainLoop()
       
@@ -86,20 +91,56 @@ class MyClass(object):
         buttonDisCon = wx.Button(panel2Page1,wx.ID_ANY,u'中断连接',(80,5),wx.Size(70,25))
         frame.Bind(wx.EVT_BUTTON,lambda evt, mark=0 : self.endConnect(buttonCon, self.connectThread),buttonDisCon)
         #给背景图片添加点击事件，而不是给panel添加事件
-        backgroundImage.Bind(wx.EVT_LEFT_DOWN,self.getMousePos)
+#         backgroundImage.Bind(wx.EVT_LEFT_DOWN,self.getMousePos)
+#         backgroundImage.Bind(wx.EVT_LEFT_DOWN,self.sendClickEVT)
+#         backgroundImage.Bind(wx.EVT_LEFT_DOWN,self.dragDownEVT)
+#         backgroundImage.Bind(wx.EVT_LEFT_UP,self.dragUpEVT)
+        backgroundImage.Bind(wx.EVT_MOUSE_EVENTS,self.screenEVT)
         
         
         panel2panel0 = wx.Panel(panel2Page1,wx.ID_ANY,(5,35),wx.Size(145,80),wx.BORDER_SIMPLE | wx.TE_MULTILINE )
 #         panel2panel0.SetBackgroundColour("#ff0000")
         panel2Txt1 = wx.TextCtrl(panel2panel0,wx.ID_ANY,u"phone:sanxing\nwidth:720\nheight:1280",(0,0),wx.Size(145,80),wx.TE_MULTILINE | wx.TE_NO_VSCROLL)
-        panel2Txt1.SetEditable(False)
+        panel2Txt1.SetEditable(False)      
+        radioClickBut = wx.RadioButton(panel2Page1,wx.ID_ANY,u'点击',(190,10),style = wx.RB_GROUP)
+        radioDragBut = wx.RadioButton(panel2Page1,wx.ID_ANY,u'拖曳',(190,30))       
+        radioPressBut = wx.RadioButton(panel2Page1,wx.ID_ANY,u'长按',(190,80))
+        
+        radioLeftAndRight = wx.RadioButton(panel2Page1,wx.ID_ANY,u'左右',(250,50),style = wx.RB_GROUP)
+        radioUpAndDown = wx.RadioButton(panel2Page1,wx.ID_ANY,u'上下',(320,50))
+        
+        wx.StaticText(panel2Page1,wx.ID_ANY,u'长按时长：',pos = (190,100))
+        self.longPressTxt = wx.TextCtrl(panel2Page1,wx.ID_ANY,'5000',size = (100,20),pos = (250,100))
+        wx.StaticText(panel2Page1,wx.ID_ANY,u'毫秒',pos = (355,100))
+        radioLeftAndRight.Enable(False)
+        radioUpAndDown.Enable(False)
+        self.longPressTxt.SetEditable(False)
+        
+        radioClickBut.Bind(wx.EVT_RADIOBUTTON,lambda evt, mark=0 : self.radioClickButEVT(radioClickBut, radioDragBut, radioPressBut, radioUpAndDown, radioLeftAndRight, self.longPressTxt))
+        radioDragBut.Bind(wx.EVT_RADIOBUTTON,lambda evt, mark=0 : self.radioDragButEVT(radioClickBut, radioDragBut, radioPressBut, radioUpAndDown, radioLeftAndRight, self.longPressTxt))
+        radioPressBut.Bind(wx.EVT_RADIOBUTTON,lambda evt, mark=0 : self.radioPressButEVT(radioClickBut, radioDragBut, radioPressBut, radioUpAndDown, radioLeftAndRight, self.longPressTxt))
+        radioUpAndDown.Bind(wx.EVT_RADIOBUTTON,lambda evt, mark=0 : self.radioUpAndDownEVT(radioClickBut, radioDragBut, radioPressBut, radioUpAndDown, radioLeftAndRight, self.longPressTxt))
+        radioLeftAndRight.Bind(wx.EVT_RADIOBUTTON,lambda evt, mark=0 : self.radioLeftAndRightEVT(radioClickBut, radioDragBut, radioPressBut, radioUpAndDown, radioLeftAndRight, self.longPressTxt))
         
 
 
         panel2Page2 = TabPage.TabPage(nb)
+        buttonHome = wx.Button(panel2Page2,wx.ID_ANY,u'Home键',(5,5),wx.Size(70,25))
+        buttonBack = wx.Button(panel2Page2,wx.ID_ANY,u'返回键',(5,35),wx.Size(70,25))
+        buttonMenu = wx.Button(panel2Page2,wx.ID_ANY,u'菜单键',(5,65),wx.Size(70,25))
+        buttonVoiceUp = wx.Button(panel2Page2,wx.ID_ANY,u'音量+',(5,95),wx.Size(70,25))
+        buttonVoiceDown = wx.Button(panel2Page2,wx.ID_ANY,u'音量-',(5,125),wx.Size(70,25))
+        buttonHome.Bind(wx.EVT_BUTTON,self.sendHomeEVT)
+        buttonBack.Bind(wx.EVT_BUTTON,self.sendBackEVT)
+        buttonMenu.Bind(wx.EVT_BUTTON,self.sendMenuEVT)
+        buttonVoiceUp.Bind(wx.EVT_BUTTON,self.sendVoiceUpEVT)
+        buttonVoiceDown.Bind(wx.EVT_BUTTON,self.sendVoiceDownEVT)
+        
+        panel2Page3 = TabPage.TabPage(nb)
 #         panel2Page2.SetBackgroundColour("#ffffff")
         nb.AddPage(panel2Page1,u'连接')
         nb.AddPage(panel2Page2,u'控制')
+        nb.AddPage(panel2Page3,u'输入')
         
         
         
@@ -209,12 +250,126 @@ class MyClass(object):
             return height*1440/width
         else:
             return height
-    
+        
+    #获取鼠标点击的坐标
     def getMousePos(self,event):
         point = event.GetPosition()
-        print point
-        print point[0]/self.screenRate.getScreenRate()
-        print point[1]/self.screenRate.getScreenRate()
-        
+#         print point
+        x = point[0]/self.screenRate.getScreenRate()
+        y = point[1]/self.screenRate.getScreenRate()
+        cmd = "adb shell input tap " + str(x) + " " + str(y)
+        os.system(cmd)
+    #设置屏幕操控的方式单机，长按，或者拖动
+    def radioClickButEVT(self,radioClickBut,radioDragBut,radioPressBut,radioUpAndDown,radioLeftAndRight,longPressTxt):
+        self.eventType = 0
+        radioLeftAndRight.Enable(False)
+        radioUpAndDown.Enable(False)
+        self.longPressTxt.SetEditable(False)
+    def radioPressButEVT(self,radioClickBut,radioDragBut,radioPressBut,radioUpAndDown,radioLeftAndRight,longPressTxt):  
+            self.eventType = 4
+            radioLeftAndRight.Enable(False)
+            radioUpAndDown.Enable(False)
+            self.longPressTxt.SetEditable(True)
+    def radioDragButEVT(self,radioClickBut,radioDragBut,radioPressBut,radioUpAndDown,radioLeftAndRight,longPressTxt):
+            radioLeftAndRight.Enable(True)
+            radioUpAndDown.Enable(True)
+            self.longPressTxt.SetEditable(False)  
+            radioLeftAndRight.SetValue(True)
+            self.eventType = 2
+                     
+    def radioUpAndDownEVT(self,radioClickBut,radioDragBut,radioPressBut,radioUpAndDown,radioLeftAndRight,longPressTxt):
+            self.eventType = 3
+    def radioLeftAndRightEVT(self,radioClickBut,radioDragBut,radioPressBut,radioUpAndDown,radioLeftAndRight,longPressTxt):
+            self.eventType = 2
+    
+#     #定义屏幕上推动的事件
+#     def dragDownEVT(self,event):
+#         if self.eventType == 2 or self.eventType == 3:
+#             self.startPosition == event.GetPosition()
+#     def dragUpEVT(self,event):
+#         if self.eventType == 2 or self.eventType == 3:
+#             self.endPosition = event.GetPosition()
+#             if self.eventType == 2:
+#                 x1 = self.startPosition[0]
+#                 x2 = self.endPosition[0]
+#                 cmd = 'adb shell input swipe ' + str(x1) + ' ' + str(x1) + ' ' + str(x2) + ' ' + str(x2)
+#                 os.system(cmd)   
+#             elif self.eventType == 3:
+#                 y1 = self.startPosition[1]
+#                 y2 = self.endPosition[1]
+#                 cmd = 'adb shell input swipe ' + str(y1) + ' ' + str(y1) + ' ' + str(y2) + ' ' + str(y2)
+#                 os.system(cmd)
+                
+    def screenEVT(self,event):
+        if event.ButtonDown():
+            print event.GetPosition()
+            if self.eventType == 0:
+                point = event.GetPosition()
+                x = point[0]/self.screenRate.getScreenRate()
+                y = point[1]/self.screenRate.getScreenRate()
+                cmd = "adb shell input tap " + str(x) + " " + str(y)
+                os.system(cmd)
+            elif self.eventType == 2 or self.eventType == 3:
+                self.startPosition = event.GetPosition()
+            elif self.eventType == 4:
+#                 self.startPosition = event.GetPosition()
+#                 x1 = self.startPosition[0]/self.screenRate.getScreenRate()
+#                 y1 = self.startPosition[1]/self.screenRate.getScreenRate()
+#                 cmd = "adb shell input " + str(x1) + ' ' + str(y1) + ' ' + str(x1) + ' ' + str(y1) + ' sleep ' + self.longPressTxt.GetValue()
+                print event.GetPosition()
+                cmd1 = 'adb shell input keyevent 3'
+                cmd = 'adb shell sleep 3'
+                print cmd
+                os.system(cmd)
+                os.system(cmd1)
+        elif event.ButtonUp():
+            if self.eventType == 2 or self.eventType == 3:
+                self.endPosition = event.GetPosition()
+                if self.eventType == 2:
+                    x1 = self.startPosition[0]/self.screenRate.getScreenRate()
+                    x2 = self.endPosition[0]/self.screenRate.getScreenRate()
+                    y1 = self.startPosition[1]/self.screenRate.getScreenRate()
+                    y2 = self.endPosition[1]/self.screenRate.getScreenRate()
+                    cmd = 'adb shell input swipe ' + str(x1) + ' ' + str(y1) + ' ' + str(x2) + ' ' + str(y1)
+                    os.system(cmd)   
+                elif self.eventType == 3:
+                    x1 = self.startPosition[0]/self.screenRate.getScreenRate()
+                    x2 = self.endPosition[0]/self.screenRate.getScreenRate()
+                    y1 = self.startPosition[1]/self.screenRate.getScreenRate()
+                    y2 = self.endPosition[1]/self.screenRate.getScreenRate()
+                    cmd = 'adb shell input swipe ' + str(x1) + ' ' + str(y1) + ' ' + str(x1) + ' ' + str(y2)
+                    os.system(cmd)
+                
+            
+            
+#     #向手机发送点击事件
+#     def sendClickEVT(self,event):
+#         if self.eventType == 0:
+#             point = event.GetPosition()
+#             x = point[0]/self.screenRate.getScreenRate()
+#             y = point[1]/self.screenRate.getScreenRate()
+#             cmd = "adb shell input tap " + str(x) + " " + str(y)
+#             os.system(cmd)       
+    def sendHomeEVT(self,event):
+        cmd = 'adb shell input keyevent 3'
+        os.system(cmd)
+    def sendBackEVT(self,event):
+        cmd = 'adb shell input keyevent 4'
+        os.system(cmd)
+    def sendMenuEVT(self,event):
+        cmd = 'adb shell input keyevent 82'
+        os.system(cmd)
+    def sendVoiceUpEVT(self,event):
+        cmd = 'adb shell input keyevent 24'
+        os.system(cmd)
+    def sendVoiceDownEVT(self,event):
+        cmd = 'adb shell input keyevent 25'
+        os.system(cmd)
+    #关闭窗口执行的事件
+    def closeWinEVT(self,event):
+        wx.Exit()
+        cmd = '..\\getProId'
+        os.system(cmd)
+        self.connectThread.stop()
         
 MyClass("").show();
