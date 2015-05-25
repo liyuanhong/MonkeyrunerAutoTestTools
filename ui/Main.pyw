@@ -11,6 +11,7 @@ from widget import  TabPage
 from services import StartMonkeyService,ShowScreenService
 from wx import Size
 from bean import ScreenRate
+import subprocess
 
 class MyClass(object):
 
@@ -130,11 +131,13 @@ class MyClass(object):
         buttonMenu = wx.Button(panel2Page2,wx.ID_ANY,u'菜单键',(5,65),wx.Size(70,25))
         buttonVoiceUp = wx.Button(panel2Page2,wx.ID_ANY,u'音量+',(5,95),wx.Size(70,25))
         buttonVoiceDown = wx.Button(panel2Page2,wx.ID_ANY,u'音量-',(5,125),wx.Size(70,25))
+        buttonLongPressHome = wx.Button(panel2Page2,wx.ID_ANY,u'长按Home键',(5,155),wx.Size(100,25))
         buttonHome.Bind(wx.EVT_BUTTON,self.sendHomeEVT)
         buttonBack.Bind(wx.EVT_BUTTON,self.sendBackEVT)
         buttonMenu.Bind(wx.EVT_BUTTON,self.sendMenuEVT)
         buttonVoiceUp.Bind(wx.EVT_BUTTON,self.sendVoiceUpEVT)
         buttonVoiceDown.Bind(wx.EVT_BUTTON,self.sendVoiceDownEVT)
+        buttonLongPressHome.Bind(wx.EVT_BUTTON,self.sendLongPressHomeEVT)
         
         panel2Page3 = TabPage.TabPage(nb)
 #         panel2Page2.SetBackgroundColour("#ffffff")
@@ -184,7 +187,6 @@ class MyClass(object):
             self.connectThread = ShowScreenService.ShowScreenService(img,height,width,bitmap,backgroundImage,panel1,panel2Txt1,self.screenRate,self.freshRate)
             
             while not os.path.exists('D:\\screenshot\\infoCtrl.txt'):
-                print "aaaaaa"
                 pass           
             
             flag = 0
@@ -258,7 +260,9 @@ class MyClass(object):
         x = point[0]/self.screenRate.getScreenRate()
         y = point[1]/self.screenRate.getScreenRate()
         cmd = "adb shell input tap " + str(x) + " " + str(y)
-        os.system(cmd)
+        CREATE_NO_WINDOW = 0x08000000
+        subprocess.call(cmd, creationflags=CREATE_NO_WINDOW)
+#         os.system(cmd)
     #设置屏幕操控的方式单机，长按，或者拖动
     def radioClickButEVT(self,radioClickBut,radioDragBut,radioPressBut,radioUpAndDown,radioLeftAndRight,longPressTxt):
         self.eventType = 0
@@ -308,20 +312,20 @@ class MyClass(object):
                 x = point[0]/self.screenRate.getScreenRate()
                 y = point[1]/self.screenRate.getScreenRate()
                 cmd = "adb shell input tap " + str(x) + " " + str(y)
-                os.system(cmd)
+#                 os.system(cmd)
+                CREATE_NO_WINDOW = 0x08000000
+                subprocess.call(cmd, creationflags=CREATE_NO_WINDOW)
             elif self.eventType == 2 or self.eventType == 3:
                 self.startPosition = event.GetPosition()
             elif self.eventType == 4:
-#                 self.startPosition = event.GetPosition()
-#                 x1 = self.startPosition[0]/self.screenRate.getScreenRate()
-#                 y1 = self.startPosition[1]/self.screenRate.getScreenRate()
-#                 cmd = "adb shell input " + str(x1) + ' ' + str(y1) + ' ' + str(x1) + ' ' + str(y1) + ' sleep ' + self.longPressTxt.GetValue()
-                print event.GetPosition()
-                cmd1 = 'adb shell input keyevent 3'
-                cmd = 'adb shell sleep 3'
-                print cmd
-                os.system(cmd)
-                os.system(cmd1)
+                self.startPosition = event.GetPosition()
+                x1 = self.startPosition[0]/self.screenRate.getScreenRate()
+                y1 = self.startPosition[1]/self.screenRate.getScreenRate()
+                cmd = "adb shell input touchscreen swipe " + str(x1) + ' ' + str(y1) + ' ' + str(x1) + ' ' + str(y1) + ' ' + self.longPressTxt.GetValue()
+#                 cmd = 'adb shell input touchscreen swipe ' + 
+#                 os.system(cmd)
+                CREATE_NO_WINDOW = 0x08000000
+                subprocess.call(cmd, creationflags=CREATE_NO_WINDOW)
         elif event.ButtonUp():
             if self.eventType == 2 or self.eventType == 3:
                 self.endPosition = event.GetPosition()
@@ -331,14 +335,18 @@ class MyClass(object):
                     y1 = self.startPosition[1]/self.screenRate.getScreenRate()
                     y2 = self.endPosition[1]/self.screenRate.getScreenRate()
                     cmd = 'adb shell input swipe ' + str(x1) + ' ' + str(y1) + ' ' + str(x2) + ' ' + str(y1)
-                    os.system(cmd)   
+#                     os.system(cmd)   
+                    CREATE_NO_WINDOW = 0x08000000
+                    subprocess.call(cmd, creationflags=CREATE_NO_WINDOW)
                 elif self.eventType == 3:
                     x1 = self.startPosition[0]/self.screenRate.getScreenRate()
                     x2 = self.endPosition[0]/self.screenRate.getScreenRate()
                     y1 = self.startPosition[1]/self.screenRate.getScreenRate()
                     y2 = self.endPosition[1]/self.screenRate.getScreenRate()
                     cmd = 'adb shell input swipe ' + str(x1) + ' ' + str(y1) + ' ' + str(x1) + ' ' + str(y2)
-                    os.system(cmd)
+#                     os.system(cmd)
+                    CREATE_NO_WINDOW = 0x08000000
+                    subprocess.call(cmd, creationflags=CREATE_NO_WINDOW)
                 
             
             
@@ -352,19 +360,34 @@ class MyClass(object):
 #             os.system(cmd)       
     def sendHomeEVT(self,event):
         cmd = 'adb shell input keyevent 3'
-        os.system(cmd)
+        CREATE_NO_WINDOW = 0x08000000
+        subprocess.call(cmd, creationflags=CREATE_NO_WINDOW)
+#         os.system(cmd)
     def sendBackEVT(self,event):
         cmd = 'adb shell input keyevent 4'
-        os.system(cmd)
+#         os.system(cmd)
+        CREATE_NO_WINDOW = 0x08000000
+        subprocess.call(cmd, creationflags=CREATE_NO_WINDOW)
     def sendMenuEVT(self,event):
         cmd = 'adb shell input keyevent 82'
-        os.system(cmd)
+#         os.system(cmd)
+        CREATE_NO_WINDOW = 0x08000000
+        subprocess.call(cmd, creationflags=CREATE_NO_WINDOW)
     def sendVoiceUpEVT(self,event):
         cmd = 'adb shell input keyevent 24'
-        os.system(cmd)
+        CREATE_NO_WINDOW = 0x08000000
+        subprocess.call(cmd, creationflags=CREATE_NO_WINDOW)
+#         os.system(cmd)
     def sendVoiceDownEVT(self,event):
         cmd = 'adb shell input keyevent 25'
-        os.system(cmd)
+#         os.system(cmd)
+        CREATE_NO_WINDOW = 0x08000000
+        subprocess.call(cmd, creationflags=CREATE_NO_WINDOW)
+    def sendLongPressHomeEVT(self,event):
+        cmd = 'adb shell input keyevent --longpress 3'
+#         os.system(cmd)
+        CREATE_NO_WINDOW = 0x08000000
+        subprocess.call(cmd, creationflags=CREATE_NO_WINDOW)
     #关闭窗口执行的事件
     def closeWinEVT(self,event):
         wx.Exit()
