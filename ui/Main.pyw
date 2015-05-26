@@ -30,9 +30,20 @@ class MyClass(object):
         self.startPosition = (0,0)
         #定义拖动的结束点
         self.endPosition = (0,0)
+        #截图的方式0表示自动，1表示手动
+        self.screenShotType = 0
+        #是否录制脚本0，表示 不录制，1表示录制
+        self.isRecord = 0
+        #定义脚本的前部分代码
+        self.txt = '''import sys
+import time
+import os
+from com.android.monkeyrunner import MonkeyRunner, MonkeyDevice
+device = MonkeyRunner.waitForConnection()'''
     
     #显示主窗体
     def show(self):
+        print self.txt
         win = wx.App()
         frame = wx.Frame(None, -1, 'simple.py',size = self.winSize) 
         nb = wx.Notebook(frame,wx.NewId())    
@@ -40,11 +51,11 @@ class MyClass(object):
         
         #添加tab标签页
         page1 = TabPage.TabPage(nb)
-#         page2 = TabPage.TabPage(nb)
+        page2 = TabPage.TabPage(nb)
         nb.AddPage(page1,u'录制脚本')
         self.addPage1Layout(frame, page1);
         
-#         nb.AddPage(page2,'page2')                   
+        nb.AddPage(page2,'脚本回放')                   
         self.addMenu(menuBar,frame);
         
         frame.SetMenuBar(menuBar);
@@ -55,8 +66,12 @@ class MyClass(object):
     #添加菜单项  
     def addMenu(self,menuBar,frame):
         menuFile = wx.Menu()
-        menuOpenItem = wx.MenuItem(menuFile,wx.NewId(),text = u"打开")
-        menuFile.Append(menuOpenItem.GetId(),u"打开")
+        menuOpenItem = wx.MenuItem(menuFile,wx.NewId(),text = u"打开脚本")
+        menuSaveAsItem = wx.MenuItem(menuFile,wx.ID_ANY,text = u"导出脚本")
+        menuSaveItem = wx.MenuItem(menuFile,wx.ID_ANY,text = u"保存")
+        menuFile.Append(menuOpenItem.GetId(),u"打开脚本")
+        menuFile.Append(menuSaveAsItem.GetId(),u"导出脚本")
+        menuFile.Append(menuSaveItem.GetId(),u"保存")
         
         menuExitItem = wx.MenuItem(menuFile,wx.NewId(),text = u"退出")        
         menuFile.Append(menuExitItem.GetId(),u"退出")
@@ -113,6 +128,21 @@ class MyClass(object):
         wx.StaticText(panel2Page1,wx.ID_ANY,u'长按时长：',pos = (190,100))
         self.longPressTxt = wx.TextCtrl(panel2Page1,wx.ID_ANY,'5000',size = (100,20),pos = (250,100))
         wx.StaticText(panel2Page1,wx.ID_ANY,u'毫秒',pos = (355,100))
+        
+        self.recordButOff = wx.RadioButton(panel2Page1,wx.ID_ANY,u'停止录制',(5,125),style = wx.RB_GROUP)
+        self.recordButOn = wx.RadioButton(panel2Page1,wx.ID_ANY,u'开始录制',(80,125))
+        self.recordButOn.Bind(wx.EVT_RADIOBUTTON,self.recordButEVT)
+        self.recordButOff.Bind(wx.EVT_RADIOBUTTON,self.recordButEVT)
+        
+        self.inputText = wx.TextCtrl(panel2Page1,wx.ID_ANY,'',(190,130),(160,25))
+        inputBut = wx.Button(panel2Page1,wx.ID_ANY,u'输入',(360,130),wx.Size(50,25))
+        delBut = wx.Button(panel2Page1,wx.ID_ANY,u'DEL',(420,130),wx.Size(50,25))
+        inputBut.Bind(wx.EVT_BUTTON,self.inputTextEVT)
+        delBut.Bind(wx.EVT_BUTTON,self.delTextEVT)
+        
+        wx.Panel(panel2Page1,wx.ID_ANY,pos = (165,0),size = wx.Size(1,160),style = wx.BORDER_SIMPLE)
+        wx.Panel(panel2Page1,wx.ID_ANY,pos = (0,165),size = wx.Size(508,1),style = wx.BORDER_SIMPLE)
+        
         radioLeftAndRight.Enable(False)
         radioUpAndDown.Enable(False)
         self.longPressTxt.SetEditable(False)
@@ -263,6 +293,10 @@ class MyClass(object):
         CREATE_NO_WINDOW = 0x08000000
         subprocess.call(cmd, creationflags=CREATE_NO_WINDOW)
 #         os.system(cmd)
+        if self.isRecord == 0:
+            pass
+        elif self.isRecord == 1:
+            pass
     #设置屏幕操控的方式单机，长按，或者拖动
     def radioClickButEVT(self,radioClickBut,radioDragBut,radioPressBut,radioUpAndDown,radioLeftAndRight,longPressTxt):
         self.eventType = 0
@@ -279,12 +313,17 @@ class MyClass(object):
             radioUpAndDown.Enable(True)
             self.longPressTxt.SetEditable(False)  
             radioLeftAndRight.SetValue(True)
-            self.eventType = 2
-                     
+            self.eventType = 2                     
     def radioUpAndDownEVT(self,radioClickBut,radioDragBut,radioPressBut,radioUpAndDown,radioLeftAndRight,longPressTxt):
             self.eventType = 3
     def radioLeftAndRightEVT(self,radioClickBut,radioDragBut,radioPressBut,radioUpAndDown,radioLeftAndRight,longPressTxt):
             self.eventType = 2
+            
+    def recordButEVT(self,event):
+        if event.GetId() == self.recordButOff.GetId():
+            self.isRecord = 0
+        elif event.GetId() == self.recordButOn.GetId():
+            self.isRecord = 1
     
 #     #定义屏幕上推动的事件
 #     def dragDownEVT(self,event):
@@ -315,6 +354,10 @@ class MyClass(object):
 #                 os.system(cmd)
                 CREATE_NO_WINDOW = 0x08000000
                 subprocess.call(cmd, creationflags=CREATE_NO_WINDOW)
+                if self.isRecord == 0:
+                    pass
+                elif self.isRecord == 1:
+                    pass
             elif self.eventType == 2 or self.eventType == 3:
                 self.startPosition = event.GetPosition()
             elif self.eventType == 4:
@@ -326,6 +369,10 @@ class MyClass(object):
 #                 os.system(cmd)
                 CREATE_NO_WINDOW = 0x08000000
                 subprocess.call(cmd, creationflags=CREATE_NO_WINDOW)
+                if self.isRecord == 0:
+                    pass
+                elif self.isRecord == 1:
+                    pass
         elif event.ButtonUp():
             if self.eventType == 2 or self.eventType == 3:
                 self.endPosition = event.GetPosition()
@@ -338,6 +385,10 @@ class MyClass(object):
 #                     os.system(cmd)   
                     CREATE_NO_WINDOW = 0x08000000
                     subprocess.call(cmd, creationflags=CREATE_NO_WINDOW)
+                    if self.isRecord == 0:
+                        pass
+                    elif self.isRecord == 1:
+                        pass
                 elif self.eventType == 3:
                     x1 = self.startPosition[0]/self.screenRate.getScreenRate()
                     x2 = self.endPosition[0]/self.screenRate.getScreenRate()
@@ -347,6 +398,10 @@ class MyClass(object):
 #                     os.system(cmd)
                     CREATE_NO_WINDOW = 0x08000000
                     subprocess.call(cmd, creationflags=CREATE_NO_WINDOW)
+                    if self.isRecord == 0:
+                        pass
+                    elif self.isRecord == 1:
+                        pass
                 
             
             
@@ -363,31 +418,71 @@ class MyClass(object):
         CREATE_NO_WINDOW = 0x08000000
         subprocess.call(cmd, creationflags=CREATE_NO_WINDOW)
 #         os.system(cmd)
+        if self.isRecord == 0:
+            pass
+        elif self.isRecord == 1:
+            pass
     def sendBackEVT(self,event):
         cmd = 'adb shell input keyevent 4'
 #         os.system(cmd)
         CREATE_NO_WINDOW = 0x08000000
         subprocess.call(cmd, creationflags=CREATE_NO_WINDOW)
+        if self.isRecord == 0:
+            pass
+        elif self.isRecord == 1:
+            pass
     def sendMenuEVT(self,event):
         cmd = 'adb shell input keyevent 82'
 #         os.system(cmd)
         CREATE_NO_WINDOW = 0x08000000
         subprocess.call(cmd, creationflags=CREATE_NO_WINDOW)
+        if self.isRecord == 0:
+            pass
+        elif self.isRecord == 1:
+            pass
     def sendVoiceUpEVT(self,event):
         cmd = 'adb shell input keyevent 24'
         CREATE_NO_WINDOW = 0x08000000
         subprocess.call(cmd, creationflags=CREATE_NO_WINDOW)
 #         os.system(cmd)
+        if self.isRecord == 0:
+            pass
+        elif self.isRecord == 1:
+            pass
     def sendVoiceDownEVT(self,event):
         cmd = 'adb shell input keyevent 25'
 #         os.system(cmd)
         CREATE_NO_WINDOW = 0x08000000
         subprocess.call(cmd, creationflags=CREATE_NO_WINDOW)
+        if self.isRecord == 0:
+            pass
+        elif self.isRecord == 1:
+            pass
     def sendLongPressHomeEVT(self,event):
         cmd = 'adb shell input keyevent --longpress 3'
 #         os.system(cmd)
         CREATE_NO_WINDOW = 0x08000000
         subprocess.call(cmd, creationflags=CREATE_NO_WINDOW)
+        if self.isRecord == 0:
+            pass
+        elif self.isRecord == 1:
+            pass
+    def inputTextEVT(self,event):
+        cmd = "adb shell input text " + self.inputText.GetValue()
+        CREATE_NO_WINDOW = 0x08000000
+        subprocess.call(cmd, creationflags=CREATE_NO_WINDOW)
+        if self.isRecord == 0:
+            pass
+        elif self.isRecord == 1:
+            pass
+    def delTextEVT(self,event):
+        cmd = "adb shell input keyevent 67"
+        CREATE_NO_WINDOW = 0x08000000
+        subprocess.call(cmd, creationflags=CREATE_NO_WINDOW)
+        if self.isRecord == 0:
+            pass
+        elif self.isRecord == 1:
+            pass
     #关闭窗口执行的事件
     def closeWinEVT(self,event):
         wx.Exit()
