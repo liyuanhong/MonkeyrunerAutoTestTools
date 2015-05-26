@@ -30,20 +30,27 @@ class MyClass(object):
         self.startPosition = (0,0)
         #定义拖动的结束点
         self.endPosition = (0,0)
-        #截图的方式0表示自动，1表示手动
+        #截图的方式0表示自动，1表示手动,2表示不截图
         self.screenShotType = 0
+        self.screenIndex = 0
         #是否录制脚本0，表示 不录制，1表示录制
         self.isRecord = 0
+        #将要录制的代码部分
+        self.code = []
+        self.exportCode = []
+        #当前代码的录制索引
+        self.codeindex = 0
         #定义脚本的前部分代码
         self.txt = '''import sys
 import time
 import os
 from com.android.monkeyrunner import MonkeyRunner, MonkeyDevice
 device = MonkeyRunner.waitForConnection()'''
+        self.exportCode.append(self.txt)
+        print self.exportCode
     
     #显示主窗体
     def show(self):
-        print self.txt
         win = wx.App()
         frame = wx.Frame(None, -1, 'simple.py',size = self.winSize) 
         nb = wx.Notebook(frame,wx.NewId())    
@@ -55,7 +62,7 @@ device = MonkeyRunner.waitForConnection()'''
         nb.AddPage(page1,u'录制脚本')
         self.addPage1Layout(frame, page1);
         
-        nb.AddPage(page2,'脚本回放')                   
+        nb.AddPage(page2,u'脚本回放')                   
         self.addMenu(menuBar,frame);
         
         frame.SetMenuBar(menuBar);
@@ -146,6 +153,10 @@ device = MonkeyRunner.waitForConnection()'''
         radioLeftAndRight.Enable(False)
         radioUpAndDown.Enable(False)
         self.longPressTxt.SetEditable(False)
+        
+        wx.StaticText(panel2Page1,wx.ID_ANY,u'事件延时：',pos = (5,175))
+        self.delayTime = wx.TextCtrl(panel2Page1,wx.ID_ANY,'2',(65,175),(80,20))
+        wx.StaticText(panel2Page1,wx.ID_ANY,u'秒',pos = (150,175))
         
         radioClickBut.Bind(wx.EVT_RADIOBUTTON,lambda evt, mark=0 : self.radioClickButEVT(radioClickBut, radioDragBut, radioPressBut, radioUpAndDown, radioLeftAndRight, self.longPressTxt))
         radioDragBut.Bind(wx.EVT_RADIOBUTTON,lambda evt, mark=0 : self.radioDragButEVT(radioClickBut, radioDragBut, radioPressBut, radioUpAndDown, radioLeftAndRight, self.longPressTxt))
@@ -284,19 +295,23 @@ device = MonkeyRunner.waitForConnection()'''
             return height
         
     #获取鼠标点击的坐标
-    def getMousePos(self,event):
-        point = event.GetPosition()
-#         print point
-        x = point[0]/self.screenRate.getScreenRate()
-        y = point[1]/self.screenRate.getScreenRate()
-        cmd = "adb shell input tap " + str(x) + " " + str(y)
-        CREATE_NO_WINDOW = 0x08000000
-        subprocess.call(cmd, creationflags=CREATE_NO_WINDOW)
-#         os.system(cmd)
-        if self.isRecord == 0:
-            pass
-        elif self.isRecord == 1:
-            pass
+#     def getMousePos(self,event):
+#         point = event.GetPosition()
+# #         print point
+#         x = point[0]/self.screenRate.getScreenRate()
+#         y = point[1]/self.screenRate.getScreenRate()
+#         cmd = "adb shell input tap " + str(x) + " " + str(y)
+#         CREATE_NO_WINDOW = 0x08000000
+#         subprocess.call(cmd, creationflags=CREATE_NO_WINDOW)
+# #         os.system(cmd)
+#         if self.isRecord == 0:
+#             pass
+#         elif self.isRecord == 1:
+#             scp1 = 'device.touch(' + x + ',' + y + ',"DOWN_AND_UP")'
+#             scp2 = '\nMonkeyRunner.sleep(' + self.delayTime.GetValue() + ')'
+#             scp = scp1 + scp2
+#             print self.exportCode.append(scp)
+            
     #设置屏幕操控的方式单机，长按，或者拖动
     def radioClickButEVT(self,radioClickBut,radioDragBut,radioPressBut,radioUpAndDown,radioLeftAndRight,longPressTxt):
         self.eventType = 0
@@ -345,7 +360,6 @@ device = MonkeyRunner.waitForConnection()'''
                 
     def screenEVT(self,event):
         if event.ButtonDown():
-            print event.GetPosition()
             if self.eventType == 0:
                 point = event.GetPosition()
                 x = point[0]/self.screenRate.getScreenRate()
@@ -357,7 +371,24 @@ device = MonkeyRunner.waitForConnection()'''
                 if self.isRecord == 0:
                     pass
                 elif self.isRecord == 1:
-                    pass
+                    scp1 = 'device.touch(' + str(x) + ',' + str(y) + ',"DOWN_AND_UP")'
+                    scp2 = '\nMonkeyRunner.sleep(' + self.delayTime.GetValue() + ')'
+                    shot = ''
+                    if self.screenShotType == 0:
+                        shot1 = 'result = device.takeSnapshot()'
+                        shot2 = '\nresult.writeToFile(D:\\' + str(self.screenIndex) + '.png,png)'
+                        shot = shot1 + shot2
+                        self.screenIndex += 1
+                    elif self.screenShotType == 1:
+                        shot1 = 'result = device.takeSnapshot()'
+                        shot2 = '\nresult.writeToFile(D:\\aaaaaaaaaa' + '.png,png)'
+                        shot = shot1 + shot2
+                    elif self.screenShotType == 2:
+                        pass
+                    scp = scp1 + scp2 + shot
+                    self.code.append(scp)
+                    self.codeindex += 1
+                    print self.code
             elif self.eventType == 2 or self.eventType == 3:
                 self.startPosition = event.GetPosition()
             elif self.eventType == 4:
