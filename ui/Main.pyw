@@ -24,6 +24,8 @@ class MyClass(object):
         self.connectThread = None
         #定义屏幕操作的类型，0表示点击，1表示滑动，2表示左右滑动，3表示上下滑动，4表示长按
         self.eventType = 0
+        #定义录制脚本的类型，0表示monkeyrunner脚本，1表示DOS脚本
+        self.scriptType = 0
         #定义显示与真实屏幕的比例
         self.screenRate = ScreenRate.ScreenRate()
         #定义拖动的起始点
@@ -129,6 +131,10 @@ device = MonkeyRunner.waitForConnection()'''
         radioDragBut = wx.RadioButton(panel2Page1,wx.ID_ANY,u'拖曳',(190,30))       
         radioPressBut = wx.RadioButton(panel2Page1,wx.ID_ANY,u'长按',(190,80))
         
+        wx.StaticText(panel2Page1,wx.ID_ANY,u'坐标：',pos = (250,10))
+        self.coodinate = wx.TextCtrl(panel2Page1,wx.ID_ANY,'(0,0)',(290,10),(180,20))
+        self.coodinate.SetEditable(False) 
+        
         radioLeftAndRight = wx.RadioButton(panel2Page1,wx.ID_ANY,u'左右',(250,50),style = wx.RB_GROUP)
         radioUpAndDown = wx.RadioButton(panel2Page1,wx.ID_ANY,u'上下',(320,50))
         
@@ -157,6 +163,22 @@ device = MonkeyRunner.waitForConnection()'''
         wx.StaticText(panel2Page1,wx.ID_ANY,u'事件延时：',pos = (5,175))
         self.delayTime = wx.TextCtrl(panel2Page1,wx.ID_ANY,'2',(65,175),(80,20))
         wx.StaticText(panel2Page1,wx.ID_ANY,u'秒',pos = (150,175))
+        
+        wx.StaticText(panel2Page1,wx.ID_ANY,u'脚本类型：',pos = (5,200))
+        monkeyBut = wx.RadioButton(panel2Page1,wx.ID_ANY,u'monkeyrunner脚本',(5,220),style = wx.RB_GROUP)
+        DosBut = wx.RadioButton(panel2Page1,wx.ID_ANY,u'DOS脚本',(5,240))
+        
+        wx.StaticText(panel2Page1,wx.ID_ANY,u'添加截图：',pos = (190,175))
+        radioAutoShotBut = wx.RadioButton(panel2Page1,wx.ID_ANY,u'自动截图',(260,175),style = wx.RB_GROUP)
+        radioManShotBut = wx.RadioButton(panel2Page1,wx.ID_ANY,u'手动截图',(350,175))
+        wx.StaticText(panel2Page1,wx.ID_ANY,u'自动截取时长：',pos = (190,200))
+        wx.StaticText(panel2Page1,wx.ID_ANY,u'手动截取时长：',pos = (190,220))
+        self.autoShotTimeTxt = wx.TextCtrl(panel2Page1,wx.ID_ANY,'2',(280,200),(100,20))
+        self.autoShotTimeTxt = wx.TextCtrl(panel2Page1,wx.ID_ANY,'2',(280,220),(100,20))
+        wx.StaticText(panel2Page1,wx.ID_ANY,u'秒',pos = (390,200))
+        wx.StaticText(panel2Page1,wx.ID_ANY,u'秒',pos = (390,220))
+        manShotBut = wx.Button(panel2Page1,wx.ID_ANY,u'添加截图',(420,215),wx.Size(65,25))
+        
         
         radioClickBut.Bind(wx.EVT_RADIOBUTTON,lambda evt, mark=0 : self.radioClickButEVT(radioClickBut, radioDragBut, radioPressBut, radioUpAndDown, radioLeftAndRight, self.longPressTxt))
         radioDragBut.Bind(wx.EVT_RADIOBUTTON,lambda evt, mark=0 : self.radioDragButEVT(radioClickBut, radioDragBut, radioPressBut, radioUpAndDown, radioLeftAndRight, self.longPressTxt))
@@ -364,6 +386,7 @@ device = MonkeyRunner.waitForConnection()'''
                 point = event.GetPosition()
                 x = point[0]/self.screenRate.getScreenRate()
                 y = point[1]/self.screenRate.getScreenRate()
+                self.coodinate.SetValue('(' + str(x) + ',' + str(y) + ')')
                 cmd = "adb shell input tap " + str(x) + " " + str(y)
 #                 os.system(cmd)
                 CREATE_NO_WINDOW = 0x08000000
@@ -395,6 +418,7 @@ device = MonkeyRunner.waitForConnection()'''
                 self.startPosition = event.GetPosition()
                 x1 = self.startPosition[0]/self.screenRate.getScreenRate()
                 y1 = self.startPosition[1]/self.screenRate.getScreenRate()
+                self.coodinate.SetValue('(' + str(x1) + ',' + str(y1) + ')')
                 cmd = "adb shell input touchscreen swipe " + str(x1) + ' ' + str(y1) + ' ' + str(x1) + ' ' + str(y1) + ' ' + self.longPressTxt.GetValue()
 #                 cmd = 'adb shell input touchscreen swipe ' + 
 #                 os.system(cmd)
@@ -412,6 +436,7 @@ device = MonkeyRunner.waitForConnection()'''
                     x2 = self.endPosition[0]/self.screenRate.getScreenRate()
                     y1 = self.startPosition[1]/self.screenRate.getScreenRate()
                     y2 = self.endPosition[1]/self.screenRate.getScreenRate()
+                    self.coodinate.SetValue('(' + str(x1) + ',' + str(y1) + ')' + ' ' + '(' + str(x2) + ',' + str(y2) + ')')
                     cmd = 'adb shell input swipe ' + str(x1) + ' ' + str(y1) + ' ' + str(x2) + ' ' + str(y1)
 #                     os.system(cmd)   
                     CREATE_NO_WINDOW = 0x08000000
