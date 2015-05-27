@@ -38,18 +38,21 @@ class MyClass(object):
         #是否录制脚本0，表示 不录制，1表示录制
         self.isRecord = 0
         #将要录制的代码部分
-        self.code = []
-        self.exportCode = []
+        self.mokeyCode = []
+        self.dosCode = []
+        self.exportMonkeyCode = []
+        self.exportDosCode = []
         #当前代码的录制索引
-        self.codeindex = 0
+        self.monkeyCodeIndex = 0
+        self.dosCodeIndex = 0
         #定义脚本的前部分代码
         self.txt = '''import sys
 import time
 import os
 from com.android.monkeyrunner import MonkeyRunner, MonkeyDevice
 device = MonkeyRunner.waitForConnection()'''
-        self.exportCode.append(self.txt)
-        print self.exportCode
+        self.exportMonkeyCode.append(self.txt)
+        print self.exportMonkeyCode
     
     #显示主窗体
     def show(self):
@@ -165,8 +168,10 @@ device = MonkeyRunner.waitForConnection()'''
         wx.StaticText(panel2Page1,wx.ID_ANY,u'秒',pos = (150,175))
         
         wx.StaticText(panel2Page1,wx.ID_ANY,u'脚本类型：',pos = (5,200))
-        monkeyBut = wx.RadioButton(panel2Page1,wx.ID_ANY,u'monkeyrunner脚本',(5,220),style = wx.RB_GROUP)
-        DosBut = wx.RadioButton(panel2Page1,wx.ID_ANY,u'DOS脚本',(5,240))
+        self.monkeyBut = wx.RadioButton(panel2Page1,wx.ID_ANY,u'monkeyrunner脚本',(5,220),style = wx.RB_GROUP)
+        self.dosBut = wx.RadioButton(panel2Page1,wx.ID_ANY,u'DOS脚本',(5,240))
+        self.monkeyBut.Bind(wx.EVT_RADIOBUTTON,self.changeCodeTypeEVT)
+        self.dosBut.Bind(wx.EVT_RADIOBUTTON,self.changeCodeTypeEVT)
         
         wx.StaticText(panel2Page1,wx.ID_ANY,u'添加截图：',pos = (190,175))
         radioAutoShotBut = wx.RadioButton(panel2Page1,wx.ID_ANY,u'自动截图',(260,175),style = wx.RB_GROUP)
@@ -214,8 +219,8 @@ device = MonkeyRunner.waitForConnection()'''
 #         panel3.SetBackgroundColour("#aa0000")       
 
         wx.StaticText(panel3,wx.ID_ANY,u'脚本区域：',pos = (10,2)) 
-        scriptArea = wx.TextCtrl(panel3,wx.ID_ANY,size = wx.Size(508,317),pos = (10,22),style = wx.BORDER_SIMPLE | wx.TE_MULTILINE | wx.HSCROLL)
-        scriptArea.SetFont(wx.Font(11, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL))
+        self.scriptArea = wx.TextCtrl(panel3,wx.ID_ANY,size = wx.Size(508,317),pos = (10,22),style = wx.BORDER_SIMPLE | wx.TE_MULTILINE | wx.HSCROLL)
+        self.scriptArea.SetFont(wx.Font(11, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL))
          
         page1BoxSizer.Add(self.panel1)
         page1BoxSizer.Add(page1BoxSizer2)
@@ -332,7 +337,7 @@ device = MonkeyRunner.waitForConnection()'''
 #             scp1 = 'device.touch(' + x + ',' + y + ',"DOWN_AND_UP")'
 #             scp2 = '\nMonkeyRunner.sleep(' + self.delayTime.GetValue() + ')'
 #             scp = scp1 + scp2
-#             print self.exportCode.append(scp)
+#             print self.exportMonkeyCode.append(scp)
             
     #设置屏幕操控的方式单机，长按，或者拖动
     def radioClickButEVT(self,radioClickBut,radioDragBut,radioPressBut,radioUpAndDown,radioLeftAndRight,longPressTxt):
@@ -394,24 +399,34 @@ device = MonkeyRunner.waitForConnection()'''
                 if self.isRecord == 0:
                     pass
                 elif self.isRecord == 1:
-                    scp1 = 'device.touch(' + str(x) + ',' + str(y) + ',"DOWN_AND_UP")'
-                    scp2 = '\nMonkeyRunner.sleep(' + self.delayTime.GetValue() + ')'
-                    shot = ''
-                    if self.screenShotType == 0:
-                        shot1 = 'result = device.takeSnapshot()'
-                        shot2 = '\nresult.writeToFile(D:\\' + str(self.screenIndex) + '.png,png)'
-                        shot = shot1 + shot2
-                        self.screenIndex += 1
-                    elif self.screenShotType == 1:
-                        shot1 = 'result = device.takeSnapshot()'
-                        shot2 = '\nresult.writeToFile(D:\\aaaaaaaaaa' + '.png,png)'
-                        shot = shot1 + shot2
-                    elif self.screenShotType == 2:
-                        pass
-                    scp = scp1 + scp2 + shot
-                    self.code.append(scp)
-                    self.codeindex += 1
-                    print self.code
+                    if self.scriptType == 0:
+                        scp1 = 'device.touch(' + str(x) + ',' + str(y) + ',"DOWN_AND_UP")'
+                        scp2 = '\nMonkeyRunner.sleep(' + self.delayTime.GetValue() + ')'
+                        shot = ''
+                        if self.screenShotType == 0:
+                            shot1 = 'result = device.takeSnapshot()'
+                            shot2 = '\nresult.writeToFile(D:\\' + str(self.screenIndex) + '.png,png)'
+                            shot = shot1 + shot2
+                            self.screenIndex += 1
+                        elif self.screenShotType == 1:
+                            hot1 = 'result = device.takeSnapshot()'
+                            shot2 = '\nresult.writeToFile(D:\\aaaaaaaaaa' + '.png,png)'
+                            shot = shot1 + shot2
+                        elif self.screenShotType == 2:
+                            pass
+                        scp = scp1 + scp2 + shot + '\n\n'
+                        self.mokeyCode.append(scp)
+                        self.monkeyCodeIndex += 1
+                        self.scriptArea.SetValue(self.getCodeFromList(self.mokeyCode))
+                        self.scriptArea.ShowPosition(self.scriptArea.GetLastPosition())
+                        print self.mokeyCode
+                    elif self.scriptType == 1:
+                        scp1 = cmd
+                        scp = scp1 + '\n'
+                        self.dosCode.append(scp)
+                        self.dosCodeIndex += 1
+                        self.scriptArea.SetValue(self.getCodeFromList(self.dosCode))
+                        self.scriptArea.ShowPosition(self.scriptArea.GetLastPosition())
             elif self.eventType == 2 or self.eventType == 3:
                 self.startPosition = event.GetPosition()
             elif self.eventType == 4:
@@ -539,11 +554,28 @@ device = MonkeyRunner.waitForConnection()'''
             pass
         elif self.isRecord == 1:
             pass
+        
+    def changeCodeTypeEVT(self,event):
+        if event.GetId() == self.monkeyBut.GetId():
+            self.scriptType = 0
+            self.scriptArea.SetValue(self.getCodeFromList(self.mokeyCode))
+            self.scriptArea.ShowPosition(self.scriptArea.GetLastPosition())
+        elif event.GetId() == self.dosBut.GetId():
+            self.scriptType = 1
+            self.scriptArea.SetValue(self.getCodeFromList(self.dosCode))
+            self.scriptArea.ShowPosition(self.scriptArea.GetLastPosition())
     #关闭窗口执行的事件
     def closeWinEVT(self,event):
         wx.Exit()
         cmd = '..\\getProId'
         os.system(cmd)
         self.connectThread.stop()
+        
+    def getCodeFromList(self,codeList):
+        length = len(codeList)
+        code = ''
+        for i in range(0,length):
+            code = code + codeList[i]
+        return code
         
 MyClass("").show();
