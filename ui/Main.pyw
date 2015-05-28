@@ -174,8 +174,8 @@ device = MonkeyRunner.waitForConnection()'''
         self.dosBut.Bind(wx.EVT_RADIOBUTTON,self.changeCodeTypeEVT)
         
         wx.StaticText(panel2Page1,wx.ID_ANY,u'添加截图：',pos = (190,175))
-        radioAutoShotBut = wx.RadioButton(panel2Page1,wx.ID_ANY,u'自动截图',(260,175),style = wx.RB_GROUP)
-        radioManShotBut = wx.RadioButton(panel2Page1,wx.ID_ANY,u'手动截图',(350,175))
+        self.radioAutoShotBut = wx.RadioButton(panel2Page1,wx.ID_ANY,u'自动截图',(260,175),style = wx.RB_GROUP)
+        self.radioManShotBut = wx.RadioButton(panel2Page1,wx.ID_ANY,u'手动截图',(350,175))
         wx.StaticText(panel2Page1,wx.ID_ANY,u'自动截取时长：',pos = (190,200))
         wx.StaticText(panel2Page1,wx.ID_ANY,u'手动截取时长：',pos = (190,220))
         self.autoShotTimeTxt = wx.TextCtrl(panel2Page1,wx.ID_ANY,'2',(280,200),(100,20))
@@ -183,6 +183,10 @@ device = MonkeyRunner.waitForConnection()'''
         wx.StaticText(panel2Page1,wx.ID_ANY,u'秒',pos = (390,200))
         wx.StaticText(panel2Page1,wx.ID_ANY,u'秒',pos = (390,220))
         manShotBut = wx.Button(panel2Page1,wx.ID_ANY,u'添加截图',(420,215),wx.Size(65,25))
+        self.screenshotPath = wx.TextCtrl(panel2Page1,wx.ID_ANY,'D:\\screenshot',(190,248),(220,20))
+        selectPathBut = wx.Button(panel2Page1,wx.ID_ANY,u'截图路径',(420,245),wx.Size(65,25))
+        self.radioAutoShotBut.Bind(wx.EVT_RADIOBUTTON,self.changeCodeTypeEVT)
+        self.radioManShotBut.Bind(wx.EVT_RADIOBUTTON,self.changeCodeTypeEVT)
         
         
         radioClickBut.Bind(wx.EVT_RADIOBUTTON,lambda evt, mark=0 : self.radioClickButEVT(radioClickBut, radioDragBut, radioPressBut, radioUpAndDown, radioLeftAndRight, self.longPressTxt))
@@ -404,22 +408,20 @@ device = MonkeyRunner.waitForConnection()'''
                         scp2 = '\nMonkeyRunner.sleep(' + self.delayTime.GetValue() + ')'
                         shot = ''
                         if self.screenShotType == 0:
-                            shot1 = 'result = device.takeSnapshot()'
-                            shot2 = '\nresult.writeToFile(D:\\' + str(self.screenIndex) + '.png,png)'
+                            shot1 = '\nresult = device.takeSnapshot()'
+                            shot2 = '\nresult.writeToFile("D:\\' + str(self.screenIndex) + '.png","png")'
                             shot = shot1 + shot2
                             self.screenIndex += 1
                         elif self.screenShotType == 1:
-                            hot1 = 'result = device.takeSnapshot()'
-                            shot2 = '\nresult.writeToFile(D:\\aaaaaaaaaa' + '.png,png)'
-                            shot = shot1 + shot2
+                            shot = ''
                         elif self.screenShotType == 2:
-                            pass
-                        scp = scp1 + scp2 + shot + '\n\n'
+                            shot = ''
+                        scp = scp1 + shot + scp2 + '\n\n'
                         self.mokeyCode.append(scp)
                         self.monkeyCodeIndex += 1
                         self.scriptArea.SetValue(self.getCodeFromList(self.mokeyCode))
                         self.scriptArea.ShowPosition(self.scriptArea.GetLastPosition())
-                        print self.mokeyCode
+#                         print self.mokeyCode
                     elif self.scriptType == 1:
                         scp1 = cmd
                         scp = scp1 + '\n'
@@ -459,7 +461,37 @@ device = MonkeyRunner.waitForConnection()'''
                     if self.isRecord == 0:
                         pass
                     elif self.isRecord == 1:
-                        pass
+                        if self.scriptType == 0:
+                            scp1 = 'device.drag((' + str(x1) + ',' + str(y1) + '),(' + str(x2) + ',' + str(y2) + '),1.0,10)'
+                            scp2 = '\nMonkeyRunner.sleep(' + self.delayTime.GetValue() + ')'
+                            shot = ''
+                            if self.screenShotType == 0:
+                                shot1 = '\nresult = device.takeSnapshot()'
+                                shot2 = '\nresult.writeToFile("D:\\' + str(self.screenIndex) + '.png","png")'
+                                shot = shot1 + shot2
+                                self.screenIndex += 1
+                            elif self.screenShotType == 1:
+                                shot = ''
+                            elif self.screenShotType == 2:
+                                shot = ''
+                            scp = scp1 + shot + scp2 + '\n\n'
+                            self.mokeyCode.append(scp)
+                            self.monkeyCodeIndex += 1
+                            self.scriptArea.SetValue(self.getCodeFromList(self.mokeyCode))
+                            self.scriptArea.ShowPosition(self.scriptArea.GetLastPosition())
+                        elif self.scriptType == 1: 
+                            scp1 = cmd
+                            scp = scp1 + '\n'
+                            self.dosCode.append(scp)
+                            self.dosCodeIndex += 1
+                            self.scriptArea.SetValue(self.getCodeFromList(self.dosCode))
+                            self.scriptArea.ShowPosition(self.scriptArea.GetLastPosition())
+                        if self.screenShotType == 0:
+                            pass
+                        elif self.screenShotType == 1:
+                            pass
+                        elif self.screenShotType == 2:
+                            pass
                 elif self.eventType == 3:
                     x1 = self.startPosition[0]/self.screenRate.getScreenRate()
                     x2 = self.endPosition[0]/self.screenRate.getScreenRate()
@@ -485,6 +517,27 @@ device = MonkeyRunner.waitForConnection()'''
 #             cmd = "adb shell input tap " + str(x) + " " + str(y)
 #             os.system(cmd)       
     def sendHomeEVT(self,event):
+        if self.isRecord == 0:
+            pass
+        elif self.isRecord == 1:
+            if self.scriptType == 0:
+#                 scp1 = 'device.touch(' + str(x) + ',' + str(y) + ',"DOWN_AND_UP")'
+#                 scp2 = '\nMonkeyRunner.sleep(' + self.delayTime.GetValue() + ')'
+#                 shot = ''
+                if self.screenShotType == 0:
+                    pass
+                elif self.screenShotType == 1:
+                    pass
+                elif self.screenShotType == 2:
+                    pass
+            elif self.scriptType == 1: 
+                if self.screenShotType == 0:
+                    pass
+                elif self.screenShotType == 1:
+                    pass
+                elif self.screenShotType == 2:
+                    pass
+                
         cmd = 'adb shell input keyevent 3'
         CREATE_NO_WINDOW = 0x08000000
         subprocess.call(cmd, creationflags=CREATE_NO_WINDOW)
@@ -556,14 +609,22 @@ device = MonkeyRunner.waitForConnection()'''
             pass
         
     def changeCodeTypeEVT(self,event):
-        if event.GetId() == self.monkeyBut.GetId():
-            self.scriptType = 0
+        if event.GetId() == self.radioAutoShotBut.GetId():
+            self.screenShotType = 0
+            print 0
             self.scriptArea.SetValue(self.getCodeFromList(self.mokeyCode))
             self.scriptArea.ShowPosition(self.scriptArea.GetLastPosition())
-        elif event.GetId() == self.dosBut.GetId():
-            self.scriptType = 1
+        elif event.GetId() == self.radioManShotBut.GetId():
+            print 1
+            self.screenShotType = 1
             self.scriptArea.SetValue(self.getCodeFromList(self.dosCode))
             self.scriptArea.ShowPosition(self.scriptArea.GetLastPosition())
+            
+    def changeScreenShotTypeEVT(self,event):
+        if event.GetId() == self.monkeyBut.GetId():
+            pass
+        elif event.GetId() == self.dosBut.GetId():
+            pass
     #关闭窗口执行的事件
     def closeWinEVT(self,event):
         wx.Exit()
@@ -572,7 +633,11 @@ device = MonkeyRunner.waitForConnection()'''
         self.connectThread.stop()
         
     def getCodeFromList(self,codeList):
-        length = len(codeList)
+#         length = len(codeList)
+        if self.scriptType == 0:
+            length = self.monkeyCodeIndex
+        elif self.scriptType == 1:
+            length = self.dosCodeIndex       
         code = ''
         for i in range(0,length):
             code = code + codeList[i]
