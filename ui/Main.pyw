@@ -79,10 +79,12 @@ device = MonkeyRunner.waitForConnection()'''
     def addMenu(self,menuBar,frame):
         menuFile = wx.Menu()
         menuOpenItem = wx.MenuItem(menuFile,wx.NewId(),text = u"打开脚本")
-        menuSaveAsItem = wx.MenuItem(menuFile,wx.ID_ANY,text = u"导出脚本")
+        menuSaveAsItem = wx.MenuItem(menuFile,wx.ID_ANY,text = u"导出Monkeyrunner脚本")
+        menuSaveAsItem1 = wx.MenuItem(menuFile,wx.ID_ANY,text = u"导出Monkeyrunner脚本")
         menuSaveItem = wx.MenuItem(menuFile,wx.ID_ANY,text = u"保存")
         menuFile.Append(menuOpenItem.GetId(),u"打开脚本")
-        menuFile.Append(menuSaveAsItem.GetId(),u"导出脚本")
+        menuFile.Append(menuSaveAsItem.GetId(),u"导出Monkeyrunner脚本")
+        menuFile.Append(menuSaveAsItem1.GetId(),u"导出Dos脚本")
         menuFile.Append(menuSaveItem.GetId(),u"保存")
         
         menuExitItem = wx.MenuItem(menuFile,wx.NewId(),text = u"退出")        
@@ -609,14 +611,12 @@ device = MonkeyRunner.waitForConnection()'''
             pass
         
     def changeCodeTypeEVT(self,event):
-        if event.GetId() == self.radioAutoShotBut.GetId():
-            self.screenShotType = 0
-            print 0
+        if event.GetId() == self.monkeyBut.GetId():
+            self.scriptType = 0
             self.scriptArea.SetValue(self.getCodeFromList(self.mokeyCode))
             self.scriptArea.ShowPosition(self.scriptArea.GetLastPosition())
-        elif event.GetId() == self.radioManShotBut.GetId():
-            print 1
-            self.screenShotType = 1
+        elif event.GetId() == self.dosBut.GetId():
+            self.scriptType = 1
             self.scriptArea.SetValue(self.getCodeFromList(self.dosCode))
             self.scriptArea.ShowPosition(self.scriptArea.GetLastPosition())
             
@@ -633,11 +633,10 @@ device = MonkeyRunner.waitForConnection()'''
         self.connectThread.stop()
         
     def getCodeFromList(self,codeList):
-#         length = len(codeList)
         if self.scriptType == 0:
             length = self.monkeyCodeIndex
         elif self.scriptType == 1:
-            length = self.dosCodeIndex       
+            length = self.dosCodeIndex     
         code = ''
         for i in range(0,length):
             code = code + codeList[i]
