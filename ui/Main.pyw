@@ -444,9 +444,39 @@ device = MonkeyRunner.waitForConnection()'''
                 CREATE_NO_WINDOW = 0x08000000
                 subprocess.call(cmd, creationflags=CREATE_NO_WINDOW)
                 if self.isRecord == 0:
-                    pass
+                        pass
                 elif self.isRecord == 1:
-                    pass
+                    if self.scriptType == 0:
+                        scp1 = 'device.drag(' + str(x1) + ',' + str(y1) + ')'
+                        scp2 = '\nMonkeyRunner.sleep(' + self.delayTime.GetValue() + ')'
+                        shot = ''
+                        if self.screenShotType == 0:
+                            shot1 = '\nresult = device.takeSnapshot()'
+                            shot2 = '\nresult.writeToFile("D:\\' + str(self.screenIndex) + '.png","png")'
+                            shot = shot1 + shot2
+                            self.screenIndex += 1
+                        elif self.screenShotType == 1:
+                            shot = ''
+                        elif self.screenShotType == 2:
+                            shot = ''
+                        scp = scp1 + shot + scp2 + '\n\n'
+                        self.mokeyCode.append(scp)
+                        self.monkeyCodeIndex += 1
+                        self.scriptArea.SetValue(self.getCodeFromList(self.mokeyCode))
+                        self.scriptArea.ShowPosition(self.scriptArea.GetLastPosition())
+                    elif self.scriptType == 1: 
+                        scp1 = cmd
+                        scp = scp1 + '\n'
+                        self.dosCode.append(scp)
+                        self.dosCodeIndex += 1
+                        self.scriptArea.SetValue(self.getCodeFromList(self.dosCode))
+                        self.scriptArea.ShowPosition(self.scriptArea.GetLastPosition())
+                    if self.screenShotType == 0:
+                        pass
+                    elif self.screenShotType == 1:
+                        pass
+                    elif self.screenShotType == 2:
+                        pass
         elif event.ButtonUp():
             if self.eventType == 2 or self.eventType == 3:
                 self.endPosition = event.GetPosition()
@@ -503,10 +533,49 @@ device = MonkeyRunner.waitForConnection()'''
 #                     os.system(cmd)
                     CREATE_NO_WINDOW = 0x08000000
                     subprocess.call(cmd, creationflags=CREATE_NO_WINDOW)
+                    x1 = self.startPosition[0]/self.screenRate.getScreenRate()
+                    x2 = self.endPosition[0]/self.screenRate.getScreenRate()
+                    y1 = self.startPosition[1]/self.screenRate.getScreenRate()
+                    y2 = self.endPosition[1]/self.screenRate.getScreenRate()
+                    self.coodinate.SetValue('(' + str(x1) + ',' + str(y1) + ')' + ' ' + '(' + str(x2) + ',' + str(y2) + ')')
+                    cmd = 'adb shell input swipe ' + str(x1) + ' ' + str(y1) + ' ' + str(x2) + ' ' + str(y1)
+#                     os.system(cmd)   
+                    CREATE_NO_WINDOW = 0x08000000
+                    subprocess.call(cmd, creationflags=CREATE_NO_WINDOW)
                     if self.isRecord == 0:
                         pass
                     elif self.isRecord == 1:
-                        pass
+                        if self.scriptType == 0:
+                            scp1 = 'device.drag((' + str(x1) + ',' + str(y1) + '),(' + str(x2) + ',' + str(y2) + '),1.0,10)'
+                            scp2 = '\nMonkeyRunner.sleep(' + self.delayTime.GetValue() + ')'
+                            shot = ''
+                            if self.screenShotType == 0:
+                                shot1 = '\nresult = device.takeSnapshot()'
+                                shot2 = '\nresult.writeToFile("D:\\' + str(self.screenIndex) + '.png","png")'
+                                shot = shot1 + shot2
+                                self.screenIndex += 1
+                            elif self.screenShotType == 1:
+                                shot = ''
+                            elif self.screenShotType == 2:
+                                shot = ''
+                            scp = scp1 + shot + scp2 + '\n\n'
+                            self.mokeyCode.append(scp)
+                            self.monkeyCodeIndex += 1
+                            self.scriptArea.SetValue(self.getCodeFromList(self.mokeyCode))
+                            self.scriptArea.ShowPosition(self.scriptArea.GetLastPosition())
+                        elif self.scriptType == 1: 
+                            scp1 = cmd
+                            scp = scp1 + '\n'
+                            self.dosCode.append(scp)
+                            self.dosCodeIndex += 1
+                            self.scriptArea.SetValue(self.getCodeFromList(self.dosCode))
+                            self.scriptArea.ShowPosition(self.scriptArea.GetLastPosition())
+                        if self.screenShotType == 0:
+                            pass
+                        elif self.screenShotType == 1:
+                            pass
+                        elif self.screenShotType == 2:
+                            pass
                 
             
             
