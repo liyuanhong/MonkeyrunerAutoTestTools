@@ -1,17 +1,22 @@
 #coding:utf-8
-import os,sys
+import os, sys
+import subprocess
+
+from wx import Size
+import wx
+
+from bean import ScreenRate
+from services import StartMonkeyService, ShowScreenService
+from ui import MyControlPanel
+from widget import  TabPage
+
+
 curPath = os.path.abspath(os.path.dirname(__file__))
 sys.path.append(curPath)
 sys.path.append(curPath + '\\..')
 sys.path.append(curPath + '\\..\\widget')
 sys.path.append(curPath + '\\..\\services')
 sys.path.append(curPath + '\\..\\util')
-import wx
-from widget import  TabPage
-from services import StartMonkeyService,ShowScreenService
-from wx import Size
-from bean import ScreenRate
-import subprocess
 
 class MyClass(object):
 
@@ -22,6 +27,8 @@ class MyClass(object):
         self.freshRate = 0.05
         #动态显示手机屏幕的线程
         self.connectThread = None
+        #截图保存路径
+        self.picPath = 'D:\screenshot'
         #定义屏幕操作的类型，0表示点击，1表示滑动，2表示左右滑动，3表示上下滑动，4表示长按
         self.eventType = 0
         #定义录制脚本的类型，0表示monkeyrunner脚本，1表示DOS脚本
@@ -35,6 +42,7 @@ class MyClass(object):
         #截图的方式0表示自动，1表示手动,2表示不截图
         self.screenShotType = 0
         self.screenIndex = 0
+        self.dosScreenIndex = 0
         #是否录制脚本0，表示 不录制，1表示录制
         self.isRecord = 0
         #将要录制的代码部分
@@ -57,22 +65,22 @@ device = MonkeyRunner.waitForConnection()'''
     #显示主窗体
     def show(self):
         win = wx.App()
-        frame = wx.Frame(None, -1, 'simple.py',size = self.winSize) 
-        nb = wx.Notebook(frame,wx.NewId())    
+        self.frame = wx.Frame(None, -1, 'simple.py',size = self.winSize) 
+        nb = wx.Notebook(self.frame,wx.NewId())    
         menuBar = wx.MenuBar()
         
         #添加tab标签页
         page1 = TabPage.TabPage(nb)
         page2 = TabPage.TabPage(nb)
         nb.AddPage(page1,u'录制脚本')
-        self.addPage1Layout(frame, page1);
+        self.addPage1Layout(self.frame, page1);
         
         nb.AddPage(page2,u'脚本回放')                   
-        self.addMenu(menuBar,frame);
+        self.addMenu(menuBar,self.frame);
         
-        frame.SetMenuBar(menuBar);
-        frame.Bind(wx.EVT_CLOSE,self.closeWinEVT)
-        frame.Show()
+        self.frame.SetMenuBar(menuBar);
+        self.frame.Bind(wx.EVT_CLOSE,self.closeWinEVT)
+        self.frame.Show()
         win.MainLoop()
       
     #添加菜单项  
@@ -82,16 +90,30 @@ device = MonkeyRunner.waitForConnection()'''
         menuSaveAsItem = wx.MenuItem(menuFile,wx.ID_ANY,text = u"导出Monkeyrunner脚本")
         menuSaveAsItem1 = wx.MenuItem(menuFile,wx.ID_ANY,text = u"导出Monkeyrunner脚本")
         menuSaveItem = wx.MenuItem(menuFile,wx.ID_ANY,text = u"保存")
+        menuExitItem = wx.MenuItem(menuFile,wx.NewId(),text = u"退出")
         menuFile.Append(menuOpenItem.GetId(),u"打开脚本")
         menuFile.Append(menuSaveAsItem.GetId(),u"导出Monkeyrunner脚本")
         menuFile.Append(menuSaveAsItem1.GetId(),u"导出Dos脚本")
-        menuFile.Append(menuSaveItem.GetId(),u"保存")
-        
-        menuExitItem = wx.MenuItem(menuFile,wx.NewId(),text = u"退出")        
+        menuFile.Append(menuSaveItem.GetId(),u"保存")            
         menuFile.Append(menuExitItem.GetId(),u"退出")
-        frame.Bind(wx.EVT_MENU, self.myExit)
+        frame.Bind(wx.EVT_MENU, self.myExit,menuExitItem)
         
+        menuControl = wx.Menu()
+        menuClearDos = wx.MenuItem(menuFile,wx.ID_ANY,text = u"清空Dos脚本")
+        menuClearMon = wx.MenuItem(menuFile,wx.ID_ANY,text = u"清空Monkeyrunner脚本")
+        menuRerecord = wx.MenuItem(menuFile,wx.ID_ANY,text = u"重新录制")
+        menuControl.Append(menuRerecord.GetId(), u"重新录制")       
+        menuControl.Append(menuClearMon.GetId(), u"清空Monkeyrunner脚本")   
+        menuControl.Append(menuClearDos.GetId(), u"清空Dos脚本")    
+        
+        menuAbout = wx.Menu()
+        menuVersoin = wx.MenuItem(menuFile,wx.ID_ANY,text = u"版本")
+        menuAbout.Append(menuRerecord.GetId(), u"版本")
+        
+          
         menuBar.Append(menuFile,u"文件")
+        menuBar.Append(menuControl,u"控制")
+        menuBar.Append(menuAbout,u"关于")
     
     #录制脚本页面页面布局
     def addPage1Layout(self,frame,page1):
@@ -121,10 +143,6 @@ device = MonkeyRunner.waitForConnection()'''
         buttonDisCon = wx.Button(panel2Page1,wx.ID_ANY,u'中断连接',(80,5),wx.Size(70,25))
         frame.Bind(wx.EVT_BUTTON,lambda evt, mark=0 : self.endConnect(buttonCon, self.connectThread),buttonDisCon)
         #给背景图片添加点击事件，而不是给panel添加事件
-#         backgroundImage.Bind(wx.EVT_LEFT_DOWN,self.getMousePos)
-#         backgroundImage.Bind(wx.EVT_LEFT_DOWN,self.sendClickEVT)
-#         backgroundImage.Bind(wx.EVT_LEFT_DOWN,self.dragDownEVT)
-#         backgroundImage.Bind(wx.EVT_LEFT_UP,self.dragUpEVT)
         backgroundImage.Bind(wx.EVT_MOUSE_EVENTS,self.screenEVT)
         
         
@@ -144,8 +162,8 @@ device = MonkeyRunner.waitForConnection()'''
         radioUpAndDown = wx.RadioButton(panel2Page1,wx.ID_ANY,u'上下',(320,50))
         
         wx.StaticText(panel2Page1,wx.ID_ANY,u'长按时长：',pos = (190,100))
-        self.longPressTxt = wx.TextCtrl(panel2Page1,wx.ID_ANY,'5000',size = (100,20),pos = (250,100))
-        wx.StaticText(panel2Page1,wx.ID_ANY,u'毫秒',pos = (355,100))
+        self.longPressTxt = wx.TextCtrl(panel2Page1,wx.ID_ANY,'5',size = (100,20),pos = (250,100))
+        wx.StaticText(panel2Page1,wx.ID_ANY,u'秒',pos = (355,100))
         
         self.recordButOff = wx.RadioButton(panel2Page1,wx.ID_ANY,u'停止录制',(5,125),style = wx.RB_GROUP)
         self.recordButOn = wx.RadioButton(panel2Page1,wx.ID_ANY,u'开始录制',(80,125))
@@ -180,15 +198,20 @@ device = MonkeyRunner.waitForConnection()'''
         self.radioManShotBut = wx.RadioButton(panel2Page1,wx.ID_ANY,u'手动截图',(350,175))
         wx.StaticText(panel2Page1,wx.ID_ANY,u'自动截取时长：',pos = (190,200))
         wx.StaticText(panel2Page1,wx.ID_ANY,u'手动截取时长：',pos = (190,220))
-        self.autoShotTimeTxt = wx.TextCtrl(panel2Page1,wx.ID_ANY,'2',(280,200),(100,20))
-        self.autoShotTimeTxt = wx.TextCtrl(panel2Page1,wx.ID_ANY,'2',(280,220),(100,20))
+        self.autoShotTimeTxt = wx.TextCtrl(panel2Page1,wx.ID_ANY,'',(280,200),(100,20))
+        self.manShotTimeTxt = wx.TextCtrl(panel2Page1,wx.ID_ANY,'',(280,220),(100,20))
+        self.autoShotTimeTxt.SetEditable(False)
+        self.manShotTimeTxt.SetEditable(False)
         wx.StaticText(panel2Page1,wx.ID_ANY,u'秒',pos = (390,200))
         wx.StaticText(panel2Page1,wx.ID_ANY,u'秒',pos = (390,220))
         manShotBut = wx.Button(panel2Page1,wx.ID_ANY,u'添加截图',(420,215),wx.Size(65,25))
-        self.screenshotPath = wx.TextCtrl(panel2Page1,wx.ID_ANY,'D:\\screenshot',(190,248),(220,20))
+        self.screenshotPath = wx.TextCtrl(panel2Page1,wx.ID_ANY,'D:\\screenshot',(110,248),(300,20))
+        self.screenshotPath.SetEditable(False)
         selectPathBut = wx.Button(panel2Page1,wx.ID_ANY,u'截图路径',(420,245),wx.Size(65,25))
-        self.radioAutoShotBut.Bind(wx.EVT_RADIOBUTTON,self.changeCodeTypeEVT)
-        self.radioManShotBut.Bind(wx.EVT_RADIOBUTTON,self.changeCodeTypeEVT)
+        self.radioAutoShotBut.Bind(wx.EVT_RADIOBUTTON,self.changeScreenShotTypeEVT)
+        self.radioManShotBut.Bind(wx.EVT_RADIOBUTTON,self.changeScreenShotTypeEVT)
+        manShotBut.Bind(wx.EVT_BUTTON,self.manScreenshotEVT)
+        selectPathBut.Bind(wx.EVT_BUTTON,self.selectScreenshotPathEVT)
         
         
         radioClickBut.Bind(wx.EVT_RADIOBUTTON,lambda evt, mark=0 : self.radioClickButEVT(radioClickBut, radioDragBut, radioPressBut, radioUpAndDown, radioLeftAndRight, self.longPressTxt))
@@ -200,18 +223,9 @@ device = MonkeyRunner.waitForConnection()'''
 
 
         panel2Page2 = TabPage.TabPage(nb)
-        buttonHome = wx.Button(panel2Page2,wx.ID_ANY,u'Home键',(5,5),wx.Size(70,25))
-        buttonBack = wx.Button(panel2Page2,wx.ID_ANY,u'返回键',(5,35),wx.Size(70,25))
-        buttonMenu = wx.Button(panel2Page2,wx.ID_ANY,u'菜单键',(5,65),wx.Size(70,25))
-        buttonVoiceUp = wx.Button(panel2Page2,wx.ID_ANY,u'音量+',(5,95),wx.Size(70,25))
-        buttonVoiceDown = wx.Button(panel2Page2,wx.ID_ANY,u'音量-',(5,125),wx.Size(70,25))
-        buttonLongPressHome = wx.Button(panel2Page2,wx.ID_ANY,u'长按Home键',(5,155),wx.Size(100,25))
-        buttonHome.Bind(wx.EVT_BUTTON,self.sendHomeEVT)
-        buttonBack.Bind(wx.EVT_BUTTON,self.sendBackEVT)
-        buttonMenu.Bind(wx.EVT_BUTTON,self.sendMenuEVT)
-        buttonVoiceUp.Bind(wx.EVT_BUTTON,self.sendVoiceUpEVT)
-        buttonVoiceDown.Bind(wx.EVT_BUTTON,self.sendVoiceDownEVT)
-        buttonLongPressHome.Bind(wx.EVT_BUTTON,self.sendLongPressHomeEVT)
+        #添加控制面板内容
+        MyControlPanel.MyControlPanel(panel2Page2,self.isRecord)
+            
         
         panel2Page3 = TabPage.TabPage(nb)
 #         panel2Page2.SetBackgroundColour("#ffffff")
@@ -274,18 +288,8 @@ device = MonkeyRunner.waitForConnection()'''
             
             file2 = open('D:\\screenshot\\infoCtrl.txt','w')
             file2.write('0')
-            file2.close()
+            file2.close()            
             
-            print self.width
-            print self.height
-            
-#             width = self.getPerfectWith(self.width, self.height)
-#             height = self.getPerfectHeight(self.width, self.height)
-#             print width
-#             print height
-#             self.panel1.SetSize(wx.Size(360,640))
-#             print self.panel1.GetBestSize()
-#             self.panel1.Refresh()
         else:
             dialog = wx.MessageDialog(frame,'请连接你的android手机！'.decode('UTF-8'),'消息'.decode('UTF-8'),wx.OK_DEFAULT)
             dialog.ShowModal()
@@ -326,24 +330,6 @@ device = MonkeyRunner.waitForConnection()'''
             return height*1440/width
         else:
             return height
-        
-    #获取鼠标点击的坐标
-#     def getMousePos(self,event):
-#         point = event.GetPosition()
-# #         print point
-#         x = point[0]/self.screenRate.getScreenRate()
-#         y = point[1]/self.screenRate.getScreenRate()
-#         cmd = "adb shell input tap " + str(x) + " " + str(y)
-#         CREATE_NO_WINDOW = 0x08000000
-#         subprocess.call(cmd, creationflags=CREATE_NO_WINDOW)
-# #         os.system(cmd)
-#         if self.isRecord == 0:
-#             pass
-#         elif self.isRecord == 1:
-#             scp1 = 'device.touch(' + x + ',' + y + ',"DOWN_AND_UP")'
-#             scp2 = '\nMonkeyRunner.sleep(' + self.delayTime.GetValue() + ')'
-#             scp = scp1 + scp2
-#             print self.exportMonkeyCode.append(scp)
             
     #设置屏幕操控的方式单机，长按，或者拖动
     def radioClickButEVT(self,radioClickBut,radioDragBut,radioPressBut,radioUpAndDown,radioLeftAndRight,longPressTxt):
@@ -373,23 +359,6 @@ device = MonkeyRunner.waitForConnection()'''
         elif event.GetId() == self.recordButOn.GetId():
             self.isRecord = 1
     
-#     #定义屏幕上推动的事件
-#     def dragDownEVT(self,event):
-#         if self.eventType == 2 or self.eventType == 3:
-#             self.startPosition == event.GetPosition()
-#     def dragUpEVT(self,event):
-#         if self.eventType == 2 or self.eventType == 3:
-#             self.endPosition = event.GetPosition()
-#             if self.eventType == 2:
-#                 x1 = self.startPosition[0]
-#                 x2 = self.endPosition[0]
-#                 cmd = 'adb shell input swipe ' + str(x1) + ' ' + str(x1) + ' ' + str(x2) + ' ' + str(x2)
-#                 os.system(cmd)   
-#             elif self.eventType == 3:
-#                 y1 = self.startPosition[1]
-#                 y2 = self.endPosition[1]
-#                 cmd = 'adb shell input swipe ' + str(y1) + ' ' + str(y1) + ' ' + str(y2) + ' ' + str(y2)
-#                 os.system(cmd)
                 
     def screenEVT(self,event):
         if event.ButtonDown():
@@ -411,14 +380,14 @@ device = MonkeyRunner.waitForConnection()'''
                         shot = ''
                         if self.screenShotType == 0:
                             shot1 = '\nresult = device.takeSnapshot()'
-                            shot2 = '\nresult.writeToFile("D:\\' + str(self.screenIndex) + '.png","png")'
+                            shot2 = '\nresult.writeToFile("' + self.picPath + '\\' + str(self.screenIndex) + '.png","png")'
                             shot = shot1 + shot2
                             self.screenIndex += 1
                         elif self.screenShotType == 1:
                             shot = ''
                         elif self.screenShotType == 2:
                             shot = ''
-                        scp = scp1 + shot + scp2 + '\n\n'
+                        scp = scp1 + scp2 + shot + '\n\n'
                         self.mokeyCode.append(scp)
                         self.monkeyCodeIndex += 1
                         self.scriptArea.SetValue(self.getCodeFromList(self.mokeyCode))
@@ -438,7 +407,7 @@ device = MonkeyRunner.waitForConnection()'''
                 x1 = self.startPosition[0]/self.screenRate.getScreenRate()
                 y1 = self.startPosition[1]/self.screenRate.getScreenRate()
                 self.coodinate.SetValue('(' + str(x1) + ',' + str(y1) + ')')
-                cmd = "adb shell input touchscreen swipe " + str(x1) + ' ' + str(y1) + ' ' + str(x1) + ' ' + str(y1) + ' ' + self.longPressTxt.GetValue()
+                cmd = "adb shell input touchscreen swipe " + str(x1) + ' ' + str(y1) + ' ' + str(x1) + ' ' + str(y1) + ' ' + str(int(self.longPressTxt.GetValue())*1000)
 #                 cmd = 'adb shell input touchscreen swipe ' + 
 #                 os.system(cmd)
                 CREATE_NO_WINDOW = 0x08000000
@@ -452,14 +421,14 @@ device = MonkeyRunner.waitForConnection()'''
                         shot = ''
                         if self.screenShotType == 0:
                             shot1 = '\nresult = device.takeSnapshot()'
-                            shot2 = '\nresult.writeToFile("D:\\' + str(self.screenIndex) + '.png","png")'
+                            shot2 = '\nresult.writeToFile("' + self.picPath + '\\'  + str(self.screenIndex) + '.png","png")'
                             shot = shot1 + shot2
                             self.screenIndex += 1
                         elif self.screenShotType == 1:
                             shot = ''
                         elif self.screenShotType == 2:
                             shot = ''
-                        scp = scp1 + shot + scp2 + '\n\n'
+                        scp = scp1 + scp2 + shot + '\n\n'
                         self.mokeyCode.append(scp)
                         self.monkeyCodeIndex += 1
                         self.scriptArea.SetValue(self.getCodeFromList(self.mokeyCode))
@@ -499,14 +468,14 @@ device = MonkeyRunner.waitForConnection()'''
                             shot = ''
                             if self.screenShotType == 0:
                                 shot1 = '\nresult = device.takeSnapshot()'
-                                shot2 = '\nresult.writeToFile("D:\\' + str(self.screenIndex) + '.png","png")'
+                                shot2 = '\nresult.writeToFile("' + self.picPath + '\\'  + str(self.screenIndex) + '.png","png")'
                                 shot = shot1 + shot2
                                 self.screenIndex += 1
                             elif self.screenShotType == 1:
                                 shot = ''
                             elif self.screenShotType == 2:
                                 shot = ''
-                            scp = scp1 + shot + scp2 + '\n\n'
+                            scp = scp1 + scp2 + shot + '\n\n'
                             self.mokeyCode.append(scp)
                             self.monkeyCodeIndex += 1
                             self.scriptArea.SetValue(self.getCodeFromList(self.mokeyCode))
@@ -551,14 +520,14 @@ device = MonkeyRunner.waitForConnection()'''
                             shot = ''
                             if self.screenShotType == 0:
                                 shot1 = '\nresult = device.takeSnapshot()'
-                                shot2 = '\nresult.writeToFile("D:\\' + str(self.screenIndex) + '.png","png")'
+                                shot2 = '\nresult.writeToFile("' + self.picPath + '\\'  + str(self.screenIndex) + '.png","png")'
                                 shot = shot1 + shot2
                                 self.screenIndex += 1
                             elif self.screenShotType == 1:
                                 shot = ''
                             elif self.screenShotType == 2:
                                 shot = ''
-                            scp = scp1 + shot + scp2 + '\n\n'
+                            scp = scp1 + scp2 + shot + '\n\n'
                             self.mokeyCode.append(scp)
                             self.monkeyCodeIndex += 1
                             self.scriptArea.SetValue(self.getCodeFromList(self.mokeyCode))
@@ -575,93 +544,8 @@ device = MonkeyRunner.waitForConnection()'''
                         elif self.screenShotType == 1:
                             pass
                         elif self.screenShotType == 2:
-                            pass
-                
-            
-            
-#     #向手机发送点击事件
-#     def sendClickEVT(self,event):
-#         if self.eventType == 0:
-#             point = event.GetPosition()
-#             x = point[0]/self.screenRate.getScreenRate()
-#             y = point[1]/self.screenRate.getScreenRate()
-#             cmd = "adb shell input tap " + str(x) + " " + str(y)
-#             os.system(cmd)       
-    def sendHomeEVT(self,event):
-        if self.isRecord == 0:
-            pass
-        elif self.isRecord == 1:
-            if self.scriptType == 0:
-#                 scp1 = 'device.touch(' + str(x) + ',' + str(y) + ',"DOWN_AND_UP")'
-#                 scp2 = '\nMonkeyRunner.sleep(' + self.delayTime.GetValue() + ')'
-#                 shot = ''
-                if self.screenShotType == 0:
-                    pass
-                elif self.screenShotType == 1:
-                    pass
-                elif self.screenShotType == 2:
-                    pass
-            elif self.scriptType == 1: 
-                if self.screenShotType == 0:
-                    pass
-                elif self.screenShotType == 1:
-                    pass
-                elif self.screenShotType == 2:
-                    pass
-                
-        cmd = 'adb shell input keyevent 3'
-        CREATE_NO_WINDOW = 0x08000000
-        subprocess.call(cmd, creationflags=CREATE_NO_WINDOW)
-#         os.system(cmd)
-        if self.isRecord == 0:
-            pass
-        elif self.isRecord == 1:
-            pass
-    def sendBackEVT(self,event):
-        cmd = 'adb shell input keyevent 4'
-#         os.system(cmd)
-        CREATE_NO_WINDOW = 0x08000000
-        subprocess.call(cmd, creationflags=CREATE_NO_WINDOW)
-        if self.isRecord == 0:
-            pass
-        elif self.isRecord == 1:
-            pass
-    def sendMenuEVT(self,event):
-        cmd = 'adb shell input keyevent 82'
-#         os.system(cmd)
-        CREATE_NO_WINDOW = 0x08000000
-        subprocess.call(cmd, creationflags=CREATE_NO_WINDOW)
-        if self.isRecord == 0:
-            pass
-        elif self.isRecord == 1:
-            pass
-    def sendVoiceUpEVT(self,event):
-        cmd = 'adb shell input keyevent 24'
-        CREATE_NO_WINDOW = 0x08000000
-        subprocess.call(cmd, creationflags=CREATE_NO_WINDOW)
-#         os.system(cmd)
-        if self.isRecord == 0:
-            pass
-        elif self.isRecord == 1:
-            pass
-    def sendVoiceDownEVT(self,event):
-        cmd = 'adb shell input keyevent 25'
-#         os.system(cmd)
-        CREATE_NO_WINDOW = 0x08000000
-        subprocess.call(cmd, creationflags=CREATE_NO_WINDOW)
-        if self.isRecord == 0:
-            pass
-        elif self.isRecord == 1:
-            pass
-    def sendLongPressHomeEVT(self,event):
-        cmd = 'adb shell input keyevent --longpress 3'
-#         os.system(cmd)
-        CREATE_NO_WINDOW = 0x08000000
-        subprocess.call(cmd, creationflags=CREATE_NO_WINDOW)
-        if self.isRecord == 0:
-            pass
-        elif self.isRecord == 1:
-            pass
+                            pass   
+
     def inputTextEVT(self,event):
         cmd = "adb shell input text " + self.inputText.GetValue()
         CREATE_NO_WINDOW = 0x08000000
@@ -690,10 +574,10 @@ device = MonkeyRunner.waitForConnection()'''
             self.scriptArea.ShowPosition(self.scriptArea.GetLastPosition())
             
     def changeScreenShotTypeEVT(self,event):
-        if event.GetId() == self.monkeyBut.GetId():
-            pass
-        elif event.GetId() == self.dosBut.GetId():
-            pass
+        if event.GetId() == self.radioAutoShotBut.GetId():
+            self.screenShotType = 0
+        elif event.GetId() == self.radioManShotBut.GetId():
+            self.screenShotType = 1
     #关闭窗口执行的事件
     def closeWinEVT(self,event):
         wx.Exit()
@@ -710,5 +594,38 @@ device = MonkeyRunner.waitForConnection()'''
         for i in range(0,length):
             code = code + codeList[i]
         return code
+    def manScreenshotEVT(self,event): 
+        if self.scriptType == 0:
+            if self.monkeyCodeIndex != 0:
+                code = self.mokeyCode[self.monkeyCodeIndex - 1]
+                code = code[0:len(code) - 2]
+                shot1 = '\nresult = device.takeSnapshot()'
+                shot2 = '\nresult.writeToFile("' + self.picPath + '\\'  + str(self.screenIndex) + '.png","png")'
+                shot = shot1 + shot2 
+                code = code + shot + '\n\n'
+                self.mokeyCode[self.monkeyCodeIndex - 1] = code
+                self.scriptArea.SetValue(self.getCodeFromList(self.mokeyCode))
+                self.scriptArea.ShowPosition(self.scriptArea.GetLastPosition())
+                self.screenIndex += 1
+        elif self.scriptType == 1:
+            if self.dosCodeIndex != 0:
+                code = self.dosCode[self.dosCodeIndex - 1]
+                code = code[0:len(code) - 1]
+                shot1 = "\nadb shell /system/bin/screencap -p /sdcard/screenshot.png\n"                
+                shot2 = 'adb pull /sdcard/screenshot.png ' + self.picPath + '\\'  + str(self.dosScreenIndex) + '.png' + '\n'
+                shot = shot1 + shot2 
+                code = code + shot
+                self.dosCode[self.dosCodeIndex - 1] = code
+                self.scriptArea.SetValue(self.getCodeFromList(self.dosCode))
+                self.scriptArea.ShowPosition(self.scriptArea.GetLastPosition())
+                self.dosScreenIndex += 1
+                
+    def selectScreenshotPathEVT(self,event):
+        dlg = wx.DirDialog(self.frame, "Choose a directory:",style=wx.DD_DEFAULT_STYLE)
+        if dlg.ShowModal() == wx.ID_OK:
+            path = dlg.GetPath()
+            self.screenshotPath.SetValue(path)
+            self.picPath = path
+        dlg.Destroy()
         
 MyClass("").show();
