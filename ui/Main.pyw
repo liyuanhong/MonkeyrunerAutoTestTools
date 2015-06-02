@@ -511,7 +511,8 @@ device = MonkeyRunner.waitForConnection()\n\n'''
                 self.getMonScreenshot(scp1, scp2, shot)
             elif self.scriptType == 1: 
                 scp1 = cmd
-                scp2 = '\nchoice /t ' + self.delayTime.GetValue() + ' /d y /n >nul\n'
+#                 scp2 = '\nchoice /t ' + self.delayTime.GetValue() + ' /d y /n >nul\n'
+                scp2 = '\n'
                 scp = scp1 + scp2
                 shot = ''
                 self.getDosScreenshot(scp, shot)
