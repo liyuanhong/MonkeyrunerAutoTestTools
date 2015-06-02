@@ -110,12 +110,16 @@ device = MonkeyRunner.waitForConnection()\n\n'''
         menuClearDos = wx.MenuItem(menuControl,wx.ID_ANY,text = u"清空Dos脚本")
         menuClearMon = wx.MenuItem(menuControl,wx.ID_ANY,text = u"清空Monkeyrunner脚本")
         menuRerecord = wx.MenuItem(menuControl,wx.ID_ANY,text = u"重新录制")
+        menuCancleRerecord = wx.MenuItem(menuControl,wx.ID_ANY,text = u"撤销录制")
         menuControl.Append(menuRerecord.GetId(), u"重新录制")       
         menuControl.Append(menuClearMon.GetId(), u"清空Monkeyrunner脚本")   
-        menuControl.Append(menuClearDos.GetId(), u"清空Dos脚本")   
+        menuControl.Append(menuClearDos.GetId(), u"清空Dos脚本")  
+        menuControl.Append(menuCancleRerecord.GetId(), u"撤销录制")
+         
         frame.Bind(wx.EVT_MENU,self.reRecordEVT,menuRerecord) 
         frame.Bind(wx.EVT_MENU,self.clearMonCodeEVT,menuClearMon) 
         frame.Bind(wx.EVT_MENU,self.clearDosCodeEVT,menuClearDos) 
+        frame.Bind(wx.EVT_MENU,self.cancleRerecordEVT,menuCancleRerecord)
         
         
         menuAbout = wx.Menu()
@@ -642,23 +646,24 @@ device = MonkeyRunner.waitForConnection()\n\n'''
         self.scriptArea.ShowPosition(self.scriptArea.GetLastPosition())
     
     def clearMonCodeEVT(self,event):
-        self.mokeyCode = []
+        del self.mokeyCode[:]
         self.monkeyCodeIndex = 0
         if self.scriptType == 0:
             self.scriptArea.SetValue('')
         elif self.scriptType == 1:
-            pass       
+            pass   
+        print len(self.mokeyCode)    
     def clearDosCodeEVT(self,event):
-        self.dosCode = []
+        del self.dosCode[:]
         self.dosCodeIndex = 0
         if self.scriptType == 0:
             pass
         elif self.scriptType == 1:
             self.scriptArea.SetValue('')       
     def reRecordEVT(self,event):
-        self.mokeyCode = []
+        del self.mokeyCode[:]
         self.monkeyCodeIndex = 0
-        self.dosCode = []
+        del self.dosCode[:]
         self.dosCodeIndex = 0
         if self.scriptType == 0:
             self.scriptArea.SetValue('')
@@ -668,6 +673,19 @@ device = MonkeyRunner.waitForConnection()\n\n'''
     def showVersionEVT(self,event):
         dialog = wx.MessageDialog(self.frame,u"Androd自动化脚本录制工具\n版本：V1.0.0\n.......\n炫一下测试部",'',wx.YES_DEFAULT)
         dialog.ShowModal()
+        
+    def cancleRerecordEVT(self,event):
+        if self.isRecord == 0:
+            pass
+        elif self.isRecord == 1:
+            if self.scriptType == 0:
+                self.monkeyCodeIndex -= 1
+                self.scriptArea.SetValue(self.getCodeFromList(self.mokeyCode))
+                self.scriptArea.ShowPosition(self.scriptArea.GetLastPosition())
+            elif self.scriptType == 1:
+                self.dosCodeIndex -= 1
+                self.scriptArea.SetValue(self.getCodeFromList(self.dosCode))
+            self.scriptArea.ShowPosition(self.scriptArea.GetLastPosition())
         
     def getIsRecord(self):
         return self.isRecord

@@ -148,8 +148,7 @@ class MyControlPanel():
                 scp2 = scp2 = '\nchoice /t ' + self.delayTime.GetValue() + ' /d y /n >nul\n'
                 scp = scp1 + scp2
                 shot = ''
-                self.recordDosScript(scp, shot)
-        
+                self.recordDosScript(scp, shot)        
         
     def recordMonkeyScript(self,scp,shot):
         if self.parent.getScreentShotType() == 0:
