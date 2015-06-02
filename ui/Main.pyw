@@ -648,6 +648,7 @@ device = MonkeyRunner.waitForConnection()\n\n'''
     def clearMonCodeEVT(self,event):
         del self.mokeyCode[:]
         self.monkeyCodeIndex = 0
+        self.screenIndex = 0
         if self.scriptType == 0:
             self.scriptArea.SetValue('')
         elif self.scriptType == 1:
@@ -656,6 +657,7 @@ device = MonkeyRunner.waitForConnection()\n\n'''
     def clearDosCodeEVT(self,event):
         del self.dosCode[:]
         self.dosCodeIndex = 0
+        self.dosScreenIndex = 0
         if self.scriptType == 0:
             pass
         elif self.scriptType == 1:
@@ -665,6 +667,8 @@ device = MonkeyRunner.waitForConnection()\n\n'''
         self.monkeyCodeIndex = 0
         del self.dosCode[:]
         self.dosCodeIndex = 0
+        self.screenIndex = 0
+        self.dosScreenIndex = 0
         if self.scriptType == 0:
             self.scriptArea.SetValue('')
         elif self.scriptType == 1:
