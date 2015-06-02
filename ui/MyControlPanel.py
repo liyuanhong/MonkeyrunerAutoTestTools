@@ -5,9 +5,13 @@ from widget import TabPage
 
 
 class MyControlPanel(): 
-    def __init__(self,panel2Page2,isRecord):
+    def __init__(self,panel2Page2,parent,delayTime,scriptArea,mokeyCode,dosCode):
         self.panel2Page2 = panel2Page2
-        self.isRecord = isRecord
+        self.parent = parent
+        self.delayTime = delayTime
+        self.scriptArea = scriptArea
+        self.mokeyCode = mokeyCode
+        self.dosCode = dosCode
         self.init()
         
     def init(self):
@@ -26,77 +30,149 @@ class MyControlPanel():
         
         
     def sendHomeEVT(self,event):
-        if self.isRecord == 0:
-            pass
-        elif self.isRecord == 1:
-            if self.scriptType == 0:
-#                 scp1 = 'device.touch(' + str(x) + ',' + str(y) + ',"DOWN_AND_UP")'
-#                 scp2 = '\nMonkeyRunner.sleep(' + self.delayTime.GetValue() + ')'
-#                 shot = ''
-                if self.screenShotType == 0:
-                    pass
-                elif self.screenShotType == 1:
-                    pass
-                elif self.screenShotType == 2:
-                    pass
-            elif self.scriptType == 1: 
-                if self.screenShotType == 0:
-                    pass
-                elif self.screenShotType == 1:
-                    pass
-                elif self.screenShotType == 2:
-                    pass
-                
         cmd = 'adb shell input keyevent 3'
         CREATE_NO_WINDOW = 0x08000000
         subprocess.call(cmd, creationflags=CREATE_NO_WINDOW)
-#         os.system(cmd)
-        if self.isRecord == 0:
+        if self.parent.getIsRecord() == 0:
             pass
-        elif self.isRecord == 1:
-            pass
+        elif self.parent.getIsRecord() == 1:
+            if self.parent.getScriptType() == 0:
+                scp1 = 'device.press("KEYCODE_HOME","DOWN_AND_UP")'
+                scp2 = '\nMonkeyRunner.sleep(' + self.delayTime.GetValue() + ')'
+                scp = scp1+scp2
+                shot = ''
+                self.recordMonkeyScript(scp, shot)
+            elif self.parent.getScriptType() == 1: 
+                scp1 = cmd
+                scp2 = scp2 = '\nchoice /t ' + self.delayTime.GetValue() + ' /d y /n >nul\n'
+                scp = scp1 + scp2
+                shot = ''
+                self.recordDosScript(scp, shot)
+
     def sendBackEVT(self,event):
         cmd = 'adb shell input keyevent 4'
 #         os.system(cmd)
         CREATE_NO_WINDOW = 0x08000000
         subprocess.call(cmd, creationflags=CREATE_NO_WINDOW)
-        if self.isRecord == 0:
+        if self.parent.getIsRecord() == 0:
             pass
-        elif self.isRecord == 1:
-            pass
+        elif self.parent.getIsRecord() == 1:
+            if self.parent.getScriptType() == 0:
+                scp1 = 'device.press("KEYCODE_BACK","DOWN_AND_UP")'
+                scp2 = '\nMonkeyRunner.sleep(' + self.delayTime.GetValue() + ')'
+                scp = scp1+scp2
+                shot = ''
+                self.recordMonkeyScript(scp, shot)
+            elif self.parent.getScriptType() == 1: 
+                scp1 = cmd
+                scp2 = scp2 = '\nchoice /t ' + self.delayTime.GetValue() + ' /d y /n >nul\n'
+                scp = scp1 + scp2
+                shot = ''
+                self.recordDosScript(scp, shot)
     def sendMenuEVT(self,event):
         cmd = 'adb shell input keyevent 82'
 #         os.system(cmd)
         CREATE_NO_WINDOW = 0x08000000
         subprocess.call(cmd, creationflags=CREATE_NO_WINDOW)
-        if self.isRecord == 0:
+        if self.parent.getIsRecord() == 0:
             pass
-        elif self.isRecord == 1:
-            pass
+        elif self.parent.getIsRecord() == 1:
+            if self.parent.getScriptType() == 0:
+                scp1 = 'device.press("KEYCODE_MENU","DOWN_AND_UP")'
+                scp2 = '\nMonkeyRunner.sleep(' + self.delayTime.GetValue() + ')'
+                scp = scp1+scp2
+                shot = ''
+                self.recordMonkeyScript(scp, shot)
+            elif self.parent.getScriptType() == 1: 
+                scp1 = cmd
+                scp2 = scp2 = '\nchoice /t ' + self.delayTime.GetValue() + ' /d y /n >nul\n'
+                scp = scp1 + scp2
+                shot = ''
+                self.recordDosScript(scp, shot)
     def sendVoiceUpEVT(self,event):
         cmd = 'adb shell input keyevent 24'
         CREATE_NO_WINDOW = 0x08000000
         subprocess.call(cmd, creationflags=CREATE_NO_WINDOW)
 #         os.system(cmd)
-        if self.isRecord == 0:
+        if self.parent.getIsRecord() == 0:
             pass
-        elif self.isRecord == 1:
-            pass
+        elif self.parent.getIsRecord() == 1:
+            if self.parent.getScriptType() == 0:
+                scp1 = 'device.press("KEYCODE_VOLUME_UP","DOWN_AND_UP")'
+                scp2 = '\nMonkeyRunner.sleep(' + self.delayTime.GetValue() + ')'
+                scp = scp1+scp2
+                shot = ''
+                self.recordMonkeyScript(scp, shot)
+            elif self.parent.getScriptType() == 1: 
+                scp1 = cmd
+                scp2 = scp2 = '\nchoice /t ' + self.delayTime.GetValue() + ' /d y /n >nul\n'
+                scp = scp1 + scp2
+                shot = ''
+                self.recordDosScript(scp, shot)
     def sendVoiceDownEVT(self,event):
         cmd = 'adb shell input keyevent 25'
 #         os.system(cmd)
         CREATE_NO_WINDOW = 0x08000000
         subprocess.call(cmd, creationflags=CREATE_NO_WINDOW)
-        if self.isRecord == 0:
+        if self.parent.getIsRecord() == 0:
             pass
-        elif self.isRecord == 1:
-            pass
+        elif self.parent.getIsRecord() == 1:
+            if self.parent.getScriptType() == 0:
+                scp1 = 'device.press("KEYCODE_VOLUME_DOWN","DOWN_AND_UP")'
+                scp2 = '\nMonkeyRunner.sleep(' + self.delayTime.GetValue() + ')'
+                scp = scp1+scp2
+                shot = ''
+                self.recordMonkeyScript(scp, shot)
+            elif self.parent.getScriptType() == 1: 
+                scp1 = cmd
+                scp2 = scp2 = '\nchoice /t ' + self.delayTime.GetValue() + ' /d y /n >nul\n'
+                scp = scp1 + scp2
+                shot = ''
+                self.recordDosScript(scp, shot)
     def sendLongPressHomeEVT(self,event):
         cmd = 'adb shell input keyevent --longpress 3'
 #         os.system(cmd)
         CREATE_NO_WINDOW = 0x08000000
         subprocess.call(cmd, creationflags=CREATE_NO_WINDOW)
-        if self.isRecord == 0:
+        if self.parent.getIsRecord() == 0:
             pass
-        elif self.isRecord == 1:
-            pass
+        elif self.parent.getIsRecord() == 1:
+            if self.parent.getScriptType() == 0:
+                scp1 = 'device.press("KEYCODE_HOME","DOWN")\nMonkeyRunner.sleep("2")\ndevice.press("KEYCODE_HOME","UP")'
+                scp2 = '\nMonkeyRunner.sleep(' + self.delayTime.GetValue() + ')'
+                scp = scp1+scp2
+                shot = ''
+                self.recordMonkeyScript(scp, shot)
+            elif self.parent.getScriptType() == 1: 
+                scp1 = cmd
+                scp2 = scp2 = '\nchoice /t ' + self.delayTime.GetValue() + ' /d y /n >nul\n'
+                scp = scp1 + scp2
+                shot = ''
+                self.recordDosScript(scp, shot)
+        
+        
+    def recordMonkeyScript(self,scp,shot):
+        if self.parent.getScreentShotType() == 0:
+            shot = ''
+        elif self.parent.getScreentShotType() == 1:
+            shot = ''
+        elif self.parent.getScreentShotType() == 2:
+            shot = ''
+        scp = scp + shot + '\n\n'
+        self.mokeyCode.append(scp)
+        self.parent.addMonkeyCodeIndex()
+        self.scriptArea.SetValue(self.parent.getCodeFromList(self.mokeyCode))
+        self.scriptArea.ShowPosition(self.scriptArea.GetLastPosition())
+        
+    def recordDosScript(self,scp,shot):
+        if self.parent.getScreentShotType() == 0:
+            shot = ''
+        elif self.parent.getScreentShotType() == 1:
+            shot = ''
+        elif self.parent.getScreentShotType() == 2:
+            shot = ''
+        scp = scp + shot + '\n'
+        self.dosCode.append(scp)
+        self.parent.addDosCodeIndex()
+        self.scriptArea.SetValue(self.parent.getCodeFromList(self.dosCode))
+        self.scriptArea.ShowPosition(self.scriptArea.GetLastPosition())

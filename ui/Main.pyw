@@ -42,7 +42,7 @@ class MyClass(object):
         #定义拖动的结束点
         self.endPosition = (0,0)
         #截图的方式0表示自动，1表示手动,2表示不截图
-        self.screenShotType = 0
+        self.screenShotType = 1
         self.screenIndex = 0
         self.dosScreenIndex = 0
         #是否录制脚本0，表示 不录制，1表示录制
@@ -103,11 +103,13 @@ device = MonkeyRunner.waitForConnection()\n\n'''
         frame.Bind(wx.EVT_MENU, self.myExit,menuExitItem)
         frame.Bind(wx.EVT_MENU,self.exportMonkeyScriptEVT,menuSaveAsItem)
         frame.Bind(wx.EVT_MENU,self.exportDosScriptEVT,menuSaveAsItem1)
+        menuOpenItem.Enable(False)
+        menuSaveItem.Enable(False)
         
         menuControl = wx.Menu()
-        menuClearDos = wx.MenuItem(menuFile,wx.ID_ANY,text = u"清空Dos脚本")
-        menuClearMon = wx.MenuItem(menuFile,wx.ID_ANY,text = u"清空Monkeyrunner脚本")
-        menuRerecord = wx.MenuItem(menuFile,wx.ID_ANY,text = u"重新录制")
+        menuClearDos = wx.MenuItem(menuControl,wx.ID_ANY,text = u"清空Dos脚本")
+        menuClearMon = wx.MenuItem(menuControl,wx.ID_ANY,text = u"清空Monkeyrunner脚本")
+        menuRerecord = wx.MenuItem(menuControl,wx.ID_ANY,text = u"重新录制")
         menuControl.Append(menuRerecord.GetId(), u"重新录制")       
         menuControl.Append(menuClearMon.GetId(), u"清空Monkeyrunner脚本")   
         menuControl.Append(menuClearDos.GetId(), u"清空Dos脚本")   
@@ -115,9 +117,11 @@ device = MonkeyRunner.waitForConnection()\n\n'''
         frame.Bind(wx.EVT_MENU,self.clearMonCodeEVT,menuClearMon) 
         frame.Bind(wx.EVT_MENU,self.clearDosCodeEVT,menuClearDos) 
         
+        
         menuAbout = wx.Menu()
-        menuVersoin = wx.MenuItem(menuFile,wx.ID_ANY,text = u"版本")
-        menuAbout.Append(menuRerecord.GetId(), u"版本")
+        menuVersoin = wx.MenuItem(menuAbout,wx.ID_ANY,text = u"版本")
+        menuAbout.Append(menuVersoin.GetId(), u"版本")
+        frame.Bind(wx.EVT_MENU,self.showVersionEVT,menuVersoin)
         
           
         menuBar.Append(menuFile,u"文件")
@@ -203,8 +207,8 @@ device = MonkeyRunner.waitForConnection()\n\n'''
         self.dosBut.Bind(wx.EVT_RADIOBUTTON,self.changeCodeTypeEVT)
         
         wx.StaticText(panel2Page1,wx.ID_ANY,u'添加截图：',pos = (190,175))
-        self.radioAutoShotBut = wx.RadioButton(panel2Page1,wx.ID_ANY,u'自动截图',(260,175),style = wx.RB_GROUP)
-        self.radioManShotBut = wx.RadioButton(panel2Page1,wx.ID_ANY,u'手动截图',(350,175))
+        self.radioManShotBut = wx.RadioButton(panel2Page1,wx.ID_ANY,u'手动截图',(350,175),style = wx.RB_GROUP)
+        self.radioAutoShotBut = wx.RadioButton(panel2Page1,wx.ID_ANY,u'自动截图',(260,175))      
         wx.StaticText(panel2Page1,wx.ID_ANY,u'自动截取时长：',pos = (190,200))
         wx.StaticText(panel2Page1,wx.ID_ANY,u'手动截取时长：',pos = (190,220))
         self.autoShotTimeTxt = wx.TextCtrl(panel2Page1,wx.ID_ANY,'',(280,200),(100,20))
@@ -232,8 +236,7 @@ device = MonkeyRunner.waitForConnection()\n\n'''
 
 
         panel2Page2 = TabPage.TabPage(nb)
-        #添加控制面板内容
-        MyControlPanel.MyControlPanel(panel2Page2,self.isRecord)
+        
             
         
         panel2Page3 = TabPage.TabPage(nb)
@@ -256,7 +259,8 @@ device = MonkeyRunner.waitForConnection()\n\n'''
         page1BoxSizer2.Add(panel2)
         page1BoxSizer2.Add(panel3)
         
-        
+        #添加控制面板内容
+        MyControlPanel.MyControlPanel(panel2Page2,self,self.delayTime,self.scriptArea,self.mokeyCode,self.dosCode)
     
     def myExit(self,event):
         wx.Exit()
@@ -473,11 +477,22 @@ device = MonkeyRunner.waitForConnection()\n\n'''
     def inputTextEVT(self,event):
         cmd = "adb shell input text " + self.inputText.GetValue()
         CREATE_NO_WINDOW = 0x08000000
-        subprocess.call(cmd, creationflags=CREATE_NO_WINDOW)
+        subprocess.call(cmd, creationflags=CREATE_NO_WINDOW)        
         if self.isRecord == 0:
             pass
         elif self.isRecord == 1:
-            pass
+            if self.scriptType == 0:
+                scp1 = 'device.type("' + self.inputText.GetValue() + '")'
+                scp2 = '\nMonkeyRunner.sleep(' + self.delayTime.GetValue() + ')'
+                shot = ''
+                self.getMonScreenshot(scp1, scp2, shot)
+            elif self.scriptType == 1: 
+                scp1 = cmd
+                scp2 = '\nchoice /t ' + self.delayTime.GetValue() + ' /d y /n >nul\n'
+                scp = scp1 + scp2
+                shot = ''
+                self.getDosScreenshot(scp, shot)
+            
     def delTextEVT(self,event):
         cmd = "adb shell input keyevent 67"
         CREATE_NO_WINDOW = 0x08000000
@@ -485,7 +500,17 @@ device = MonkeyRunner.waitForConnection()\n\n'''
         if self.isRecord == 0:
             pass
         elif self.isRecord == 1:
-            pass
+            if self.scriptType == 0:
+                scp1 = 'device.press("KEYCODE_DEL","DOWN_AND_UP")'
+                scp2 = '\nMonkeyRunner.sleep(0.5)'
+                shot = ''
+                self.getMonScreenshot(scp1, scp2, shot)
+            elif self.scriptType == 1: 
+                scp1 = cmd
+                scp2 = '\nchoice /t ' + self.delayTime.GetValue() + ' /d y /n >nul\n'
+                scp = scp1 + scp2
+                shot = ''
+                self.getDosScreenshot(scp, shot)
         
     def changeCodeTypeEVT(self,event):
         if event.GetId() == self.monkeyBut.GetId():
@@ -518,6 +543,16 @@ device = MonkeyRunner.waitForConnection()\n\n'''
         for i in range(0,length):
             code = code + codeList[i]
         return code
+    def getExportCodeFromList(self,codeList,type):
+        if type == 0:
+            length = self.monkeyCodeIndex
+        elif type == 1:
+            length = self.dosCodeIndex     
+        code = ''
+        for i in range(0,length):
+            code = code + codeList[i]
+        return code
+    
     def manScreenshotEVT(self,event): 
         if self.scriptType == 0:
             if self.monkeyCodeIndex != 0:
@@ -553,7 +588,7 @@ device = MonkeyRunner.waitForConnection()\n\n'''
         dlg.Destroy()
         
     def exportMonkeyScriptEVT(self,event):
-        self.exportMonkeyCode = self.txt + self.getCodeFromList(self.mokeyCode)
+        self.exportMonkeyCode = self.txt + self.getExportCodeFromList(self.mokeyCode,0)
         dlg = wx.FileDialog(self.frame,"",os.getcwd(), "", "XYZ files (*.py)|*.py", style=wx.SAVE)
         dlg.SetFilterIndex(2)
         if dlg.ShowModal() == wx.ID_OK:
@@ -564,7 +599,7 @@ device = MonkeyRunner.waitForConnection()\n\n'''
         dlg.Destroy()
         
     def exportDosScriptEVT(self,event):
-        self.exportDosCode = self.dosTxt + self.getCodeFromList(self.dosCode) + '\npause'
+        self.exportDosCode = self.dosTxt + self.getExportCodeFromList(self.dosCode,1) + '\npause'
         dlg = wx.FileDialog(self.frame,"",os.getcwd(), "", "XYZ files (*.bat)|*.bat", style=wx.SAVE)
         dlg.SetFilterIndex(2)
         if dlg.ShowModal() == wx.ID_OK:
@@ -607,7 +642,6 @@ device = MonkeyRunner.waitForConnection()\n\n'''
         self.scriptArea.ShowPosition(self.scriptArea.GetLastPosition())
     
     def clearMonCodeEVT(self,event):
-        print 'aaaaaaaaaaa'
         self.mokeyCode = []
         self.monkeyCodeIndex = 0
         if self.scriptType == 0:
@@ -615,7 +649,6 @@ device = MonkeyRunner.waitForConnection()\n\n'''
         elif self.scriptType == 1:
             pass       
     def clearDosCodeEVT(self,event):
-        print 'bbbbbbbbb'
         self.dosCode = []
         self.dosCodeIndex = 0
         if self.scriptType == 0:
@@ -623,7 +656,6 @@ device = MonkeyRunner.waitForConnection()\n\n'''
         elif self.scriptType == 1:
             self.scriptArea.SetValue('')       
     def reRecordEVT(self,event):
-        print 'ccccccc'
         self.mokeyCode = []
         self.monkeyCodeIndex = 0
         self.dosCode = []
@@ -632,5 +664,24 @@ device = MonkeyRunner.waitForConnection()\n\n'''
             self.scriptArea.SetValue('')
         elif self.scriptType == 1:
             self.scriptArea.SetValue('')
+            
+    def showVersionEVT(self,event):
+        dialog = wx.MessageDialog(self.frame,u"Androd自动化脚本录制工具\n版本：V1.0.0\n.......\n炫一下测试部",'',wx.YES_DEFAULT)
+        dialog.ShowModal()
+        
+    def getIsRecord(self):
+        return self.isRecord
+    def getMonkeyCodeInxex(self):
+        return self.monkeyCodeIndex
+    def getDosCodeIndex(self):
+        return self.dosCodeIndex
+    def getScriptType(self):
+        return self.scriptType
+    def getScreentShotType(self):
+        return self.screenShotType
+    def addMonkeyCodeIndex(self):
+        self.monkeyCodeIndex += 1
+    def addDosCodeIndex(self):
+        self.dosCodeIndex += 1
         
 MyClass("").show();
