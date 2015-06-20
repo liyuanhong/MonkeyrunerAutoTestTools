@@ -55,6 +55,9 @@ class MyClass(object):
         #当前代码的录制索引
         self.monkeyCodeIndex = 0
         self.dosCodeIndex = 0
+        #定义adb执行的路径
+        self.adbPath = os.getcwd() + '\\..\\tools\\platform-tools\\'
+        print self.adbPath
         #定义脚本的前部分代码
         self.txt = '''import sys
 import time
@@ -273,11 +276,10 @@ device = MonkeyRunner.waitForConnection()\n\n'''
          #连接手机并开始屏幕的同步显示
     def startConnect(self,frame,buttonCon,img,width,height,bitmap,backgroundImage,panel1,panel2Txt1):
         #通过judge判断设置是否连接，如果连接着就会返回一个3个元素的数组，没有则返回2个元素的数组
-        judge = os.popen('adb devices').readlines()
+        judge = os.popen(self.adbPath + 'adb devices').readlines()
         if len(judge) == 3:
             buttonCon.Enable(False)
             path = 'D:\\screenshot\\'
-            filename = 'monkeyPic'
             if os.path.exists(path):
                 print 'path is exit'
             else:
@@ -384,7 +386,7 @@ device = MonkeyRunner.waitForConnection()\n\n'''
                 x = int(point[0]/self.screenRate.getScreenRate())
                 y = int(point[1]/self.screenRate.getScreenRate())
                 self.coodinate.SetValue('(' + str(x) + ',' + str(y) + ')')
-                cmd = "adb shell input tap " + str(x) + " " + str(y)
+                cmd = self.adbPath + "adb shell input tap " + str(x) + " " + str(y)
 #                 os.system(cmd)
                 CREATE_NO_WINDOW = 0x08000000
                 subprocess.call(cmd, creationflags=CREATE_NO_WINDOW)
@@ -409,7 +411,7 @@ device = MonkeyRunner.waitForConnection()\n\n'''
                 x1 = int(self.startPosition[0]/self.screenRate.getScreenRate())
                 y1 = int(self.startPosition[1]/self.screenRate.getScreenRate())
                 self.coodinate.SetValue('(' + str(x1) + ',' + str(y1) + ')')
-                cmd = "adb shell input touchscreen swipe " + str(x1) + ' ' + str(y1) + ' ' + str(x1) + ' ' + str(y1) + ' ' + str(int(self.longPressTxt.GetValue())*1000)
+                cmd = self.adbPath + "adb shell input touchscreen swipe " + str(x1) + ' ' + str(y1) + ' ' + str(x1) + ' ' + str(y1) + ' ' + str(int(self.longPressTxt.GetValue())*1000)
                 CREATE_NO_WINDOW = 0x08000000
                 subprocess.call(cmd, creationflags=CREATE_NO_WINDOW)
                 if self.isRecord == 0:
@@ -436,7 +438,7 @@ device = MonkeyRunner.waitForConnection()\n\n'''
                     y1 = int(self.startPosition[1]/self.screenRate.getScreenRate())
                     y2 = int(self.endPosition[1]/self.screenRate.getScreenRate())
                     self.coodinate.SetValue('(' + str(x1) + ',' + str(y1) + ')' + ' ' + '(' + str(x2) + ',' + str(y2) + ')')
-                    cmd = 'adb shell input swipe ' + str(x1) + ' ' + str(y1) + ' ' + str(x2) + ' ' + str(y1)
+                    cmd = self.adbPath + 'adb shell input swipe ' + str(x1) + ' ' + str(y1) + ' ' + str(x2) + ' ' + str(y1)
 #                     os.system(cmd)   
                     CREATE_NO_WINDOW = 0x08000000
                     subprocess.call(cmd, creationflags=CREATE_NO_WINDOW)
@@ -459,7 +461,7 @@ device = MonkeyRunner.waitForConnection()\n\n'''
                     x2 = int(self.endPosition[0]/self.screenRate.getScreenRate())
                     y1 = int(self.startPosition[1]/self.screenRate.getScreenRate())
                     y2 = int(self.endPosition[1]/self.screenRate.getScreenRate())
-                    cmd = 'adb shell input swipe ' + str(x1) + ' ' + str(y1) + ' ' + str(x1) + ' ' + str(y2)
+                    cmd = self.adbPath + 'adb shell input swipe ' + str(x1) + ' ' + str(y1) + ' ' + str(x1) + ' ' + str(y2)
 #                     os.system(cmd)
                     CREATE_NO_WINDOW = 0x08000000
                     subprocess.call(cmd, creationflags=CREATE_NO_WINDOW)
@@ -479,7 +481,7 @@ device = MonkeyRunner.waitForConnection()\n\n'''
                             self.getDosScreenshot(scp, shot)
 
     def inputTextEVT(self,event):
-        cmd = "adb shell input text " + self.inputText.GetValue()
+        cmd = self.adbPath + "adb shell input text " + self.inputText.GetValue()
         CREATE_NO_WINDOW = 0x08000000
         subprocess.call(cmd, creationflags=CREATE_NO_WINDOW)        
         if self.isRecord == 0:
@@ -498,7 +500,7 @@ device = MonkeyRunner.waitForConnection()\n\n'''
                 self.getDosScreenshot(scp, shot)
             
     def delTextEVT(self,event):
-        cmd = "adb shell input keyevent 67"
+        cmd = self.adbPath + "adb shell input keyevent 67"
         CREATE_NO_WINDOW = 0x08000000
         subprocess.call(cmd, creationflags=CREATE_NO_WINDOW)
         if self.isRecord == 0:

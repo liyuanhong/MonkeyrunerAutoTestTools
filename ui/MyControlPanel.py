@@ -30,7 +30,7 @@ class MyControlPanel():
         
         
     def sendHomeEVT(self,event):
-        cmd = 'adb shell input keyevent 3'
+        cmd = self.parent.adbPath + 'adb shell input keyevent 3'
         CREATE_NO_WINDOW = 0x08000000
         subprocess.call(cmd, creationflags=CREATE_NO_WINDOW)
         if self.parent.getIsRecord() == 0:
@@ -50,7 +50,7 @@ class MyControlPanel():
                 self.recordDosScript(scp, shot)
 
     def sendBackEVT(self,event):
-        cmd = 'adb shell input keyevent 4'
+        cmd = self.parent.adbPath + 'adb shell input keyevent 4'
 #         os.system(cmd)
         CREATE_NO_WINDOW = 0x08000000
         subprocess.call(cmd, creationflags=CREATE_NO_WINDOW)
@@ -70,7 +70,7 @@ class MyControlPanel():
                 shot = ''
                 self.recordDosScript(scp, shot)
     def sendMenuEVT(self,event):
-        cmd = 'adb shell input keyevent 82'
+        cmd = self.parent.adbPath + 'adb shell input keyevent 82'
 #         os.system(cmd)
         CREATE_NO_WINDOW = 0x08000000
         subprocess.call(cmd, creationflags=CREATE_NO_WINDOW)
@@ -90,7 +90,7 @@ class MyControlPanel():
                 shot = ''
                 self.recordDosScript(scp, shot)
     def sendVoiceUpEVT(self,event):
-        cmd = 'adb shell input keyevent 24'
+        cmd = self.parent.adbPath + 'adb shell input keyevent 24'
         CREATE_NO_WINDOW = 0x08000000
         subprocess.call(cmd, creationflags=CREATE_NO_WINDOW)
 #         os.system(cmd)
@@ -110,7 +110,7 @@ class MyControlPanel():
                 shot = ''
                 self.recordDosScript(scp, shot)
     def sendVoiceDownEVT(self,event):
-        cmd = 'adb shell input keyevent 25'
+        cmd = self.parent.adbPath + 'adb shell input keyevent 25'
 #         os.system(cmd)
         CREATE_NO_WINDOW = 0x08000000
         subprocess.call(cmd, creationflags=CREATE_NO_WINDOW)
@@ -130,7 +130,7 @@ class MyControlPanel():
                 shot = ''
                 self.recordDosScript(scp, shot)
     def sendLongPressHomeEVT(self,event):
-        cmd = 'adb shell input keyevent --longpress 3'
+        cmd = self.parent.adbPath + 'adb shell input keyevent --longpress 3'
 #         os.system(cmd)
         CREATE_NO_WINDOW = 0x08000000
         subprocess.call(cmd, creationflags=CREATE_NO_WINDOW)
