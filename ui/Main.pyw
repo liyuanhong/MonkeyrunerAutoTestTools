@@ -240,20 +240,14 @@ device = MonkeyRunner.waitForConnection()\n\n'''
         radioUpAndDown.Bind(wx.EVT_RADIOBUTTON,lambda evt, mark=0 : self.radioUpAndDownEVT(radioClickBut, radioDragBut, radioPressBut, radioUpAndDown, radioLeftAndRight, self.longPressTxt))
         radioLeftAndRight.Bind(wx.EVT_RADIOBUTTON,lambda evt, mark=0 : self.radioLeftAndRightEVT(radioClickBut, radioDragBut, radioPressBut, radioUpAndDown, radioLeftAndRight, self.longPressTxt))
         
-
-
         panel2Page2 = TabPage.TabPage(nb)
-        
-            
-        
+             
         panel2Page3 = TabPage.TabPage(nb)
 #         panel2Page2.SetBackgroundColour("#ffffff")
         nb.AddPage(panel2Page1,u'连接')
         nb.AddPage(panel2Page2,u'控制')
         nb.AddPage(panel2Page3,u'输入')
-        
-        
-        
+                
         panel3 = wx.Panel(page1,wx.ID_ANY,size = wx.Size(540,360))
 #         panel3.SetBackgroundColour("#aa0000")       
 
@@ -270,8 +264,7 @@ device = MonkeyRunner.waitForConnection()\n\n'''
         MyControlPanel.MyControlPanel(panel2Page2,self,self.delayTime,self.scriptArea,self.mokeyCode,self.dosCode)
     
     def myExit(self,event):
-        wx.Exit()
-        
+        wx.Exit()        
         
          #连接手机并开始屏幕的同步显示
     def startConnect(self,frame,buttonCon,img,width,height,bitmap,backgroundImage,panel1,panel2Txt1):
