@@ -1,6 +1,19 @@
 #coding:utf-8
+
+from mhlib import PATH
 import os, sys
 import subprocess
+import thread
+
+from wx import Size
+import wx
+
+from bean import ScreenRate
+from services import StartMonkeyService, ShowScreenService
+from ui import MyControlPanel
+from ui.Page2Layout import Page2Layout
+from widget import  TabPage
+
 
 curPath = os.path.abspath(os.path.dirname(__file__))
 sys.path.append(curPath)
@@ -9,13 +22,9 @@ sys.path.append(curPath + '\\..\\widget')
 sys.path.append(curPath + '\\..\\services')
 sys.path.append(curPath + '\\..\\util')
 
-from wx import Size
-import wx
 
-from bean import ScreenRate
-from services import StartMonkeyService, ShowScreenService
-from ui import MyControlPanel
-from widget import  TabPage
+
+
 
 
 
@@ -57,7 +66,8 @@ class MyClass(object):
         self.dosCodeIndex = 0
         #定义adb执行的路径
         self.adbPath = os.getcwd() + '\\..\\tools\\platform-tools\\'
-        print self.adbPath
+        #定义了monkeyrunner的执行路径
+        self.monParh = os.getcwd() + '\\..\\tools\\tools\\'
         #定义脚本的前部分代码
         self.txt = '''import sys
 import time
@@ -78,11 +88,11 @@ device = MonkeyRunner.waitForConnection()\n\n'''
         
         #添加tab标签页
         page1 = TabPage.TabPage(nb)
-        page2 = TabPage.TabPage(nb)
+        self.page2 = TabPage.TabPage(nb)
         nb.AddPage(page1,u'录制脚本')
         self.addPage1Layout(self.frame, page1);
         
-        nb.AddPage(page2,u'脚本回放')                   
+        nb.AddPage(self.page2,u'monkey与日志')                   
         self.addMenu(menuBar,self.frame);
         
         self.frame.SetMenuBar(menuBar);
@@ -114,15 +124,18 @@ device = MonkeyRunner.waitForConnection()\n\n'''
         menuClearMon = wx.MenuItem(menuControl,wx.ID_ANY,text = u"清空Monkeyrunner脚本")
         menuRerecord = wx.MenuItem(menuControl,wx.ID_ANY,text = u"重新录制")
         menuCancleRerecord = wx.MenuItem(menuControl,wx.ID_ANY,text = u"撤销录制")
+        playMonScript = wx.MenuItem(menuControl,wx.ID_ANY,text = u"回放Monkeyrunner脚本")
         menuControl.Append(menuRerecord.GetId(), u"重新录制")       
         menuControl.Append(menuClearMon.GetId(), u"清空Monkeyrunner脚本")   
         menuControl.Append(menuClearDos.GetId(), u"清空Dos脚本")  
         menuControl.Append(menuCancleRerecord.GetId(), u"撤销录制")
+        menuControl.Append(playMonScript.GetId(), u"回放Monkeyrunner脚本")
          
         frame.Bind(wx.EVT_MENU,self.reRecordEVT,menuRerecord) 
         frame.Bind(wx.EVT_MENU,self.clearMonCodeEVT,menuClearMon) 
         frame.Bind(wx.EVT_MENU,self.clearDosCodeEVT,menuClearDos) 
         frame.Bind(wx.EVT_MENU,self.cancleRerecordEVT,menuCancleRerecord)
+        frame.Bind(wx.EVT_MENU,self.playMonScriptEVT,playMonScript)
         
         
         menuAbout = wx.Menu()
@@ -263,8 +276,14 @@ device = MonkeyRunner.waitForConnection()\n\n'''
         #添加控制面板内容
         MyControlPanel.MyControlPanel(panel2Page2,self,self.delayTime,self.scriptArea,self.mokeyCode,self.dosCode)
     
+        #添加第二个Tab页面
+        Page2Layout(self,self.page2)
+        
     def myExit(self,event):
-        wx.Exit()        
+        wx.Exit()     
+        cmd = '..\\getProId'
+        os.system(cmd)
+        self.connectThread.stop()   
         
          #连接手机并开始屏幕的同步显示
     def startConnect(self,frame,buttonCon,img,width,height,bitmap,backgroundImage,panel1,panel2Txt1):
@@ -686,6 +705,31 @@ device = MonkeyRunner.waitForConnection()\n\n'''
                 self.dosCodeIndex -= 1
                 self.scriptArea.SetValue(self.getCodeFromList(self.dosCode))
             self.scriptArea.ShowPosition(self.scriptArea.GetLastPosition())
+            
+    def playMonScriptEVT(self,event):
+        wildcard = "Python source (*.py)|*.py|"     \
+           "Compiled Python (*.pyc)|*.pyc|" \
+           "SPAM files (*.spam)|*.spam|"    \
+           "Egg file (*.egg)|*.egg|"        \
+           "All files (*.*)|*.*"
+        dlg = wx.FileDialog(
+            self.frame, message="Choose a file",
+            defaultDir=os.getcwd(), 
+            defaultFile="",
+            wildcard=wildcard,
+            style=wx.OPEN | wx.MULTIPLE | wx.CHANGE_DIR)
+        if dlg.ShowModal() == wx.ID_OK:
+            thePath = dlg.GetPath()
+            cmd = self.monParh + 'monkeyrunner  ' + thePath
+            try:           
+                #通过Python线程池的原理，启动一个线程去执行
+                thread.start_new_thread(os.system, (cmd,))     
+#                 os.system(cmd)
+            except Exception,ex:  
+                print Exception,":",ex 
+                    
+        dlg.Destroy()
+        
         
     def getIsRecord(self):
         return self.isRecord
