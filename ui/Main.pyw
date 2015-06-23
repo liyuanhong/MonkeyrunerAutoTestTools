@@ -5,6 +5,15 @@ import os, sys
 import subprocess
 import thread
 
+curPath = os.path.abspath(os.path.dirname(__file__))
+sys.path.append(curPath)
+sys.path.append(curPath + '\\..')
+sys.path.append(curPath + '\\..\\widget')
+sys.path.append(curPath + '\\..\\services')
+sys.path.append(curPath + '\\..\\util')
+
+
+
 from wx import Size
 import wx
 
@@ -15,12 +24,6 @@ from ui.Page2Layout import Page2Layout
 from widget import  TabPage
 
 
-curPath = os.path.abspath(os.path.dirname(__file__))
-sys.path.append(curPath)
-sys.path.append(curPath + '\\..')
-sys.path.append(curPath + '\\..\\widget')
-sys.path.append(curPath + '\\..\\services')
-sys.path.append(curPath + '\\..\\util')
 
 
 
