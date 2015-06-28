@@ -5,6 +5,16 @@ import os, sys
 import subprocess
 import thread
 
+from wx import Size
+import wx
+
+from bean import ScreenRate
+from services import StartMonkeyService, ShowScreenService
+from ui import MyControlPanel
+from ui.Page2Layout import Page2Layout
+from widget import  TabPage
+
+
 curPath = os.path.abspath(os.path.dirname(__file__))
 sys.path.append(curPath)
 sys.path.append(curPath + '\\..')
@@ -14,14 +24,7 @@ sys.path.append(curPath + '\\..\\util')
 
 
 
-from wx import Size
-import wx
 
-from bean import ScreenRate
-from services import StartMonkeyService, ShowScreenService
-from ui import MyControlPanel
-from ui.Page2Layout import Page2Layout
-from widget import  TabPage
 
 
 
@@ -284,9 +287,10 @@ device = MonkeyRunner.waitForConnection()\n\n'''
         
     def myExit(self,event):
         wx.Exit()     
-        cmd = '..\\getProId'
-        os.system(cmd)
-        self.connectThread.stop()   
+        if self.connectThread != None:
+            cmd = '..\\getProId'
+            os.system(cmd)
+            self.connectThread.stop()   
         
          #连接手机并开始屏幕的同步显示
     def startConnect(self,frame,buttonCon,img,width,height,bitmap,backgroundImage,panel1,panel2Txt1):
@@ -552,9 +556,10 @@ device = MonkeyRunner.waitForConnection()\n\n'''
     #关闭窗口执行的事件
     def closeWinEVT(self,event):
         wx.Exit()
-        cmd = '..\\getProId'
-        os.system(cmd)
-        self.connectThread.stop()
+        if self.connectThread != None:
+            cmd = '..\\getProId'
+            os.system(cmd)
+            self.connectThread.stop()
         
     def getCodeFromList(self,codeList):
         if self.scriptType == 0:

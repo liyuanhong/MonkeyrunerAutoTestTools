@@ -1,5 +1,7 @@
 eclipse.preferences.version=1
+encoding//services/JudgeCrashService.py=utf-8
 encoding//services/MonkeyGetBitmapService.py=utf-8
+encoding//services/ShowLogService.py=utf-8
 encoding//services/ShowScreenService.py=utf-8
 encoding//services/StartCMD.py=utf-8
 encoding//services/StartMonkeyService.py=utf-8
