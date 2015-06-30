@@ -22,20 +22,27 @@ class ShowLogService(threading.Thread):
         while self.ctr == 1:
             time.sleep(self.sepaTime)
             if self.parent.filterTxt.GetValue() == '':
-                self.file = open(self.logPath + 'log.txt','r')
-                self.log = self.file.read()
-                self.logArea.SetValue(self.log.decode('utf-8'))
-                self.logArea.ShowPosition(self.logArea.GetLastPosition())
+                if self.parent.isAutoScroll == 1:
+                    self.file = open(self.logPath + 'log.txt','r')
+                    self.log = self.file.read()
+                    self.logArea.SetValue(self.log.decode('utf-8'))
+                    self.logArea.ShowPosition(self.logArea.GetLastPosition())
+                elif self.parent.isAutoScroll == 0:
+                    pass
                 self.file.close()
             else:
-                self.file = open(self.logPath + 'log.txt')
-                logs = ''
-                for log in self.file: 
-                    log = log.decode('utf-8')
-                    if log.find(self.parent.filterTxt.GetValue()) != -1:
-                        logs += log
-                self.logArea.SetValue(logs)
-                self.logArea.ShowPosition(self.logArea.GetLastPosition())
+                if self.parent.isAutoScroll == 1:
+                    self.file = open(self.logPath + 'log.txt')
+                    logs = ''
+                    for log in self.file: 
+                        log = log.decode('utf-8')
+                        if log.find(self.parent.filterTxt.GetValue()) != -1:
+                            logs += log
+                    self.logArea.SetValue(logs)
+                    self.logArea.ShowPosition(self.logArea.GetLastPosition())
+                elif self.parent.isAutoScroll == 0:
+                    pass
+                self.file.close()
         
     def stop(self):
         self.ctr = 0

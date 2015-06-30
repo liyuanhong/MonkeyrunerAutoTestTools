@@ -49,6 +49,7 @@ class Page2Layout(object):
         label = wx.StaticText(filterPanel,wx.ID_ANY,u'过滤：',pos = (0,65))
         label.SetFont(wx.Font(10, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_BOLD))
         self.filterTxt = wx.TextCtrl(filterPanel,wx.ID_ANY,'',(40,60),(400,25))      
+        self.exportLogBut = wx.Button(filterPanel,wx.ID_ANY,u'导出日志',(445,60),wx.Size(70,25))
         panel1 = wx.Panel(self.page2,wx.ID_ANY,size = wx.Size(520,540))             
         self.logArea = wx.TextCtrl(panel1,wx.ID_ANY,size = wx.Size(520,540),pos = (0,0),style = wx.BORDER_SIMPLE | wx.TE_MULTILINE | wx.VSCROLL)        
         
@@ -58,8 +59,10 @@ class Page2Layout(object):
         label.SetFont(wx.Font(10, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_BOLD))
         self.levelFilter = wx.ComboBox(panel2,wx.ID_ANY,'',(80,0),(100,25))
         self.levelFilter.SetItems(['','Info','Debug','Verbose','Error','Warn','Fatal','Silent'])
-        radioScrollBut = wx.RadioButton(panel2,wx.ID_ANY,u'滚动',(200,5),style = wx.RB_GROUP)
-        radioNoScrollBut = wx.RadioButton(panel2,wx.ID_ANY,u'不滚动',(260,5)) 
+        self.radioScrollBut = wx.RadioButton(panel2,wx.ID_ANY,u'滚动',(200,5),style = wx.RB_GROUP)
+        self.radioNoScrollBut = wx.RadioButton(panel2,wx.ID_ANY,u'不滚动',(260,5)) 
+        self.radioScrollBut.Bind(wx.EVT_RADIOBUTTON, self.autoScrollCtrEVT)
+        self.radioNoScrollBut.Bind(wx.EVT_RADIOBUTTON, self.autoScrollCtrEVT)
         label = wx.StaticText(panel2,wx.ID_ANY,u'抓取前是否清空缓存：',pos = (5,33))
         label.SetFont(wx.Font(10, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_BOLD))
         radioClearBut = wx.RadioButton(panel2,wx.ID_ANY,u'否',(200,33),style = wx.RB_GROUP)
@@ -134,6 +137,12 @@ class Page2Layout(object):
             for i in range(0,len(packageList)):
                 packageList[i] = packageList[i].replace('\n','').replace("package:",'')
             self.packageFilter.SetItems(packageList)
+            
+    def autoScrollCtrEVT(self,event):
+        if event.GetId() == self.radioScrollBut.GetId():
+            self.isAutoScroll = 1
+        elif event.GetId() == self.radioNoScrollBut.GetId():
+            self.isAutoScroll = 0
             
             
             
