@@ -5,16 +5,6 @@ import os, sys
 import subprocess
 import thread
 
-from wx import Size
-import wx
-
-from bean import ScreenRate
-from services import StartMonkeyService, ShowScreenService
-from ui import MyControlPanel
-from ui.Page2Layout import Page2Layout
-from widget import  TabPage
-
-
 curPath = os.path.abspath(os.path.dirname(__file__))
 sys.path.append(curPath)
 sys.path.append(curPath + '\\..')
@@ -23,12 +13,14 @@ sys.path.append(curPath + '\\..\\services')
 sys.path.append(curPath + '\\..\\util')
 
 
+from wx import Size
+import wx
 
-
-
-
-
-
+from bean import ScreenRate
+from services import StartMonkeyService, ShowScreenService
+from ui import MyControlPanel
+from ui.Page2Layout import Page2Layout
+from widget import  TabPage
 
 
 

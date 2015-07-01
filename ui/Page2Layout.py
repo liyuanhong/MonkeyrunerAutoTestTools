@@ -50,6 +50,7 @@ class Page2Layout(object):
         label.SetFont(wx.Font(10, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_BOLD))
         self.filterTxt = wx.TextCtrl(filterPanel,wx.ID_ANY,'',(40,60),(400,25))      
         self.exportLogBut = wx.Button(filterPanel,wx.ID_ANY,u'导出日志',(445,60),wx.Size(70,25))
+        self.exportLogBut.Bind(wx.EVT_BUTTON,self.exportLogEVT)
         panel1 = wx.Panel(self.page2,wx.ID_ANY,size = wx.Size(520,540))             
         self.logArea = wx.TextCtrl(panel1,wx.ID_ANY,size = wx.Size(520,540),pos = (0,0),style = wx.BORDER_SIMPLE | wx.TE_MULTILINE | wx.VSCROLL)        
         
@@ -143,6 +144,16 @@ class Page2Layout(object):
             self.isAutoScroll = 1
         elif event.GetId() == self.radioNoScrollBut.GetId():
             self.isAutoScroll = 0
+            
+    def exportLogEVT(self,event):
+        dlg = wx.FileDialog(self.parent.frame,"",os.getcwd(), "", "XYZ files (*.log)|*.log", style=wx.SAVE)
+        dlg.SetFilterIndex(2)
+        if dlg.ShowModal() == wx.ID_OK:
+            path = dlg.GetPath()
+            file = open(path,'w')
+            file.write(self.logArea.GetValue())
+            file.close()
+        dlg.Destroy()
             
             
             
