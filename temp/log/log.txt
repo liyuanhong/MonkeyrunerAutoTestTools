@@ -1,117 +1,1103 @@
---------- beginning of /dev/log/main
-D/WifiStateMachine(  542): ConnectedState{ what=131155 when=-3ms arg1=105 }
-D/WifiStateMachine(  542): L2ConnectedState{ what=131155 when=-3ms arg1=105 }
-D/wpa_supplicant(15442): wpa_s 0x41a7aed0 cmd SIGNAL_POLL
-D/wpa_supplicant(15442): nl80211: survey data missing!
-D/WifiStateMachine(  542): ConnectedState{ what=131155 when=-3ms arg1=105 }
-D/WifiStateMachine(  542): L2ConnectedState{ what=131155 when=-4ms arg1=105 }
-D/wpa_supplicant(15442): wpa_s 0x41a7aed0 cmd SIGNAL_POLL
-D/wpa_supplicant(15442): nl80211: survey data missing!
-W/Email   ( 6025): Exception detected: Read timed out
-W/Email   ( 6025): Last network activities:
-W/Email   ( 6025): 1 CAPABILITY
-W/Email   ( 6025): * OK [CAPABILITY IMAP4 IMAP4rev1 IDLE XAPPLEPUSHSERVICE ID UIDPLUS AUTH=LOGIN NAMESPACE] * CAPABILITY IMAP4 IMAP4rev1 IDLE XAPPLEPUSHSERVICE AUTH=LOGIN NAMESPACE CHILDREN ID UIDPLUS
-W/Email   ( 6025): 2 ID ("name" "com.android.email" "os" "android" "os-version" "4.1.1; JRO03L" "vendor" "Xiaomi" "x-android-device-model" "MI 2S" "x-android-mobile-net-operator" "China Unicom" "AGUID" "IjLKrN1ofdkdnwSI7jZdQi2cTJo=")
-W/Email   ( 6025): 1 OK * ID NIL
-W/Email   ( 6025): [IMAP command redacted]
-W/Email   ( 6025): 4 NAMESPACE
-W/Email   ( 6025): 2 OK 3 OK * NAMESPACE (("" "/")) NIL NIL
-W/Email   ( 6025): 5 SELECT "Inbox"
-W/Email   ( 6025): 4 OK * 24 EXISTS
-W/Email   ( 6025): * 0 RECENT
-W/Email   ( 6025): * OK [UIDVALIDITY 1372238181] * OK [UIDNEXT 1080] * FLAGS (\Answered \Flagged \Deleted \Draft \Seen)
-W/Email   ( 6025): 6 UID SEARCH 24:* NOT DELETED
-W/Email   ( 6025): * OK [PERMANENTFLAGS (\* \Answered \Flagged \Deleted \Draft \Seen)] 5 OK [READ-WRITE] * SEARCH 1079
-W/Email   ( 6025): 7 IDLE
-W/Email   ( 6025): 6 OK + 
-W/System.err( 6025): java.net.SocketTimeoutException: Read timed out
-W/System.err( 6025): 	at org.apache.harmony.xnet.provider.jsse.NativeCrypto.SSL_read(Native Method)
-W/System.err( 6025): 	at org.apache.harmony.xnet.provider.jsse.OpenSSLSocketImpl$SSLInputStream.read(OpenSSLSocketImpl.java:675)
-W/System.err( 6025): 	at java.io.InputStream.read(InputStream.java:163)
-W/System.err( 6025): 	at java.io.BufferedInputStream.fillbuf(BufferedInputStream.java:142)
-W/System.err( 6025): 	at java.io.BufferedInputStream.read(BufferedInputStream.java:227)
-W/System.err( 6025): 	at com.kingsoft.email.PeekableInputStream.read(PeekableInputStream.java:39)
-W/System.err( 6025): 	at com.kingsoft.email.PeekableInputStream.peek(PeekableInputStream.java:48)
-W/System.err( 6025): 	at com.kingsoft.email.mail.store.imap.ImapResponseParser.peek(ImapResponseParser.java:119)
-W/System.err( 6025): 	at com.kingsoft.email.mail.store.imap.ImapResponseParser.parseResponse(ImapResponseParser.java:329)
-W/System.err( 6025): 	at com.kingsoft.email.mail.store.imap.ImapResponseParser.readResponse(ImapResponseParser.java:172)
-W/System.err( 6025): 	at com.kingsoft.email.mail.store.ImapConnection.getCommandResponses(ImapConnection.java:354)
-W/System.err( 6025): 	at com.kingsoft.email.mail.store.ImapConnection.executeSimpleCommand(ImapConnection.java:391)
-W/System.err( 6025): 	at com.kingsoft.email.mail.store.ImapConnection.executeSimpleCommand(ImapConnection.java:315)
-W/System.err( 6025): 	at com.kingsoft.email.mail.store.ImapPushFolder$1.run(ImapPushFolder.java:283)
-W/System.err( 6025): 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1076)
-W/System.err( 6025): 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:569)
-W/System.err( 6025): 	at java.lang.Thread.run(Thread.java:856)
-D/IMAP-PUSH( 6025): Read timed out
---------- beginning of /dev/log/system
-I/BatteryStatsImpl(  542): Start partial wakelock email_for_idle(uid=10017, pid=6025) nesting 3
-W/SSLCertificateSocketFactory( 6025): Bypassing SSL security checks at caller's request
-I/XiaomiFirewall( 1394): firewall pkgName:com.android.email, result:0
-D/IMAP-PUSH( 6025): establish connection OK
-D/IMAP-PUSH( 6025): latest server id > local server id, so request sync. for account = 908963295@qq.com
-I/BatteryStatsImpl(  542): Start partial wakelock SyncLoopWakeLock(uid=1000, pid=542) nesting 4
-I/BatteryStatsImpl(  542): Stop partial wakelock email_for_idle(uid=10017, pid=6025) nesting 3
-I/BatteryStatsImpl(  542): Start partial wakelock *sync*_com.android.email.provider_Account {name=908963295@qq.com, type=com.android.email}(uid=10017, pid=542) nesting 4
-I/BatteryStatsImpl(  542): Stop partial wakelock SyncLoopWakeLock(uid=1000, pid=542) nesting 3
-I/BatteryStatsImpl(  542): Start partial wakelock SyncLoopWakeLock(uid=1000, pid=542) nesting 4
-E/dalvikvm( 6025): threadid=22: created from interp,name=SyncAdapterThread-1
-E/dalvikvm( 6025): threadid=22: calling run(),name=SyncAdapterThread-1
-I/BatteryStatsImpl(  542): Stop partial wakelock SyncLoopWakeLock(uid=1000, pid=542) nesting 3
-V/wmh     ( 6025): ProxyTask:name=updateFolderList,startTime = 1435729043015
-V/wmh     ( 6025): onCnnected Time = 1435729043019
-W/Email   ( 6025): Mailboxes specified in a push only sync
-E/dalvikvm( 6025): threadid=23: created from interp,name=updateFolderList
-E/dalvikvm( 6025): threadid=23: calling run(),name=updateFolderList
-V/wmh     ( 6025): start
-W/Email   ( 6025): Exception detected: End of stream reached
-W/Email   ( 6025): Last network activities:
-W/Email   ( 6025): 1 CAPABILITY
-W/Email   ( 6025): * OK [CAPABILITY IMAP4 IMAP4rev1 IDLE XAPPLEPUSHSERVICE ID UIDPLUS AUTH=LOGIN NAMESPACE] * CAPABILITY IMAP4 IMAP4rev1 IDLE XAPPLEPUSHSERVICE AUTH=LOGIN NAMESPACE CHILDREN ID UIDPLUS
-W/Email   ( 6025): 2 ID ("name" "com.android.email" "os" "android" "os-version" "4.1.1; JRO03L" "vendor" "Xiaomi" "x-android-device-model" "MI 2S" "x-android-mobile-net-operator" "China Unicom" "AGUID" "IjLKrN1ofdkdnwSI7jZdQi2cTJo=")
-W/Email   ( 6025): 1 OK * ID NIL
-W/Email   ( 6025): [IMAP command redacted]
-W/Email   ( 6025): 4 NAMESPACE
-W/Email   ( 6025): 2 OK 3 OK * NAMESPACE (("" "/")) NIL NIL
-W/Email   ( 6025): 5 NOOP
-W/Email   ( 6025): 6 LIST "" "*"
-W/Email   ( 6025): 4 OK 5 OK * LIST (\HasNoChildren) "/" "INBOX"
-W/Email   ( 6025): * LIST (\NoSelect \HasChildren) "/" "&UXZO1mWHTvZZOQ-"
-W/Email   ( 6025): * LIST (\HasNoChildren) "/" "Sent Messages"
-W/Email   ( 6025): * LIST (\HasNoChildren) "/" "Drafts"
-W/Email   ( 6025): * LIST (\HasNoChildren) "/" "Deleted Messages"
-W/Email   ( 6025): * LIST (\HasNoChildren) "/" "Junk"
-W/Email   ( 6025): 7 NOOP
-W/Email   ( 6025): 6 OK 
-W/Email   ( 6025): Exception detected: End of stream reached
-W/Email   ( 6025): Last network activities:
-W/Email   ( 6025): 1 CAPABILITY
-W/Email   ( 6025): * OK [CAPABILITY IMAP4 IMAP4rev1 IDLE XAPPLEPUSHSERVICE ID UIDPLUS AUTH=LOGIN NAMESPACE] * CAPABILITY IMAP4 IMAP4rev1 IDLE XAPPLEPUSHSERVICE AUTH=LOGIN NAMESPACE CHILDREN ID UIDPLUS
-W/Email   ( 6025): 2 ID ("name" "com.android.email" "os" "android" "os-version" "4.1.1; JRO03L" "vendor" "Xiaomi" "x-android-device-model" "MI 2S" "x-android-mobile-net-operator" "China Unicom" "AGUID" "IjLKrN1ofdkdnwSI7jZdQi2cTJo=")
-W/Email   ( 6025): 1 OK * ID NIL
-W/Email   ( 6025): [IMAP command redacted]
-W/Email   ( 6025): 4 NAMESPACE
-W/Email   ( 6025): 2 OK 3 OK * NAMESPACE (("" "/")) NIL NIL
-W/Email   ( 6025): 5 SELECT "Inbox"
-W/Email   ( 6025): 4 OK * 24 EXISTS
-W/Email   ( 6025): * 0 RECENT
-W/Email   ( 6025): * OK [UIDVALIDITY 1372238181] * OK [UIDNEXT 1080] * FLAGS (\Answered \Flagged \Deleted \Draft \Seen)
-W/Email   ( 6025): 6 UID SEARCH 1:* SINCE 30-Jun-2015
-W/Email   ( 6025): * OK [PERMANENTFLAGS (\* \Answered \Flagged \Deleted \Draft \Seen)] 5 OK [READ-WRITE] * SEARCH 1074 1076 1078 1079
-W/Email   ( 6025): 7 NOOP
-W/Email   ( 6025): 8 UID FETCH 1074,1076,1078,1079 (UID FLAGS)
-W/Email   ( 6025): 6 OK 7 OK * 21 FETCH (UID 1074 FLAGS (\Seen))
-W/Email   ( 6025): * 22 FETCH (UID 1076 FLAGS (\Seen))
-W/Email   ( 6025): * 23 FETCH (UID 1078 FLAGS (\Seen))
-W/Email   ( 6025): * 24 FETCH (UID 1079 FLAGS (\Seen))
-W/Email   ( 6025): 9 NOOP
-W/Email   ( 6025): 10 NOOP
-W/Email   ( 6025): 8 OK 9 OK 
-W/SSLCertificateSocketFactory( 6025): Bypassing SSL security checks at caller's request
-I/XiaomiFirewall( 1394): firewall pkgName:com.android.email, result:0
-I/BatteryStatsImpl(  542): Start partial wakelock SyncLoopWakeLock(uid=1000, pid=542) nesting 4
-I/BatteryStatsImpl(  542): Stop partial wakelock SyncLoopWakeLock(uid=1000, pid=542) nesting 3
-W/SSLCertificateSocketFactory( 6025): Bypassing SSL security checks at caller's request
-D/WifiStateMachine(  542): ConnectedState{ what=131155 when=-4ms arg1=105 }
-D/WifiStateMachine(  542): L2ConnectedState{ what=131155 when=-4ms arg1=105 }
-D/wpa_supplicant(15442): wpa_s 0x41a7aed0 cmd SIGNAL_POLL
-D/wpa_supplicant(15442): nl80211: survey data missing!
+--------- beginning of main
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+I/MSM-irqbalance(  673): Decided to move IRQ222 from CPU3 to CPU1
+D/Ulp_jni (  997): Location CB invoked
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+I/MSM-irqbalance(  673): Decided to move IRQ215 from CPU3 to CPU1
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+E/WifiStateMachine(  997): WifiStateMachine CMD_START_SCAN source -2 txSuccessRate=0.00 rxSuccessRate=17.11 targetRoamBSSID=any RSSI=-50
+E/WifiStateMachine(  997): WifiStateMachine starting scan for "yixia_5g"WPA_PSK with 5745,5805,5765,5785
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SCAN TYPE=ONLY freq=5745,5805,5765,5785'
+D/wpa_supplicant( 1804): wlan0: Setting scan request: 0.000000 sec
+D/wpa_supplicant( 1804): wlan0: Starting AP scan for wildcard SSID
+D/wpa_supplicant( 1804): wlan0: Limit manual scan to specified channels
+D/wpa_supplicant( 1804): wlan0: Add radio work 'scan'@0x7f9dc1e4c0
+D/wpa_supplicant( 1804): wlan0: First radio work item in the queue - schedule start immediately
+D/wpa_supplicant( 1804): wlan0: Starting radio work 'scan'@0x7f9dc1e4c0 after 0.000088 second wait
+D/wpa_supplicant( 1804): wlan0: nl80211: scan request
+D/wpa_supplicant( 1804): nl80211: Scan SSID - hexdump(len=0): [NULL]
+D/wpa_supplicant( 1804): nl80211: Scan frequency 5745 MHz
+D/wpa_supplicant( 1804): nl80211: Scan frequency 5765 MHz
+D/wpa_supplicant( 1804): nl80211: Scan frequency 5785 MHz
+D/wpa_supplicant( 1804): nl80211: Scan frequency 5805 MHz
+D/wpa_supplicant( 1804): Scan requested (ret=0) - scan timeout 30 seconds
+D/wpa_supplicant( 1804): nl80211: Event message available
+D/wpa_supplicant( 1804): nl80211: Drv Event 33 (NL80211_CMD_TRIGGER_SCAN) received for wlan0
+D/wpa_supplicant( 1804): wlan0: nl80211: Scan trigger
+D/wpa_supplicant( 1804): wlan0: Event SCAN_STARTED (49) received
+D/wpa_supplicant( 1804): wlan0: Own scan request started a scan in 0.000200 seconds
+I/wpa_supplicant( 1804): wlan0: CTRL-EVENT-SCAN-STARTED 
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_455-1\x00
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_997-2\x00
+I/WifiHAL (  997): Poll result = 1
+I/WifiHAL (  997): Found some events!!!
+D/WifiHAL (  997): no_seq_check received
+I/WifiHAL (  997): event received NL80211_CMD_TRIGGER_SCAN
+I/WifiHAL (  997): event received NL80211_CMD_TRIGGER_SCAN, vendor_id = 0x0
+I/WifiHAL (  997): event ignored!!
+D/wpa_supplicant( 1804): nl80211: Event message available
+D/wpa_supplicant( 1804): nl80211: Drv Event 34 (NL80211_CMD_NEW_SCAN_RESULTS) received for wlan0
+D/wpa_supplicant( 1804): wlan0: nl80211: New scan results available
+D/wpa_supplicant( 1804): nl80211: Scan included frequencies:
+D/wpa_supplicant( 1804): wlan0: Event SCAN_RESULTS (3) received
+D/wpa_supplicant( 1804): wlan0: Scan completed in 0.713856 seconds
+D/wpa_supplicant( 1804): nl80211: Associated on 5745 MHz
+D/wpa_supplicant( 1804): nl80211: Associated with 2c:e6:cc:3c:b2:9c
+D/wpa_supplicant( 1804): nl80211: Received scan results (22 BSSes)
+D/wpa_supplicant( 1804): nl80211: Scan results indicate BSS status with 2c:e6:cc:3c:b2:9c as associated
+D/wpa_supplicant( 1804): wlan0: BSS: Start scan result update 107
+D/wpa_supplicant( 1804): BSS: last_scan_res_used=22/32
+D/wpa_supplicant( 1804): wlan0: Scan-only results received
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_455-1\x00
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_997-2\x00
+D/wpa_supplicant( 1804): wlan0: Radio work 'scan'@0x7f9dc1e4c0 done in 0.716964 seconds
+I/WifiHAL (  997): Poll result = 1
+I/WifiHAL (  997): Found some events!!!
+D/WifiHAL (  997): no_seq_check received
+I/WifiHAL (  997): event received NL80211_CMD_NEW_SCAN_RESULTS
+I/WifiHAL (  997): event received NL80211_CMD_NEW_SCAN_RESULTS, vendor_id = 0x0
+I/WifiHAL (  997): event ignored!!
+D/wpa_supplicant( 1804): wlan0: Control interface command 'BSS RANGE=0- MASK=0x23987'
+D/wpa_supplicant( 1804): wlan0: Control interface command 'STATUS-NO_EVENTS'
+I/MSM-irqbalance(  673): Decided to move IRQ222 from CPU1 to CPU0
+D/Ulp_jni (  997): Location CB invoked
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+I/MSM-irqbalance(  673): Decided to move IRQ215 from CPU1 to CPU0
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+I/MSM-irqbalance(  673): Decided to move IRQ51 from CPU3 to CPU0
+D/Ulp_jni (  997): Location CB invoked
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+I/MSM-irqbalance(  673): Decided to move IRQ57 from CPU3 to CPU0
+I/dhcpcd  ( 2772): wlan0: renewing lease of 10.10.254.210
+I/dhcpcd  ( 2772): wlan0: acknowledged 10.10.254.210 from 10.10.10.10
+I/dhcpcd  ( 2772): wlan0: leased 10.10.254.210 for 600 seconds
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+E/WifiStateMachine(  997): WifiStateMachine CMD_START_SCAN source -2 txSuccessRate=0.50 rxSuccessRate=20.30 targetRoamBSSID=any RSSI=-49
+E/WifiStateMachine(  997): WifiStateMachine starting scan for "yixia_5g"WPA_PSK with 5745,5805,5765,5785
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SCAN TYPE=ONLY freq=5745,5805,5765,5785'
+D/wpa_supplicant( 1804): wlan0: Setting scan request: 0.000000 sec
+D/wpa_supplicant( 1804): wlan0: Starting AP scan for wildcard SSID
+D/wpa_supplicant( 1804): wlan0: Limit manual scan to specified channels
+D/wpa_supplicant( 1804): wlan0: Add radio work 'scan'@0x7f9dc1e380
+D/wpa_supplicant( 1804): wlan0: First radio work item in the queue - schedule start immediately
+D/wpa_supplicant( 1804): wlan0: Starting radio work 'scan'@0x7f9dc1e380 after 0.000102 second wait
+D/wpa_supplicant( 1804): wlan0: nl80211: scan request
+D/wpa_supplicant( 1804): nl80211: Scan SSID - hexdump(len=0): [NULL]
+D/wpa_supplicant( 1804): nl80211: Scan frequency 5745 MHz
+D/wpa_supplicant( 1804): nl80211: Scan frequency 5765 MHz
+D/wpa_supplicant( 1804): nl80211: Scan frequency 5785 MHz
+D/wpa_supplicant( 1804): nl80211: Scan frequency 5805 MHz
+D/wpa_supplicant( 1804): Scan requested (ret=0) - scan timeout 30 seconds
+D/wpa_supplicant( 1804): nl80211: Event message available
+D/wpa_supplicant( 1804): nl80211: Drv Event 33 (NL80211_CMD_TRIGGER_SCAN) received for wlan0
+D/wpa_supplicant( 1804): wlan0: nl80211: Scan trigger
+D/wpa_supplicant( 1804): wlan0: Event SCAN_STARTED (49) received
+D/wpa_supplicant( 1804): wlan0: Own scan request started a scan in 0.000200 seconds
+I/wpa_supplicant( 1804): wlan0: CTRL-EVENT-SCAN-STARTED 
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_455-1\x00
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_997-2\x00
+I/WifiHAL (  997): Poll result = 1
+I/WifiHAL (  997): Found some events!!!
+D/WifiHAL (  997): no_seq_check received
+I/WifiHAL (  997): event received NL80211_CMD_TRIGGER_SCAN
+I/WifiHAL (  997): event received NL80211_CMD_TRIGGER_SCAN, vendor_id = 0x0
+I/WifiHAL (  997): event ignored!!
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+D/wpa_supplicant( 1804): nl80211: Event message available
+D/wpa_supplicant( 1804): nl80211: Drv Event 34 (NL80211_CMD_NEW_SCAN_RESULTS) received for wlan0
+D/wpa_supplicant( 1804): wlan0: nl80211: New scan results available
+D/wpa_supplicant( 1804): nl80211: Scan included frequencies:
+D/wpa_supplicant( 1804): wlan0: Event SCAN_RESULTS (3) received
+D/wpa_supplicant( 1804): wlan0: Scan completed in 0.723417 seconds
+D/wpa_supplicant( 1804): nl80211: Associated on 5745 MHz
+D/wpa_supplicant( 1804): nl80211: Associated with 2c:e6:cc:3c:b2:9c
+D/wpa_supplicant( 1804): nl80211: Received scan results (22 BSSes)
+D/wpa_supplicant( 1804): nl80211: Scan results indicate BSS status with 2c:e6:cc:3c:b2:9c as associated
+D/wpa_supplicant( 1804): wlan0: BSS: Start scan result update 108
+D/wpa_supplicant( 1804): BSS: last_scan_res_used=22/32
+D/wpa_supplicant( 1804): wlan0: Scan-only results received
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_455-1\x00
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_997-2\x00
+D/wpa_supplicant( 1804): wlan0: Radio work 'scan'@0x7f9dc1e380 done in 0.727083 seconds
+I/WifiHAL (  997): Poll result = 1
+I/WifiHAL (  997): Found some events!!!
+D/WifiHAL (  997): no_seq_check received
+I/WifiHAL (  997): event received NL80211_CMD_NEW_SCAN_RESULTS
+I/WifiHAL (  997): event received NL80211_CMD_NEW_SCAN_RESULTS, vendor_id = 0x0
+I/WifiHAL (  997): event ignored!!
+D/wpa_supplicant( 1804): wlan0: Control interface command 'BSS RANGE=0- MASK=0x23987'
+D/wpa_supplicant( 1804): wlan0: Control interface command 'STATUS-NO_EVENTS'
+I/MSM-irqbalance(  673): Decided to move IRQ216 from CPU3 to CPU0
+D/Ulp_jni (  997): Location CB invoked
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+E/native  (  997): do suspend false
+D/wpa_supplicant( 1804): wlan0: Control interface command 'DRIVER SETSUSPENDMODE 0'
+D/wpa_supplicant( 1804): wpa_driver_nl80211_driver_cmd SETSUSPENDMODE 0 len = 0, 4096
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SET ps 0'
+D/wpa_supplicant( 1804): CTRL_IFACE SET 'ps'='0'
+D/wpa_supplicant( 1804): nl80211: set_p2p_powersave (legacy_ps=0 opp_ps=-1 ctwindow=-1)
+D/wpa_supplicant( 1804): wlan0: Control interface command 'DRIVER BTCOEXMODE 1'
+D/wpa_supplicant( 1804): wpa_driver_nl80211_driver_cmd BTCOEXMODE 1 len = 0, 4096
+D/wpa_supplicant( 1804): wlan0: Control interface command 'DRIVER WLS_BATCHING GET'
+E/wpa_supplicant( 1804): wpa_driver_nl80211_driver_cmd: failed to issue private commands
+E/WifiStateMachine(  997): Unexpected BatchedScanResults :null
+D/wpa_supplicant( 1804): wlan0: Control interface command 'DRIVER WLS_BATCHING STOP'
+E/wpa_supplicant( 1804): wpa_driver_nl80211_driver_cmd: failed to issue private commands
+I/dhcpcd  (13985): sending signal 14 to pid 2772
+I/dhcpcd  ( 2772): received SIGALRM, renewing
+I/dhcpcd  ( 2772): wlan0: renewing lease of 10.10.254.210
+I/dhcpcd  ( 2772): wlan0: acknowledged 10.10.254.210 from 10.10.10.10
+I/dhcpcd  ( 2772): wlan0: leased 10.10.254.210 for 600 seconds
+D/wpa_supplicant( 1804): wlan0: Control interface command 'DRIVER BTCOEXMODE 2'
+D/wpa_supplicant( 1804): wpa_driver_nl80211_driver_cmd BTCOEXMODE 2 len = 0, 4096
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SET ps 1'
+D/wpa_supplicant( 1804): CTRL_IFACE SET 'ps'='1'
+D/wpa_supplicant( 1804): nl80211: set_p2p_powersave (legacy_ps=1 opp_ps=-1 ctwindow=-1)
+--------- beginning of system
+D/Nat464Xlat(  997): requiresClat: netType=1, connected=true, hasIPv4Address=true
+D/wpa_supplicant( 1804): wlan0: Control interface command 'BLACKLIST clear'
+D/ConnectivityService(  997): notifyType IP_CHANGED for NetworkAgentInfo [WIFI () - 100]
+D/ConnectivityService(  997): NetworkAgentInfo [WIFI () - 100] EVENT_NETWORK_INFO_CHANGED, going from CONNECTED to CONNECTING
+D/ConnectivityManager.CallbackHandler( 1365): CM callback handler got msg 524295
+D/StatusBar.NetworkController( 1365): slot=-10;action=android.net.wifi.STATE_CHANGE
+D/ConnectivityService(  997): NetworkAgentInfo [WIFI () - 100] EVENT_NETWORK_INFO_CHANGED, going from CONNECTING to CONNECTED
+E/WifiStateMachine(  997): WifiStateMachine: Leaving Connected state
+I/UploadManager( 1649): Receive intent=android.net.wifi.STATE_CHANGE
+I/UploadManager( 1649): Receive intent=android.net.wifi.STATE_CHANGE
+D/StatusBar.NetworkController( 1365): slot=-10;action=android.net.wifi.STATE_CHANGE
+I/UploadManager( 1649): Receive intent=android.net.wifi.STATE_CHANGE
+D/StatusBar.NetworkController( 1365): slot=-10;action=android.net.wifi.STATE_CHANGE
+I/UploadManager( 1649): Receive intent=android.net.wifi.STATE_CHANGE
+D/StatusBar.NetworkController( 1365): slot=-10;action=android.net.wifi.STATE_CHANGE
+E/WifiStateMachine(  997): WifiStateMachine CMD_START_SCAN source -2 txSuccessRate=0.06 rxSuccessRate=17.41 targetRoamBSSID=any RSSI=-47
+E/WifiStateMachine(  997): WifiStateMachine starting scan for "yixia_5g"WPA_PSK with 5745,5805,5765,5785
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SCAN TYPE=ONLY freq=5745,5805,5765,5785'
+D/wpa_supplicant( 1804): wlan0: Setting scan request: 0.000000 sec
+D/wpa_supplicant( 1804): wlan0: Starting AP scan for wildcard SSID
+D/wpa_supplicant( 1804): wlan0: Limit manual scan to specified channels
+D/wpa_supplicant( 1804): wlan0: Add radio work 'scan'@0x7f9dc1e4c0
+D/wpa_supplicant( 1804): wlan0: First radio work item in the queue - schedule start immediately
+D/wpa_supplicant( 1804): wlan0: Starting radio work 'scan'@0x7f9dc1e4c0 after 0.000039 second wait
+D/wpa_supplicant( 1804): wlan0: nl80211: scan request
+D/wpa_supplicant( 1804): nl80211: Scan SSID - hexdump(len=0): [NULL]
+D/wpa_supplicant( 1804): nl80211: Scan frequency 5745 MHz
+D/wpa_supplicant( 1804): nl80211: Scan frequency 5765 MHz
+D/wpa_supplicant( 1804): nl80211: Scan frequency 5785 MHz
+D/wpa_supplicant( 1804): nl80211: Scan frequency 5805 MHz
+D/wpa_supplicant( 1804): Scan requested (ret=0) - scan timeout 30 seconds
+D/wpa_supplicant( 1804): nl80211: Event message available
+I/WifiHAL (  997): Poll result = 1
+I/WifiHAL (  997): Found some events!!!
+D/wpa_supplicant( 1804): nl80211: Drv Event 33 (NL80211_CMD_TRIGGER_SCAN) received for wlan0
+D/WifiHAL (  997): no_seq_check received
+D/wpa_supplicant( 1804): wlan0: nl80211: Scan trigger
+I/WifiHAL (  997): event received NL80211_CMD_TRIGGER_SCAN
+D/wpa_supplicant( 1804): wlan0: Event SCAN_STARTED (49) received
+I/WifiHAL (  997): event received NL80211_CMD_TRIGGER_SCAN, vendor_id = 0x0
+I/WifiHAL (  997): event ignored!!
+D/wpa_supplicant( 1804): wlan0: Own scan request started a scan in 0.000106 seconds
+I/wpa_supplicant( 1804): wlan0: CTRL-EVENT-SCAN-STARTED 
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_455-1\x00
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_997-2\x00
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+D/StatusBar.NetworkController( 1365): slot=-10;action=android.net.wifi.RSSI_CHANGED
+D/wpa_supplicant( 1804): nl80211: Event message available
+D/wpa_supplicant( 1804): nl80211: Drv Event 34 (NL80211_CMD_NEW_SCAN_RESULTS) received for wlan0
+D/wpa_supplicant( 1804): wlan0: nl80211: New scan results available
+D/wpa_supplicant( 1804): nl80211: Scan included frequencies:
+D/wpa_supplicant( 1804): wlan0: Event SCAN_RESULTS (3) received
+D/wpa_supplicant( 1804): wlan0: Scan completed in 0.727851 seconds
+D/wpa_supplicant( 1804): nl80211: Associated on 5745 MHz
+D/wpa_supplicant( 1804): nl80211: Associated with 2c:e6:cc:3c:b2:9c
+D/wpa_supplicant( 1804): nl80211: Received scan results (22 BSSes)
+D/wpa_supplicant( 1804): nl80211: Scan results indicate BSS status with 2c:e6:cc:3c:b2:9c as associated
+D/wpa_supplicant( 1804): wlan0: BSS: Start scan result update 109
+D/wpa_supplicant( 1804): BSS: last_scan_res_used=22/32
+D/wpa_supplicant( 1804): wlan0: Scan-only results received
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_455-1\x00
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_997-2\x00
+D/wpa_supplicant( 1804): wlan0: Radio work 'scan'@0x7f9dc1e4c0 done in 0.730694 seconds
+I/WifiHAL (  997): Poll result = 1
+I/WifiHAL (  997): Found some events!!!
+D/WifiHAL (  997): no_seq_check received
+I/WifiHAL (  997): event received NL80211_CMD_NEW_SCAN_RESULTS
+I/WifiHAL (  997): event received NL80211_CMD_NEW_SCAN_RESULTS, vendor_id = 0x0
+I/WifiHAL (  997): event ignored!!
+D/wpa_supplicant( 1804): wlan0: Control interface command 'BSS RANGE=0- MASK=0x23987'
+D/wpa_supplicant( 1804): wlan0: Control interface command 'STATUS-NO_EVENTS'
+I/MSM-irqbalance(  673): Decided to move IRQ133 from CPU3 to CPU1
+D/Ulp_jni (  997): Location CB invoked
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+I/ActivityManager(  997): Start proc com.miui.providers.weather for broadcast com.miui.providers.weather/.receiver.ReceiverUpdateWeather: pid=14010 uid=10028 gids={50028, 9997, 3003} abi=arm64-v8a
+I/libthemeutils(14010): Theme： libthemeutil.so load success
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+I/MSM-irqbalance(  673): Decided to move IRQ155 from CPU3 to CPU1
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+D/Ulp_jni (  997): Location CB invoked
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+W/DNSIncoming(13488): There was an OPT answer. Not currently handled. Option code: 65002 data: 5A968B9961DEE8DF
+W/DNSIncoming(13488): There was an OPT answer. Not currently handled. Option code: 65002 data: 5A968B9961DEE8DF
+E/WifiStateMachine(  997): WifiStateMachine CMD_START_SCAN source -2 txSuccessRate=0.01 rxSuccessRate=21.73 targetRoamBSSID=any RSSI=-47
+E/WifiStateMachine(  997): WifiStateMachine starting scan for "yixia_5g"WPA_PSK with 5745,5805,5765,5785
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SCAN TYPE=ONLY freq=5745,5805,5765,5785'
+D/wpa_supplicant( 1804): wlan0: Setting scan request: 0.000000 sec
+D/wpa_supplicant( 1804): wlan0: Starting AP scan for wildcard SSID
+D/wpa_supplicant( 1804): wlan0: Limit manual scan to specified channels
+D/wpa_supplicant( 1804): wlan0: Add radio work 'scan'@0x7f9dc1e380
+D/wpa_supplicant( 1804): wlan0: First radio work item in the queue - schedule start immediately
+D/wpa_supplicant( 1804): wlan0: Starting radio work 'scan'@0x7f9dc1e380 after 0.000088 second wait
+D/wpa_supplicant( 1804): wlan0: nl80211: scan request
+D/wpa_supplicant( 1804): nl80211: Scan SSID - hexdump(len=0): [NULL]
+D/wpa_supplicant( 1804): nl80211: Scan frequency 5745 MHz
+D/wpa_supplicant( 1804): nl80211: Scan frequency 5765 MHz
+D/wpa_supplicant( 1804): nl80211: Scan frequency 5785 MHz
+D/wpa_supplicant( 1804): nl80211: Scan frequency 5805 MHz
+D/wpa_supplicant( 1804): Scan requested (ret=0) - scan timeout 30 seconds
+D/wpa_supplicant( 1804): nl80211: Event message available
+D/wpa_supplicant( 1804): nl80211: Drv Event 33 (NL80211_CMD_TRIGGER_SCAN) received for wlan0
+D/wpa_supplicant( 1804): wlan0: nl80211: Scan trigger
+D/wpa_supplicant( 1804): wlan0: Event SCAN_STARTED (49) received
+D/wpa_supplicant( 1804): wlan0: Own scan request started a scan in 0.000217 seconds
+I/wpa_supplicant( 1804): wlan0: CTRL-EVENT-SCAN-STARTED 
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_455-1\x00
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_997-2\x00
+I/WifiHAL (  997): Poll result = 1
+I/WifiHAL (  997): Found some events!!!
+D/WifiHAL (  997): no_seq_check received
+I/WifiHAL (  997): event received NL80211_CMD_TRIGGER_SCAN
+I/WifiHAL (  997): event received NL80211_CMD_TRIGGER_SCAN, vendor_id = 0x0
+I/WifiHAL (  997): event ignored!!
+D/wpa_supplicant( 1804): nl80211: Event message available
+D/wpa_supplicant( 1804): nl80211: Drv Event 34 (NL80211_CMD_NEW_SCAN_RESULTS) received for wlan0
+D/wpa_supplicant( 1804): wlan0: nl80211: New scan results available
+D/wpa_supplicant( 1804): nl80211: Scan included frequencies:
+D/wpa_supplicant( 1804): wlan0: Event SCAN_RESULTS (3) received
+D/wpa_supplicant( 1804): wlan0: Scan completed in 0.723633 seconds
+D/wpa_supplicant( 1804): nl80211: Associated on 5745 MHz
+D/wpa_supplicant( 1804): nl80211: Associated with 2c:e6:cc:3c:b2:9c
+D/wpa_supplicant( 1804): nl80211: Received scan results (22 BSSes)
+D/wpa_supplicant( 1804): nl80211: Scan results indicate BSS status with 2c:e6:cc:3c:b2:9c as associated
+D/wpa_supplicant( 1804): wlan0: BSS: Start scan result update 110
+D/wpa_supplicant( 1804): BSS: last_scan_res_used=22/32
+D/wpa_supplicant( 1804): wlan0: Scan-only results received
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_455-1\x00
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_997-2\x00
+D/wpa_supplicant( 1804): wlan0: Radio work 'scan'@0x7f9dc1e380 done in 0.727349 seconds
+I/WifiHAL (  997): Poll result = 1
+I/WifiHAL (  997): Found some events!!!
+D/WifiHAL (  997): no_seq_check received
+I/WifiHAL (  997): event received NL80211_CMD_NEW_SCAN_RESULTS
+I/WifiHAL (  997): event received NL80211_CMD_NEW_SCAN_RESULTS, vendor_id = 0x0
+I/WifiHAL (  997): event ignored!!
+D/wpa_supplicant( 1804): wlan0: Control interface command 'BSS RANGE=0- MASK=0x23987'
+D/wpa_supplicant( 1804): wlan0: Control interface command 'STATUS-NO_EVENTS'
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+D/Ulp_jni (  997): Location CB invoked
+W/DNSIncoming(13488): There was an OPT answer. Not currently handled. Option code: 65002 data: 5A968B9961DEE8DF
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+D/Ulp_jni (  997): Location CB invoked
+W/DNSIncoming(13488): There was an OPT answer. Not currently handled. Option code: 65002 data: 5A968B9961DEE8DF
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+W/DNSIncoming(13488): There was an OPT answer. Not currently handled. Option code: 65002 data: 5A968B9961DEE8DF
+W/DNSIncoming(13488): There was an OPT answer. Not currently handled. Option code: 65002 data: 4DEEA9E8D05BC127
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+W/DNSIncoming(13488): There was an OPT answer. Not currently handled. Option code: 65002 data: 4DEEA9E8D05BC127
+W/DNSIncoming(13488): There was an OPT answer. Not currently handled. Option code: 65002 data: 4DEEA9E8D05BC127
+W/DNSIncoming(13488): There was an OPT answer. Not currently handled. Option code: 65002 data: 6A953B16F6656CB4
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+E/WifiStateMachine(  997): WifiStateMachine CMD_START_SCAN source -2 txSuccessRate=0.00 rxSuccessRate=35.29 targetRoamBSSID=any RSSI=-46
+E/WifiStateMachine(  997): WifiStateMachine starting scan for "yixia_5g"WPA_PSK with 5745,5805,5765,5785
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SCAN TYPE=ONLY freq=5745,5805,5765,5785'
+D/wpa_supplicant( 1804): wlan0: Setting scan request: 0.000000 sec
+D/wpa_supplicant( 1804): wlan0: Starting AP scan for wildcard SSID
+D/wpa_supplicant( 1804): wlan0: Limit manual scan to specified channels
+D/wpa_supplicant( 1804): wlan0: Add radio work 'scan'@0x7f9dc1e4c0
+D/wpa_supplicant( 1804): wlan0: First radio work item in the queue - schedule start immediately
+D/wpa_supplicant( 1804): wlan0: Starting radio work 'scan'@0x7f9dc1e4c0 after 0.000089 second wait
+D/wpa_supplicant( 1804): wlan0: nl80211: scan request
+D/wpa_supplicant( 1804): nl80211: Scan SSID - hexdump(len=0): [NULL]
+D/wpa_supplicant( 1804): nl80211: Scan frequency 5745 MHz
+D/wpa_supplicant( 1804): nl80211: Scan frequency 5765 MHz
+D/wpa_supplicant( 1804): nl80211: Scan frequency 5785 MHz
+D/wpa_supplicant( 1804): nl80211: Scan frequency 5805 MHz
+D/wpa_supplicant( 1804): Scan requested (ret=0) - scan timeout 30 seconds
+D/wpa_supplicant( 1804): nl80211: Event message available
+D/wpa_supplicant( 1804): nl80211: Drv Event 33 (NL80211_CMD_TRIGGER_SCAN) received for wlan0
+D/wpa_supplicant( 1804): wlan0: nl80211: Scan trigger
+D/wpa_supplicant( 1804): wlan0: Event SCAN_STARTED (49) received
+I/WifiHAL (  997): Poll result = 1
+I/WifiHAL (  997): Found some events!!!
+D/wpa_supplicant( 1804): wlan0: Own scan request started a scan in 0.000219 seconds
+I/wpa_supplicant( 1804): wlan0: CTRL-EVENT-SCAN-STARTED 
+D/WifiHAL (  997): no_seq_check received
+I/WifiHAL (  997): event received NL80211_CMD_TRIGGER_SCAN
+I/WifiHAL (  997): event received NL80211_CMD_TRIGGER_SCAN, vendor_id = 0x0
+I/WifiHAL (  997): event ignored!!
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_455-1\x00
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_997-2\x00
+D/wpa_supplicant( 1804): nl80211: Event message available
+D/wpa_supplicant( 1804): nl80211: Drv Event 34 (NL80211_CMD_NEW_SCAN_RESULTS) received for wlan0
+D/wpa_supplicant( 1804): wlan0: nl80211: New scan results available
+D/wpa_supplicant( 1804): nl80211: Scan included frequencies:
+D/wpa_supplicant( 1804): wlan0: Event SCAN_RESULTS (3) received
+D/wpa_supplicant( 1804): wlan0: Scan completed in 0.718114 seconds
+D/wpa_supplicant( 1804): nl80211: Associated on 5745 MHz
+D/wpa_supplicant( 1804): nl80211: Associated with 2c:e6:cc:3c:b2:9c
+D/wpa_supplicant( 1804): nl80211: Received scan results (12 BSSes)
+D/wpa_supplicant( 1804): nl80211: Scan results indicate BSS status with 2c:e6:cc:3c:b2:9c as associated
+D/wpa_supplicant( 1804): wlan0: BSS: Start scan result update 111
+D/wpa_supplicant( 1804): BSS: last_scan_res_used=12/32
+D/wpa_supplicant( 1804): wlan0: Scan-only results received
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_455-1\x00
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_997-2\x00
+D/wpa_supplicant( 1804): wlan0: Radio work 'scan'@0x7f9dc1e4c0 done in 0.724135 seconds
+I/WifiHAL (  997): Poll result = 1
+I/WifiHAL (  997): Found some events!!!
+D/WifiHAL (  997): no_seq_check received
+I/WifiHAL (  997): event received NL80211_CMD_NEW_SCAN_RESULTS
+I/WifiHAL (  997): event received NL80211_CMD_NEW_SCAN_RESULTS, vendor_id = 0x0
+I/WifiHAL (  997): event ignored!!
+D/wpa_supplicant( 1804): wlan0: Control interface command 'BSS RANGE=0- MASK=0x23987'
+D/wpa_supplicant( 1804): wlan0: Control interface command 'STATUS-NO_EVENTS'
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+D/Ulp_jni (  997): Location CB invoked
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+W/DNSIncoming(13488): There was an OPT answer. Not currently handled. Option code: 65002 data: 6A953B16F6656CB4
+W/DNSIncoming(13488): There was an OPT answer. Not currently handled. Option code: 65002 data: 4DEEA9E8D05BC127
+W/DNSIncoming(13488): There was an OPT answer. Not currently handled. Option code: 65002 data: 9E3BB64F07AEBD77
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+I/art     (  997): Background sticky concurrent mark sweep GC freed 99871(6MB) AllocSpace objects, 161(3MB) LOS objects, 13% free, 51MB/59MB, paused 2.581ms total 166.826ms
+D/Ulp_jni (  997): Location CB invoked
+W/PushService( 1449): 2015-07-02 18:28:06,034 - [WARN::PushService] - [Thread:1] Service called on timer
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+E/WifiStateMachine(  997): WifiStateMachine CMD_START_SCAN source -2 txSuccessRate=0.50 rxSuccessRate=29.30 targetRoamBSSID=any RSSI=-52
+E/WifiStateMachine(  997): WifiStateMachine starting scan for "yixia_5g"WPA_PSK with 5745,5805,5765,5785
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SCAN TYPE=ONLY freq=5745,5805,5765,5785'
+D/wpa_supplicant( 1804): wlan0: Setting scan request: 0.000000 sec
+D/wpa_supplicant( 1804): wlan0: Starting AP scan for wildcard SSID
+D/wpa_supplicant( 1804): wlan0: Limit manual scan to specified channels
+D/wpa_supplicant( 1804): wlan0: Add radio work 'scan'@0x7f9dc1e380
+D/wpa_supplicant( 1804): wlan0: First radio work item in the queue - schedule start immediately
+D/wpa_supplicant( 1804): wlan0: Starting radio work 'scan'@0x7f9dc1e380 after 0.000103 second wait
+D/wpa_supplicant( 1804): wlan0: nl80211: scan request
+D/wpa_supplicant( 1804): nl80211: Scan SSID - hexdump(len=0): [NULL]
+D/wpa_supplicant( 1804): nl80211: Scan frequency 5745 MHz
+D/wpa_supplicant( 1804): nl80211: Scan frequency 5765 MHz
+D/wpa_supplicant( 1804): nl80211: Scan frequency 5785 MHz
+D/wpa_supplicant( 1804): nl80211: Scan frequency 5805 MHz
+D/wpa_supplicant( 1804): Scan requested (ret=0) - scan timeout 30 seconds
+D/wpa_supplicant( 1804): nl80211: Event message available
+D/wpa_supplicant( 1804): nl80211: Drv Event 33 (NL80211_CMD_TRIGGER_SCAN) received for wlan0
+D/wpa_supplicant( 1804): wlan0: nl80211: Scan trigger
+D/wpa_supplicant( 1804): wlan0: Event SCAN_STARTED (49) received
+D/wpa_supplicant( 1804): wlan0: Own scan request started a scan in 0.000206 seconds
+I/wpa_supplicant( 1804): wlan0: CTRL-EVENT-SCAN-STARTED 
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_455-1\x00
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_997-2\x00
+I/WifiHAL (  997): Poll result = 1
+I/WifiHAL (  997): Found some events!!!
+D/WifiHAL (  997): no_seq_check received
+I/WifiHAL (  997): event received NL80211_CMD_TRIGGER_SCAN
+I/WifiHAL (  997): event received NL80211_CMD_TRIGGER_SCAN, vendor_id = 0x0
+I/WifiHAL (  997): event ignored!!
+D/wpa_supplicant( 1804): nl80211: Event message available
+D/wpa_supplicant( 1804): nl80211: Drv Event 34 (NL80211_CMD_NEW_SCAN_RESULTS) received for wlan0
+D/wpa_supplicant( 1804): wlan0: nl80211: New scan results available
+D/wpa_supplicant( 1804): nl80211: Scan included frequencies:
+D/wpa_supplicant( 1804): wlan0: Event SCAN_RESULTS (3) received
+D/wpa_supplicant( 1804): wlan0: Scan completed in 0.721715 seconds
+D/wpa_supplicant( 1804): nl80211: Associated on 5745 MHz
+D/wpa_supplicant( 1804): nl80211: Associated with 2c:e6:cc:3c:b2:9c
+D/wpa_supplicant( 1804): nl80211: Received scan results (11 BSSes)
+D/wpa_supplicant( 1804): nl80211: Scan results indicate BSS status with 2c:e6:cc:3c:b2:9c as associated
+D/wpa_supplicant( 1804): wlan0: BSS: Start scan result update 112
+D/wpa_supplicant( 1804): wlan0: BSS: Remove id 290 BSSID 2c:e6:cc:3c:b2:98 SSID 'yixia' due to no match in scan
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_455-1\x00
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_997-2\x00
+D/wpa_supplicant( 1804): wlan0: BSS: Remove id 299 BSSID f0:b4:79:14:83:c6 SSID 'Wan' due to no match in scan
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_455-1\x00
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_997-2\x00
+D/wpa_supplicant( 1804): wlan0: BSS: Remove id 322 BSSID 6c:aa:b3:39:52:f8 SSID 'yixia' due to no match in scan
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_455-1\x00
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_997-2\x00
+D/wpa_supplicant( 1804): wlan0: BSS: Remove id 296 BSSID 42:10:b3:82:48:01 SSID 'cai' due to no match in scan
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_455-1\x00
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_997-2\x00
+D/wpa_supplicant( 1804): wlan0: BSS: Remove id 294 BSSID f4:f9:51:e6:32:78 SSID 'UED' due to no match in scan
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_455-1\x00
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_997-2\x00
+D/wpa_supplicant( 1804): wlan0: BSS: Remove id 330 BSSID c8:e0:eb:36:64:0d SSID 'dalin_at_mac' due to no match in scan
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_455-1\x00
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_997-2\x00
+D/wpa_supplicant( 1804): wlan0: BSS: Remove id 318 BSSID 6c:aa:b3:39:86:c8 SSID 'yixia' due to no match in scan
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_455-1\x00
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_997-2\x00
+D/wpa_supplicant( 1804): wlan0: BSS: Remove id 319 BSSID 6c:aa:b3:79:86:c8 SSID 'yixia_hr' due to no match in scan
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_455-1\x00
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_997-2\x00
+D/wpa_supplicant( 1804): wlan0: BSS: Remove id 328 BSSID 60:de:44:77:31:e2 SSID 'MEETING' due to no match in scan
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_455-1\x00
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_997-2\x00
+D/wpa_supplicant( 1804): wlan0: BSS: Remove id 329 BSSID 58:1f:28:ce:dc:3a SSID '1998081' due to no match in scan
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_455-1\x00
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_997-2\x00
+D/wpa_supplicant( 1804): BSS: last_scan_res_used=11/32
+D/wpa_supplicant( 1804): wlan0: Scan-only results received
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_455-1\x00
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_997-2\x00
+D/wpa_supplicant( 1804): wlan0: Radio work 'scan'@0x7f9dc1e380 done in 0.727991 seconds
+I/WifiHAL (  997): Poll result = 1
+I/WifiHAL (  997): Found some events!!!
+D/WifiHAL (  997): no_seq_check received
+I/WifiHAL (  997): event received NL80211_CMD_NEW_SCAN_RESULTS
+I/WifiHAL (  997): event received NL80211_CMD_NEW_SCAN_RESULTS, vendor_id = 0x0
+I/WifiHAL (  997): event ignored!!
+D/wpa_supplicant( 1804): wlan0: Control interface command 'BSS RANGE=0- MASK=0x23987'
+D/wpa_supplicant( 1804): wlan0: Control interface command 'STATUS-NO_EVENTS'
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+D/Ulp_jni (  997): Location CB invoked
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+W/DNSIncoming(13488): There was an OPT answer. Not currently handled. Option code: 65002 data: F6C84DEF0A77A341
+W/DNSIncoming(13488): There was an OPT answer. Not currently handled. Option code: 65002 data: 591DCBF3F38867FD
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+W/PushService( 1449): 2015-07-02 18:28:21,053 - [WARN::PushService] - [Thread:49] JOB: check the ping-pong.
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+D/Ulp_jni (  997): Location CB invoked
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+E/WifiStateMachine(  997): WifiStateMachine CMD_START_SCAN source -2 txSuccessRate=0.00 rxSuccessRate=16.13 targetRoamBSSID=any RSSI=-53
+E/WifiStateMachine(  997): WifiStateMachine starting scan for "yixia_5g"WPA_PSK with 5745,5805,5765,5785
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SCAN TYPE=ONLY freq=5745,5805,5765,5785'
+D/wpa_supplicant( 1804): wlan0: Setting scan request: 0.000000 sec
+D/wpa_supplicant( 1804): wlan0: Starting AP scan for wildcard SSID
+D/wpa_supplicant( 1804): wlan0: Limit manual scan to specified channels
+D/wpa_supplicant( 1804): wlan0: Add radio work 'scan'@0x7f9dc1e4c0
+D/wpa_supplicant( 1804): wlan0: First radio work item in the queue - schedule start immediately
+D/wpa_supplicant( 1804): wlan0: Starting radio work 'scan'@0x7f9dc1e4c0 after 0.000094 second wait
+D/wpa_supplicant( 1804): wlan0: nl80211: scan request
+D/wpa_supplicant( 1804): nl80211: Scan SSID - hexdump(len=0): [NULL]
+D/wpa_supplicant( 1804): nl80211: Scan frequency 5745 MHz
+D/wpa_supplicant( 1804): nl80211: Scan frequency 5765 MHz
+D/wpa_supplicant( 1804): nl80211: Scan frequency 5785 MHz
+D/wpa_supplicant( 1804): nl80211: Scan frequency 5805 MHz
+D/wpa_supplicant( 1804): Scan requested (ret=0) - scan timeout 30 seconds
+D/wpa_supplicant( 1804): nl80211: Event message available
+D/wpa_supplicant( 1804): nl80211: Drv Event 33 (NL80211_CMD_TRIGGER_SCAN) received for wlan0
+D/wpa_supplicant( 1804): wlan0: nl80211: Scan trigger
+D/wpa_supplicant( 1804): wlan0: Event SCAN_STARTED (49) received
+D/wpa_supplicant( 1804): wlan0: Own scan request started a scan in 0.000212 seconds
+I/wpa_supplicant( 1804): wlan0: CTRL-EVENT-SCAN-STARTED 
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_455-1\x00
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_997-2\x00
+I/WifiHAL (  997): Poll result = 1
+I/WifiHAL (  997): Found some events!!!
+D/WifiHAL (  997): no_seq_check received
+I/WifiHAL (  997): event received NL80211_CMD_TRIGGER_SCAN
+I/WifiHAL (  997): event received NL80211_CMD_TRIGGER_SCAN, vendor_id = 0x0
+I/WifiHAL (  997): event ignored!!
+D/wpa_supplicant( 1804): nl80211: Event message available
+D/wpa_supplicant( 1804): nl80211: Drv Event 34 (NL80211_CMD_NEW_SCAN_RESULTS) received for wlan0
+D/wpa_supplicant( 1804): wlan0: nl80211: New scan results available
+D/wpa_supplicant( 1804): nl80211: Scan included frequencies:
+D/wpa_supplicant( 1804): wlan0: Event SCAN_RESULTS (3) received
+D/wpa_supplicant( 1804): wlan0: Scan completed in 0.713746 seconds
+D/wpa_supplicant( 1804): nl80211: Associated on 5745 MHz
+D/wpa_supplicant( 1804): nl80211: Associated with 2c:e6:cc:3c:b2:9c
+D/wpa_supplicant( 1804): nl80211: Received scan results (11 BSSes)
+D/wpa_supplicant( 1804): nl80211: Scan results indicate BSS status with 2c:e6:cc:3c:b2:9c as associated
+D/wpa_supplicant( 1804): wlan0: BSS: Start scan result update 113
+D/wpa_supplicant( 1804): wlan0: BSS: Remove id 291 BSSID 2c:e6:cc:3c:af:c8 SSID 'yixia' due to no match in scan
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_455-1\x00
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_997-2\x00
+D/wpa_supplicant( 1804): BSS: last_scan_res_used=11/32
+D/wpa_supplicant( 1804): wlan0: Scan-only results received
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_455-1\x00
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_997-2\x00
+D/wpa_supplicant( 1804): wlan0: Radio work 'scan'@0x7f9dc1e4c0 done in 0.716970 seconds
+I/WifiHAL (  997): Poll result = 1
+I/WifiHAL (  997): Found some events!!!
+D/WifiHAL (  997): no_seq_check received
+I/WifiHAL (  997): event received NL80211_CMD_NEW_SCAN_RESULTS
+I/WifiHAL (  997): event received NL80211_CMD_NEW_SCAN_RESULTS, vendor_id = 0x0
+I/WifiHAL (  997): event ignored!!
+D/wpa_supplicant( 1804): wlan0: Control interface command 'BSS RANGE=0- MASK=0x23987'
+D/wpa_supplicant( 1804): wlan0: Control interface command 'STATUS-NO_EVENTS'
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+D/Ulp_jni (  997): Location CB invoked
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+I/MSM-irqbalance(  673): Decided to move IRQ51 from CPU0 to CPU1
+D/Ulp_jni (  997): Location CB invoked
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+I/MSM-irqbalance(  673): Decided to move IRQ215 from CPU0 to CPU1
+E/WifiStateMachine(  997): WifiStateMachine CMD_START_SCAN source -2 txSuccessRate=0.00 rxSuccessRate=16.24 targetRoamBSSID=any RSSI=-52
+E/WifiStateMachine(  997): WifiStateMachine starting scan for "yixia_5g"WPA_PSK with 5745,5805,5765,5785
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SCAN TYPE=ONLY freq=5745,5805,5765,5785'
+D/wpa_supplicant( 1804): wlan0: Setting scan request: 0.000000 sec
+D/wpa_supplicant( 1804): wlan0: Starting AP scan for wildcard SSID
+D/wpa_supplicant( 1804): wlan0: Limit manual scan to specified channels
+D/wpa_supplicant( 1804): wlan0: Add radio work 'scan'@0x7f9dc1e380
+D/wpa_supplicant( 1804): wlan0: First radio work item in the queue - schedule start immediately
+D/wpa_supplicant( 1804): wlan0: Starting radio work 'scan'@0x7f9dc1e380 after 0.000090 second wait
+D/wpa_supplicant( 1804): wlan0: nl80211: scan request
+D/wpa_supplicant( 1804): nl80211: Scan SSID - hexdump(len=0): [NULL]
+D/wpa_supplicant( 1804): nl80211: Scan frequency 5745 MHz
+D/wpa_supplicant( 1804): nl80211: Scan frequency 5765 MHz
+D/wpa_supplicant( 1804): nl80211: Scan frequency 5785 MHz
+D/wpa_supplicant( 1804): nl80211: Scan frequency 5805 MHz
+D/wpa_supplicant( 1804): Scan requested (ret=0) - scan timeout 30 seconds
+D/wpa_supplicant( 1804): nl80211: Event message available
+D/wpa_supplicant( 1804): nl80211: Drv Event 33 (NL80211_CMD_TRIGGER_SCAN) received for wlan0
+D/wpa_supplicant( 1804): wlan0: nl80211: Scan trigger
+D/wpa_supplicant( 1804): wlan0: Event SCAN_STARTED (49) received
+D/wpa_supplicant( 1804): wlan0: Own scan request started a scan in 0.000216 seconds
+I/wpa_supplicant( 1804): wlan0: CTRL-EVENT-SCAN-STARTED 
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_455-1\x00
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_997-2\x00
+I/WifiHAL (  997): Poll result = 1
+I/WifiHAL (  997): Found some events!!!
+D/WifiHAL (  997): no_seq_check received
+I/WifiHAL (  997): event received NL80211_CMD_TRIGGER_SCAN
+I/WifiHAL (  997): event received NL80211_CMD_TRIGGER_SCAN, vendor_id = 0x0
+I/WifiHAL (  997): event ignored!!
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+D/wpa_supplicant( 1804): nl80211: Event message available
+D/wpa_supplicant( 1804): nl80211: Drv Event 34 (NL80211_CMD_NEW_SCAN_RESULTS) received for wlan0
+D/wpa_supplicant( 1804): wlan0: nl80211: New scan results available
+D/wpa_supplicant( 1804): nl80211: Scan included frequencies:
+D/wpa_supplicant( 1804): wlan0: Event SCAN_RESULTS (3) received
+D/wpa_supplicant( 1804): wlan0: Scan completed in 0.720624 seconds
+D/wpa_supplicant( 1804): nl80211: Associated on 5745 MHz
+D/wpa_supplicant( 1804): nl80211: Associated with 2c:e6:cc:3c:b2:9c
+D/wpa_supplicant( 1804): nl80211: Received scan results (11 BSSes)
+D/wpa_supplicant( 1804): nl80211: Scan results indicate BSS status with 2c:e6:cc:3c:b2:9c as associated
+D/wpa_supplicant( 1804): wlan0: BSS: Start scan result update 114
+D/wpa_supplicant( 1804): BSS: last_scan_res_used=11/32
+D/wpa_supplicant( 1804): wlan0: Scan-only results received
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_455-1\x00
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_997-2\x00
+D/wpa_supplicant( 1804): wlan0: Radio work 'scan'@0x7f9dc1e380 done in 0.723547 seconds
+I/WifiHAL (  997): Poll result = 1
+I/WifiHAL (  997): Found some events!!!
+D/WifiHAL (  997): no_seq_check received
+I/WifiHAL (  997): event received NL80211_CMD_NEW_SCAN_RESULTS
+I/WifiHAL (  997): event received NL80211_CMD_NEW_SCAN_RESULTS, vendor_id = 0x0
+I/WifiHAL (  997): event ignored!!
+D/wpa_supplicant( 1804): wlan0: Control interface command 'BSS RANGE=0- MASK=0x23987'
+D/wpa_supplicant( 1804): wlan0: Control interface command 'STATUS-NO_EVENTS'
+I/MSM-irqbalance(  673): Decided to move IRQ216 from CPU0 to CPU1
+D/Ulp_jni (  997): Location CB invoked
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+I/MSM-irqbalance(  673): Decided to move IRQ222 from CPU0 to CPU1
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+D/Ulp_jni (  997): Location CB invoked
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+I/MSM-irqbalance(  673): Decided to move IRQ57 from CPU0 to CPU1
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+W/DNSIncoming(13488): There was an OPT answer. Not currently handled. Option code: 65002 data: 56637E11555B77A9
+E/WifiStateMachine(  997): WifiStateMachine CMD_START_SCAN source -2 txSuccessRate=0.00 rxSuccessRate=42.24 targetRoamBSSID=any RSSI=-54
+E/WifiStateMachine(  997): WifiStateMachine starting scan for "yixia_5g"WPA_PSK with 5745,5805,5765,5785
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SCAN TYPE=ONLY freq=5745,5805,5765,5785'
+D/wpa_supplicant( 1804): wlan0: Setting scan request: 0.000000 sec
+D/wpa_supplicant( 1804): wlan0: Starting AP scan for wildcard SSID
+D/wpa_supplicant( 1804): wlan0: Limit manual scan to specified channels
+D/wpa_supplicant( 1804): wlan0: Add radio work 'scan'@0x7f9dc1e4c0
+D/wpa_supplicant( 1804): wlan0: First radio work item in the queue - schedule start immediately
+D/wpa_supplicant( 1804): wlan0: Starting radio work 'scan'@0x7f9dc1e4c0 after 0.000096 second wait
+D/wpa_supplicant( 1804): wlan0: nl80211: scan request
+D/wpa_supplicant( 1804): nl80211: Scan SSID - hexdump(len=0): [NULL]
+D/wpa_supplicant( 1804): nl80211: Scan frequency 5745 MHz
+D/wpa_supplicant( 1804): nl80211: Scan frequency 5765 MHz
+D/wpa_supplicant( 1804): nl80211: Scan frequency 5785 MHz
+D/wpa_supplicant( 1804): nl80211: Scan frequency 5805 MHz
+D/wpa_supplicant( 1804): Scan requested (ret=0) - scan timeout 30 seconds
+D/wpa_supplicant( 1804): nl80211: Event message available
+D/wpa_supplicant( 1804): nl80211: Drv Event 33 (NL80211_CMD_TRIGGER_SCAN) received for wlan0
+D/wpa_supplicant( 1804): wlan0: nl80211: Scan trigger
+D/wpa_supplicant( 1804): wlan0: Event SCAN_STARTED (49) received
+D/wpa_supplicant( 1804): wlan0: Own scan request started a scan in 0.000424 seconds
+I/wpa_supplicant( 1804): wlan0: CTRL-EVENT-SCAN-STARTED 
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_455-1\x00
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_997-2\x00
+I/WifiHAL (  997): Poll result = 1
+I/WifiHAL (  997): Found some events!!!
+D/WifiHAL (  997): no_seq_check received
+I/WifiHAL (  997): event received NL80211_CMD_TRIGGER_SCAN
+I/WifiHAL (  997): event received NL80211_CMD_TRIGGER_SCAN, vendor_id = 0x0
+I/WifiHAL (  997): event ignored!!
+W/DNSIncoming(13488): There was an OPT answer. Not currently handled. Option code: 65002 data: 56637E11555B77A9
+W/DNSIncoming(13488): There was an OPT answer. Not currently handled. Option code: 65002 data: 56637E11555B77A9
+D/wpa_supplicant( 1804): nl80211: Event message available
+D/wpa_supplicant( 1804): nl80211: Drv Event 34 (NL80211_CMD_NEW_SCAN_RESULTS) received for wlan0
+D/wpa_supplicant( 1804): wlan0: nl80211: New scan results available
+D/wpa_supplicant( 1804): nl80211: Scan included frequencies:
+D/wpa_supplicant( 1804): wlan0: Event SCAN_RESULTS (3) received
+D/wpa_supplicant( 1804): wlan0: Scan completed in 0.714413 seconds
+D/wpa_supplicant( 1804): nl80211: Associated on 5745 MHz
+D/wpa_supplicant( 1804): nl80211: Associated with 2c:e6:cc:3c:b2:9c
+D/wpa_supplicant( 1804): nl80211: Received scan results (11 BSSes)
+D/wpa_supplicant( 1804): nl80211: Scan results indicate BSS status with 2c:e6:cc:3c:b2:9c as associated
+D/wpa_supplicant( 1804): wlan0: BSS: Start scan result update 115
+D/wpa_supplicant( 1804): BSS: last_scan_res_used=11/32
+D/wpa_supplicant( 1804): wlan0: Scan-only results received
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_455-1\x00
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_997-2\x00
+D/wpa_supplicant( 1804): wlan0: Radio work 'scan'@0x7f9dc1e4c0 done in 0.717431 seconds
+I/WifiHAL (  997): Poll result = 1
+I/WifiHAL (  997): Found some events!!!
+D/WifiHAL (  997): no_seq_check received
+I/WifiHAL (  997): event received NL80211_CMD_NEW_SCAN_RESULTS
+I/WifiHAL (  997): event received NL80211_CMD_NEW_SCAN_RESULTS, vendor_id = 0x0
+I/WifiHAL (  997): event ignored!!
+D/wpa_supplicant( 1804): wlan0: Control interface command 'BSS RANGE=0- MASK=0x23987'
+D/wpa_supplicant( 1804): wlan0: Control interface command 'STATUS-NO_EVENTS'
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+W/DNSIncoming(13488): There was an OPT answer. Not currently handled. Option code: 65002 data: 56637E11555B77A9
+D/Ulp_jni (  997): Location CB invoked
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+D/Ulp_jni (  997): Location CB invoked
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+D/MSF.C.NetConnTag(13132): [E]pa ok: 62085
+D/MSF.C.NetConnTag(13132): [E]netSend ssoSeq:62085 uin:*8871 cmd:346110978 62161
+D/MSF.C.NetConnTag(13132): [E]netRecv ssoSeq:62085 uin:*8871 cmd:346110978 62197
+D/MSF.C.NetConnTag(13132): [E]pa ok: 62086
+D/MSF.C.NetConnTag(13132): [E]netSend ssoSeq:62086 uin:*8871 cmd:-2080616503 62314
+D/MSF.C.NetConnTag(13132): [E]netRecv ssoSeq:62086 uin:*8871 cmd:-2080616503 62822
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+E/WifiStateMachine(  997): WifiStateMachine CMD_START_SCAN source -2 txSuccessRate=1.00 rxSuccessRate=16.65 targetRoamBSSID=any RSSI=-46
+E/WifiStateMachine(  997): WifiStateMachine starting scan for "yixia_5g"WPA_PSK with 5745,5805,5765,5785
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SCAN TYPE=ONLY freq=5745,5805,5765,5785'
+D/wpa_supplicant( 1804): wlan0: Setting scan request: 0.000000 sec
+D/wpa_supplicant( 1804): wlan0: Starting AP scan for wildcard SSID
+D/wpa_supplicant( 1804): wlan0: Limit manual scan to specified channels
+D/wpa_supplicant( 1804): wlan0: Add radio work 'scan'@0x7f9dc1e380
+D/wpa_supplicant( 1804): wlan0: First radio work item in the queue - schedule start immediately
+D/wpa_supplicant( 1804): wlan0: Starting radio work 'scan'@0x7f9dc1e380 after 0.000091 second wait
+D/wpa_supplicant( 1804): wlan0: nl80211: scan request
+D/wpa_supplicant( 1804): nl80211: Scan SSID - hexdump(len=0): [NULL]
+D/wpa_supplicant( 1804): nl80211: Scan frequency 5745 MHz
+D/wpa_supplicant( 1804): nl80211: Scan frequency 5765 MHz
+D/wpa_supplicant( 1804): nl80211: Scan frequency 5785 MHz
+D/wpa_supplicant( 1804): nl80211: Scan frequency 5805 MHz
+D/wpa_supplicant( 1804): Scan requested (ret=0) - scan timeout 30 seconds
+D/wpa_supplicant( 1804): nl80211: Event message available
+D/wpa_supplicant( 1804): nl80211: Drv Event 33 (NL80211_CMD_TRIGGER_SCAN) received for wlan0
+D/wpa_supplicant( 1804): wlan0: nl80211: Scan trigger
+D/wpa_supplicant( 1804): wlan0: Event SCAN_STARTED (49) received
+D/wpa_supplicant( 1804): wlan0: Own scan request started a scan in 0.000209 seconds
+I/wpa_supplicant( 1804): wlan0: CTRL-EVENT-SCAN-STARTED 
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_455-1\x00
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_997-2\x00
+I/WifiHAL (  997): Poll result = 1
+I/WifiHAL (  997): Found some events!!!
+D/WifiHAL (  997): no_seq_check received
+I/WifiHAL (  997): event received NL80211_CMD_TRIGGER_SCAN
+I/WifiHAL (  997): event received NL80211_CMD_TRIGGER_SCAN, vendor_id = 0x0
+I/WifiHAL (  997): event ignored!!
+I/WifiHAL (  997): Poll result = 1
+D/wpa_supplicant( 1804): nl80211: Event message available
+I/WifiHAL (  997): Found some events!!!
+D/WifiHAL (  997): no_seq_check received
+D/wpa_supplicant( 1804): nl80211: Drv Event 34 (NL80211_CMD_NEW_SCAN_RESULTS) received for wlan0
+I/WifiHAL (  997): event received NL80211_CMD_NEW_SCAN_RESULTS
+I/WifiHAL (  997): event received NL80211_CMD_NEW_SCAN_RESULTS, vendor_id = 0x0
+I/WifiHAL (  997): event ignored!!
+D/wpa_supplicant( 1804): wlan0: nl80211: New scan results available
+D/wpa_supplicant( 1804): nl80211: Scan included frequencies:
+D/wpa_supplicant( 1804): wlan0: Event SCAN_RESULTS (3) received
+D/wpa_supplicant( 1804): wlan0: Scan completed in 0.764926 seconds
+D/wpa_supplicant( 1804): nl80211: Associated on 5745 MHz
+D/wpa_supplicant( 1804): nl80211: Associated with 2c:e6:cc:3c:b2:9c
+D/wpa_supplicant( 1804): nl80211: Received scan results (11 BSSes)
+D/wpa_supplicant( 1804): nl80211: Scan results indicate BSS status with 2c:e6:cc:3c:b2:9c as associated
+D/wpa_supplicant( 1804): wlan0: BSS: Start scan result update 116
+D/wpa_supplicant( 1804): BSS: last_scan_res_used=11/32
+D/wpa_supplicant( 1804): wlan0: Scan-only results received
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_455-1\x00
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_997-2\x00
+D/wpa_supplicant( 1804): wlan0: Radio work 'scan'@0x7f9dc1e380 done in 0.768163 seconds
+D/wpa_supplicant( 1804): wlan0: Control interface command 'BSS RANGE=0- MASK=0x23987'
+D/wpa_supplicant( 1804): wlan0: Control interface command 'STATUS-NO_EVENTS'
+I/art     (  997): Background partial concurrent mark sweep GC freed 295263(13MB) AllocSpace objects, 96(1920KB) LOS objects, 26% free, 45MB/61MB, paused 2.383ms total 207.700ms
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+D/Ulp_jni (  997): Location CB invoked
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+D/Ulp_jni (  997): Location CB invoked
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+W/DNSIncoming(13488): There was an OPT answer. Not currently handled. Option code: 65002 data: DB73EC253999421F
+W/DNSIncoming(13488): There was an OPT answer. Not currently handled. Option code: 65002 data: DB73EC253999421F
+W/DNSIncoming(13488): There was an OPT answer. Not currently handled. Option code: 65002 data: DB73EC253999421F
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+W/DNSIncoming(13488): There was an OPT answer. Not currently handled. Option code: 65002 data: CDE4D8BE7BE3E937
+E/WifiStateMachine(  997): WifiStateMachine CMD_START_SCAN source -2 txSuccessRate=0.02 rxSuccessRate=37.15 targetRoamBSSID=any RSSI=-51
+E/WifiStateMachine(  997): WifiStateMachine starting scan for "yixia_5g"WPA_PSK with 5745,5805,5765,5785
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SCAN TYPE=ONLY freq=5745,5805,5765,5785'
+D/wpa_supplicant( 1804): wlan0: Setting scan request: 0.000000 sec
+D/wpa_supplicant( 1804): wlan0: Starting AP scan for wildcard SSID
+D/wpa_supplicant( 1804): wlan0: Limit manual scan to specified channels
+D/wpa_supplicant( 1804): wlan0: Add radio work 'scan'@0x7f9dc1e4c0
+D/wpa_supplicant( 1804): wlan0: First radio work item in the queue - schedule start immediately
+D/wpa_supplicant( 1804): wlan0: Starting radio work 'scan'@0x7f9dc1e4c0 after 0.000102 second wait
+D/wpa_supplicant( 1804): wlan0: nl80211: scan request
+D/wpa_supplicant( 1804): nl80211: Scan SSID - hexdump(len=0): [NULL]
+D/wpa_supplicant( 1804): nl80211: Scan frequency 5745 MHz
+D/wpa_supplicant( 1804): nl80211: Scan frequency 5765 MHz
+D/wpa_supplicant( 1804): nl80211: Scan frequency 5785 MHz
+D/wpa_supplicant( 1804): nl80211: Scan frequency 5805 MHz
+D/wpa_supplicant( 1804): Scan requested (ret=0) - scan timeout 30 seconds
+D/wpa_supplicant( 1804): nl80211: Event message available
+D/wpa_supplicant( 1804): nl80211: Drv Event 33 (NL80211_CMD_TRIGGER_SCAN) received for wlan0
+D/wpa_supplicant( 1804): wlan0: nl80211: Scan trigger
+D/wpa_supplicant( 1804): wlan0: Event SCAN_STARTED (49) received
+D/wpa_supplicant( 1804): wlan0: Own scan request started a scan in 0.000214 seconds
+I/wpa_supplicant( 1804): wlan0: CTRL-EVENT-SCAN-STARTED 
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_455-1\x00
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_997-2\x00
+I/WifiHAL (  997): Poll result = 1
+I/WifiHAL (  997): Found some events!!!
+D/WifiHAL (  997): no_seq_check received
+I/WifiHAL (  997): event received NL80211_CMD_TRIGGER_SCAN
+I/WifiHAL (  997): event received NL80211_CMD_TRIGGER_SCAN, vendor_id = 0x0
+I/WifiHAL (  997): event ignored!!
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+D/wpa_supplicant( 1804): nl80211: Event message available
+D/wpa_supplicant( 1804): nl80211: Drv Event 34 (NL80211_CMD_NEW_SCAN_RESULTS) received for wlan0
+D/wpa_supplicant( 1804): wlan0: nl80211: New scan results available
+D/wpa_supplicant( 1804): nl80211: Scan included frequencies:
+D/wpa_supplicant( 1804): wlan0: Event SCAN_RESULTS (3) received
+D/wpa_supplicant( 1804): wlan0: Scan completed in 0.715200 seconds
+D/wpa_supplicant( 1804): nl80211: Associated on 5745 MHz
+D/wpa_supplicant( 1804): nl80211: Associated with 2c:e6:cc:3c:b2:9c
+D/wpa_supplicant( 1804): nl80211: Received scan results (11 BSSes)
+D/wpa_supplicant( 1804): nl80211: Scan results indicate BSS status with 2c:e6:cc:3c:b2:9c as associated
+D/wpa_supplicant( 1804): wlan0: BSS: Start scan result update 117
+D/wpa_supplicant( 1804): BSS: last_scan_res_used=11/32
+D/wpa_supplicant( 1804): wlan0: Scan-only results received
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_455-1\x00
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_997-2\x00
+D/wpa_supplicant( 1804): wlan0: Radio work 'scan'@0x7f9dc1e4c0 done in 0.718196 seconds
+I/WifiHAL (  997): Poll result = 1
+I/WifiHAL (  997): Found some events!!!
+D/WifiHAL (  997): no_seq_check received
+I/WifiHAL (  997): event received NL80211_CMD_NEW_SCAN_RESULTS
+I/WifiHAL (  997): event received NL80211_CMD_NEW_SCAN_RESULTS, vendor_id = 0x0
+I/WifiHAL (  997): event ignored!!
+D/wpa_supplicant( 1804): wlan0: Control interface command 'BSS RANGE=0- MASK=0x23987'
+D/wpa_supplicant( 1804): wlan0: Control interface command 'STATUS-NO_EVENTS'
+D/AndroidRuntime(14039): 
+D/AndroidRuntime(14039): >>>>>> AndroidRuntime START com.android.internal.os.RuntimeInit <<<<<<
+D/AndroidRuntime(14039): CheckJNI is OFF
+D/AndroidRuntime(14039): Calling main entry com.android.commands.pm.Pm
+D/AndroidRuntime(14039): Shutting down VM
+D/Ulp_jni (  997): Location CB invoked
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+W/DNSIncoming(13488): There was an OPT answer. Not currently handled. Option code: 65002 data: 281923F36BB13A62
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+D/Ulp_jni (  997): Location CB invoked
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+E/WifiStateMachine(  997): WifiStateMachine CMD_START_SCAN source 10078 txSuccessRate=0.00 rxSuccessRate=32.92 targetRoamBSSID=any RSSI=-49
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SCAN TYPE=ONLY'
+D/wpa_supplicant( 1804): wlan0: Setting scan request: 0.000000 sec
+D/wpa_supplicant( 1804): wlan0: Starting AP scan for wildcard SSID
+D/wpa_supplicant( 1804): wlan0: Add radio work 'scan'@0x7f9dc1e380
+D/wpa_supplicant( 1804): wlan0: First radio work item in the queue - schedule start immediately
+D/wpa_supplicant( 1804): wlan0: Starting radio work 'scan'@0x7f9dc1e380 after 0.000090 second wait
+D/wpa_supplicant( 1804): wlan0: nl80211: scan request
+D/wpa_supplicant( 1804): nl80211: Scan SSID - hexdump(len=0): [NULL]
+D/wpa_supplicant( 1804): Scan requested (ret=0) - scan timeout 30 seconds
+D/wpa_supplicant( 1804): nl80211: Event message available
+D/wpa_supplicant( 1804): nl80211: Drv Event 33 (NL80211_CMD_TRIGGER_SCAN) received for wlan0
+D/wpa_supplicant( 1804): wlan0: nl80211: Scan trigger
+D/wpa_supplicant( 1804): wlan0: Event SCAN_STARTED (49) received
+D/wpa_supplicant( 1804): wlan0: Own scan request started a scan in 0.000261 seconds
+I/wpa_supplicant( 1804): wlan0: CTRL-EVENT-SCAN-STARTED 
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_455-1\x00
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_997-2\x00
+I/WifiHAL (  997): Poll result = 1
+I/WifiHAL (  997): Found some events!!!
+D/WifiHAL (  997): no_seq_check received
+I/WifiHAL (  997): event received NL80211_CMD_TRIGGER_SCAN
+I/WifiHAL (  997): event received NL80211_CMD_TRIGGER_SCAN, vendor_id = 0x0
+I/WifiHAL (  997): event ignored!!
+E/WifiStateMachine(  997): WifiStateMachine CMD_START_SCAN source 10078 txSuccessRate=0.00 rxSuccessRate=32.92 targetRoamBSSID=any RSSI=-49
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SCAN TYPE=ONLY'
+D/wpa_supplicant( 1804): Pending scan scheduled - reject new request
+E/WifiStateMachine(  997): WifiStateMachine CMD_START_SCAN source -2 txSuccessRate=0.00 rxSuccessRate=32.92 targetRoamBSSID=any RSSI=-49
+E/WifiStateMachine(  997): WifiStateMachine starting scan for "yixia_5g"WPA_PSK with 5745,5805,5765,5785
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SCAN TYPE=ONLY freq=5745,5805,5765,5785'
+D/wpa_supplicant( 1804): Pending scan scheduled - reject new request
+E/WifiStateMachine(  997): WifiStateMachine CMD_START_SCAN source 10029 txSuccessRate=0.00 rxSuccessRate=32.92 targetRoamBSSID=any RSSI=-49
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SCAN TYPE=ONLY'
+D/wpa_supplicant( 1804): Pending scan scheduled - reject new request
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+D/wpa_supplicant( 1804): nl80211: Event message available
+D/wpa_supplicant( 1804): nl80211: Drv Event 34 (NL80211_CMD_NEW_SCAN_RESULTS) received for wlan0
+D/wpa_supplicant( 1804): wlan0: nl80211: New scan results available
+D/wpa_supplicant( 1804): nl80211: Scan included frequencies:
+D/wpa_supplicant( 1804): wlan0: Event SCAN_RESULTS (3) received
+D/wpa_supplicant( 1804): wlan0: Scan completed in 3.657024 seconds
+D/wpa_supplicant( 1804): nl80211: Associated on 5745 MHz
+D/wpa_supplicant( 1804): nl80211: Associated with 2c:e6:cc:3c:b2:9c
+D/wpa_supplicant( 1804): nl80211: Received scan results (21 BSSes)
+D/wpa_supplicant( 1804): nl80211: Scan results indicate BSS status with 2c:e6:cc:3c:b2:9c as associated
+D/wpa_supplicant( 1804): wlan0: BSS: Start scan result update 118
+D/wpa_supplicant( 1804): wlan0: BSS: Add new id 331 BSSID 2c:e6:cc:3c:af:c8 SSID 'yixia'
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_455-1\x00
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_997-2\x00
+D/wpa_supplicant( 1804): wlan0: BSS: Add new id 332 BSSID 2c:e6:cc:3c:b2:98 SSID 'yixia'
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_455-1\x00
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_997-2\x00
+D/wpa_supplicant( 1804): wlan0: BSS: Add new id 333 BSSID f4:f9:51:e6:32:78 SSID 'UED'
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_455-1\x00
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_997-2\x00
+D/wpa_supplicant( 1804): wlan0: BSS: Add new id 334 BSSID 42:10:b3:82:48:01 SSID 'cai'
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_455-1\x00
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_997-2\x00
+D/wpa_supplicant( 1804): wlan0: BSS: Add new id 335 BSSID f0:b4:79:14:83:c6 SSID 'Wan'
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_455-1\x00
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_997-2\x00
+D/wpa_supplicant( 1804): wlan0: BSS: Add new id 336 BSSID 6c:aa:b3:39:52:f8 SSID 'yixia'
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_455-1\x00
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_997-2\x00
+D/wpa_supplicant( 1804): wlan0: BSS: Add new id 337 BSSID 6c:aa:b3:79:86:c8 SSID 'yixia_hr'
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_455-1\x00
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_997-2\x00
+D/wpa_supplicant( 1804): wlan0: BSS: Add new id 338 BSSID c8:e0:eb:36:64:0d SSID 'dalin_at_mac'
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_455-1\x00
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_997-2\x00
+D/wpa_supplicant( 1804): wlan0: BSS: Add new id 339 BSSID 6c:aa:b3:39:86:c8 SSID 'yixia'
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_455-1\x00
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_997-2\x00
+D/wpa_supplicant( 1804): wlan0: BSS: Add new id 340 BSSID b8:55:10:b9:9a:84 SSID 'JYMF_1603'
+I/WifiHAL (  997): Poll result = 1
+I/WifiHAL (  997): Found some events!!!
+D/WifiHAL (  997): no_seq_check received
+I/WifiHAL (  997): event received NL80211_CMD_NEW_SCAN_RESULTS
+I/WifiHAL (  997): event received NL80211_CMD_NEW_SCAN_RESULTS, vendor_id = 0x0
+I/WifiHAL (  997): event ignored!!
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_455-1\x00
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_997-2\x00
+D/wpa_supplicant( 1804): BSS: last_scan_res_used=21/32
+D/wpa_supplicant( 1804): wlan0: Scan-only results received
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_455-1\x00
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_997-2\x00
+D/wpa_supplicant( 1804): wlan0: Radio work 'scan'@0x7f9dc1e380 done in 3.666574 seconds
+D/wpa_supplicant( 1804): wlan0: Control interface command 'BSS RANGE=0- MASK=0x23987'
+D/wpa_supplicant( 1804): wlan0: Control interface command 'STATUS-NO_EVENTS'
+D/LBSSystemMonitorService(  997): handleMessage what - 4
+D/Wiper_jni(  997): Send Network Location.
+E/TAG     (13488): {}
+E/TAG     (13488): {}
+D/WifiScanServices(13488): scanResult:[]
+V/MSAPMReceiver(13110): Got intent:android.net.wifi.SCAN_RESULTS
+V/MSAPMReceiver(13110): Got intent SCAN_RESULTS
+V/MSAPM   (13110): notify_scan_results_available
+E/MSAPM   (13110): Handler not yet initialized. Can't send!
+D/Ulp_jni (  997): Location CB invoked
+E/WifiScanServices(13488): start process end time - 31
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+D/StatusBar.NetworkController( 1365): slot=-10;action=android.net.wifi.RSSI_CHANGED
+D/Ulp_jni (  997): Location CB invoked
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+D/StatusBar.NetworkController( 1365): slot=-10;action=android.net.wifi.RSSI_CHANGED
+I/PPDaemon(  473): int AD::ADInput(int): ad_input ioctl successful!!, ALS value = 24
+I/PPDaemon(  473): int AD::ADUpdateAL(int, int)(): ADUpdateAL() successfull, ALS = 24
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+I/MSM-irqbalance(  673): Decided to move IRQ215 from CPU1 to CPU0
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+E/WifiStateMachine(  997): WifiStateMachine CMD_START_SCAN source -2 txSuccessRate=0.00 rxSuccessRate=15.30 targetRoamBSSID=any RSSI=-53
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SCAN TYPE=ONLY'
+D/wpa_supplicant( 1804): wlan0: Setting scan request: 0.000000 sec
+D/wpa_supplicant( 1804): wlan0: Starting AP scan for wildcard SSID
+D/wpa_supplicant( 1804): wlan0: Add radio work 'scan'@0x7f9dc1e4c0
+D/wpa_supplicant( 1804): wlan0: First radio work item in the queue - schedule start immediately
+D/wpa_supplicant( 1804): wlan0: Starting radio work 'scan'@0x7f9dc1e4c0 after 0.000089 second wait
+D/wpa_supplicant( 1804): wlan0: nl80211: scan request
+D/wpa_supplicant( 1804): nl80211: Scan SSID - hexdump(len=0): [NULL]
+D/wpa_supplicant( 1804): Scan requested (ret=0) - scan timeout 30 seconds
+D/wpa_supplicant( 1804): nl80211: Event message available
+D/wpa_supplicant( 1804): nl80211: Drv Event 33 (NL80211_CMD_TRIGGER_SCAN) received for wlan0
+D/wpa_supplicant( 1804): wlan0: nl80211: Scan trigger
+D/wpa_supplicant( 1804): wlan0: Event SCAN_STARTED (49) received
+D/wpa_supplicant( 1804): wlan0: Own scan request started a scan in 0.000193 seconds
+I/wpa_supplicant( 1804): wlan0: CTRL-EVENT-SCAN-STARTED 
+I/WifiHAL (  997): Poll result = 1
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_455-1\x00
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_997-2\x00
+I/WifiHAL (  997): Found some events!!!
+D/WifiHAL (  997): no_seq_check received
+I/WifiHAL (  997): event received NL80211_CMD_TRIGGER_SCAN
+I/WifiHAL (  997): event received NL80211_CMD_TRIGGER_SCAN, vendor_id = 0x0
+I/WifiHAL (  997): event ignored!!
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+I/MSM-irqbalance(  673): Decided to move IRQ155 from CPU1 to CPU0
+D/Ulp_jni (  997): Location CB invoked
+D/wpa_supplicant( 1804): nl80211: Event message available
+D/wpa_supplicant( 1804): nl80211: Drv Event 34 (NL80211_CMD_NEW_SCAN_RESULTS) received for wlan0
+D/wpa_supplicant( 1804): wlan0: nl80211: New scan results available
+D/wpa_supplicant( 1804): nl80211: Scan included frequencies:
+D/wpa_supplicant( 1804): wlan0: Event SCAN_RESULTS (3) received
+D/wpa_supplicant( 1804): wlan0: Scan completed in 3.682543 seconds
+D/wpa_supplicant( 1804): nl80211: Associated on 5745 MHz
+D/wpa_supplicant( 1804): nl80211: Associated with 2c:e6:cc:3c:b2:9c
+D/wpa_supplicant( 1804): nl80211: Received scan results (21 BSSes)
+D/wpa_supplicant( 1804): nl80211: Scan results indicate BSS status with 2c:e6:cc:3c:b2:9c as associated
+D/wpa_supplicant( 1804): wlan0: BSS: Start scan result update 119
+D/wpa_supplicant( 1804): BSS: last_scan_res_used=21/32
+D/wpa_supplicant( 1804): wlan0: Scan-only results received
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_455-1\x00
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_997-2\x00
+D/wpa_supplicant( 1804): wlan0: Radio work 'scan'@0x7f9dc1e4c0 done in 3.685804 seconds
+I/WifiHAL (  997): Poll result = 1
+I/WifiHAL (  997): Found some events!!!
+D/WifiHAL (  997): no_seq_check received
+I/WifiHAL (  997): event received NL80211_CMD_NEW_SCAN_RESULTS
+I/WifiHAL (  997): event received NL80211_CMD_NEW_SCAN_RESULTS, vendor_id = 0x0
+I/WifiHAL (  997): event ignored!!
+D/wpa_supplicant( 1804): wlan0: Control interface command 'BSS RANGE=0- MASK=0x23987'
+D/wpa_supplicant( 1804): wlan0: Control interface command 'STATUS-NO_EVENTS'
+D/LBSSystemMonitorService(  997): handleMessage what - 4
+D/Wiper_jni(  997): Send Network Location.
+E/TAG     (13488): {}
+E/TAG     (13488): {}
+D/WifiScanServices(13488): scanResult:[]
+V/MSAPMReceiver(13110): Got intent:android.net.wifi.SCAN_RESULTS
+V/MSAPMReceiver(13110): Got intent SCAN_RESULTS
+V/MSAPM   (13110): notify_scan_results_available
+E/MSAPM   (13110): Handler not yet initialized. Can't send!
+E/WifiScanServices(13488): start process end time - 40
+E/WifiStateMachine(  997): WifiStateMachine CMD_START_SCAN source 10078 txSuccessRate=0.00 rxSuccessRate=12.15 targetRoamBSSID=any RSSI=-53
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SCAN TYPE=ONLY'
+D/wpa_supplicant( 1804): wlan0: Setting scan request: 0.000000 sec
+D/wpa_supplicant( 1804): wlan0: Starting AP scan for wildcard SSID
+D/wpa_supplicant( 1804): wlan0: Add radio work 'scan'@0x7f9dc1e380
+D/wpa_supplicant( 1804): wlan0: First radio work item in the queue - schedule start immediately
+D/wpa_supplicant( 1804): wlan0: Starting radio work 'scan'@0x7f9dc1e380 after 0.000036 second wait
+D/wpa_supplicant( 1804): wlan0: nl80211: scan request
+D/wpa_supplicant( 1804): nl80211: Scan SSID - hexdump(len=0): [NULL]
+D/wpa_supplicant( 1804): Scan requested (ret=0) - scan timeout 30 seconds
+I/WifiHAL (  997): Poll result = 1
+I/WifiHAL (  997): Found some events!!!
+D/wpa_supplicant( 1804): nl80211: Event message available
+D/WifiHAL (  997): no_seq_check received
+D/wpa_supplicant( 1804): nl80211: Drv Event 33 (NL80211_CMD_TRIGGER_SCAN) received for wlan0
+I/WifiHAL (  997): event received NL80211_CMD_TRIGGER_SCAN
+I/WifiHAL (  997): event received NL80211_CMD_TRIGGER_SCAN, vendor_id = 0x0
+D/wpa_supplicant( 1804): wlan0: nl80211: Scan trigger
+I/WifiHAL (  997): event ignored!!
+D/wpa_supplicant( 1804): wlan0: Event SCAN_STARTED (49) received
+D/wpa_supplicant( 1804): wlan0: Own scan request started a scan in 0.000108 seconds
+I/wpa_supplicant( 1804): wlan0: CTRL-EVENT-SCAN-STARTED 
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_455-1\x00
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_997-2\x00
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+D/wpa_supplicant( 1804): nl80211: Event message available
+D/wpa_supplicant( 1804): nl80211: Drv Event 34 (NL80211_CMD_NEW_SCAN_RESULTS) received for wlan0
+D/wpa_supplicant( 1804): wlan0: nl80211: New scan results available
+D/wpa_supplicant( 1804): nl80211: Scan included frequencies:
+D/wpa_supplicant( 1804): wlan0: Event SCAN_RESULTS (3) received
+D/wpa_supplicant( 1804): wlan0: Scan completed in 3.599393 seconds
+D/wpa_supplicant( 1804): nl80211: Associated on 5745 MHz
+D/wpa_supplicant( 1804): nl80211: Associated with 2c:e6:cc:3c:b2:9c
+I/WifiHAL (  997): Poll result = 1
+I/WifiHAL (  997): Found some events!!!
+D/WifiHAL (  997): no_seq_check received
+I/WifiHAL (  997): event received NL80211_CMD_NEW_SCAN_RESULTS
+I/WifiHAL (  997): event received NL80211_CMD_NEW_SCAN_RESULTS, vendor_id = 0x0
+I/WifiHAL (  997): event ignored!!
+D/wpa_supplicant( 1804): nl80211: Received scan results (24 BSSes)
+D/wpa_supplicant( 1804): nl80211: Scan results indicate BSS status with 2c:e6:cc:3c:b2:9c as associated
+D/wpa_supplicant( 1804): wlan0: BSS: Start scan result update 120
+D/wpa_supplicant( 1804): wlan0: BSS: Add new id 341 BSSID 94:77:2b:04:72:d4 SSID 'GFW'
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_455-1\x00
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_997-2\x00
+D/wpa_supplicant( 1804): wlan0: BSS: Add new id 342 BSSID 26:35:30:00:c9:b3 SSID 'PC-47'
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_455-1\x00
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_997-2\x00
+D/wpa_supplicant( 1804): wlan0: BSS: Add new id 343 BSSID 60:de:44:77:31:80 SSID 'WORKER'
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_455-1\x00
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_997-2\x00
+D/wpa_supplicant( 1804): BSS: last_scan_res_used=24/32
+D/wpa_supplicant( 1804): wlan0: Scan-only results received
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_455-1\x00
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_997-2\x00
+D/wpa_supplicant( 1804): wlan0: Radio work 'scan'@0x7f9dc1e380 done in 3.602916 seconds
+D/wpa_supplicant( 1804): wlan0: Control interface command 'BSS RANGE=0- MASK=0x23987'
+I/MSM-irqbalance(  673): Decided to move IRQ57 from CPU1 to CPU0
+D/wpa_supplicant( 1804): wlan0: Control interface command 'STATUS-NO_EVENTS'
+D/LBSSystemMonitorService(  997): handleMessage what - 4
+D/Wiper_jni(  997): Send Network Location.
+E/TAG     (13488): {}
+E/TAG     (13488): {}
+D/WifiScanServices(13488): scanResult:[]
+V/MSAPMReceiver(13110): Got intent:android.net.wifi.SCAN_RESULTS
+V/MSAPMReceiver(13110): Got intent SCAN_RESULTS
+V/MSAPM   (13110): notify_scan_results_available
+E/MSAPM   (13110): Handler not yet initialized. Can't send!
+E/WifiScanServices(13488): start process end time - 33
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+D/StatusBar.NetworkController( 1365): slot=-10;action=android.net.wifi.RSSI_CHANGED
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+I/MSM-irqbalance(  673): Decided to move IRQ115 from CPU1 to CPU0
+D/Ulp_jni (  997): Location CB invoked
+W/DNSIncoming(13488): There was an OPT answer. Not currently handled. Option code: 65002 data: DB73EC253999421F
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+D/StatusBar.NetworkController( 1365): slot=-10;action=android.net.wifi.RSSI_CHANGED
+W/DNSIncoming(13488): There was an OPT answer. Not currently handled. Option code: 65002 data: DB73EC253999421F
+W/DNSIncoming(13488): There was an OPT answer. Not currently handled. Option code: 65002 data: DB73EC253999421F
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SIGNAL_POLL'
+E/WifiStateMachine(  997): WifiStateMachine CMD_START_SCAN source -2 txSuccessRate=0.00 rxSuccessRate=29.19 targetRoamBSSID=any RSSI=-55
+E/WifiStateMachine(  997): WifiStateMachine starting scan for "yixia_5g"WPA_PSK with 5745,5805,5765,5785
+D/wpa_supplicant( 1804): wlan0: Control interface command 'SCAN TYPE=ONLY freq=5745,5805,5765,5785'
+D/wpa_supplicant( 1804): wlan0: Setting scan request: 0.000000 sec
+D/wpa_supplicant( 1804): wlan0: Starting AP scan for wildcard SSID
+D/wpa_supplicant( 1804): wlan0: Limit manual scan to specified channels
+D/wpa_supplicant( 1804): wlan0: Add radio work 'scan'@0x7f9dc1e4c0
+D/wpa_supplicant( 1804): wlan0: First radio work item in the queue - schedule start immediately
+D/wpa_supplicant( 1804): wlan0: Starting radio work 'scan'@0x7f9dc1e4c0 after 0.000103 second wait
+D/wpa_supplicant( 1804): wlan0: nl80211: scan request
+D/wpa_supplicant( 1804): nl80211: Scan SSID - hexdump(len=0): [NULL]
+D/wpa_supplicant( 1804): nl80211: Scan frequency 5745 MHz
+D/wpa_supplicant( 1804): nl80211: Scan frequency 5765 MHz
+D/wpa_supplicant( 1804): nl80211: Scan frequency 5785 MHz
+D/wpa_supplicant( 1804): nl80211: Scan frequency 5805 MHz
+D/wpa_supplicant( 1804): Scan requested (ret=0) - scan timeout 30 seconds
+D/wpa_supplicant( 1804): nl80211: Event message available
+D/wpa_supplicant( 1804): nl80211: Drv Event 33 (NL80211_CMD_TRIGGER_SCAN) received for wlan0
+D/wpa_supplicant( 1804): wlan0: nl80211: Scan trigger
+D/wpa_supplicant( 1804): wlan0: Event SCAN_STARTED (49) received
+D/wpa_supplicant( 1804): wlan0: Own scan request started a scan in 0.000208 seconds
+I/wpa_supplicant( 1804): wlan0: CTRL-EVENT-SCAN-STARTED 
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_455-1\x00
+D/wpa_supplicant( 1804): CTRL_IFACE monitor sent successfully to /data/misc/wifi/sockets/wpa_ctrl_997-2\x00
+I/WifiHAL (  997): Poll result = 1
+I/WifiHAL (  997): Found some events!!!
+D/WifiHAL (  997): no_seq_check received
+I/WifiHAL (  997): event received NL80211_CMD_TRIGGER_SCAN
+I/WifiHAL (  997): event received NL80211_CMD_TRIGGER_SCAN, vendor_id = 0x0
+I/WifiHAL (  997): event ignored!!

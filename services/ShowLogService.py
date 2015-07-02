@@ -18,7 +18,6 @@ class ShowLogService(threading.Thread):
     
     def run(self):
         threading.Thread.run(self)
-        print 
         while self.ctr == 1:
             time.sleep(self.sepaTime)
             if self.parent.filterTxt.GetValue() == '':

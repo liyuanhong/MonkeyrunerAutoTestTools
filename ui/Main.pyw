@@ -279,6 +279,8 @@ device = MonkeyRunner.waitForConnection()\n\n'''
         
     def myExit(self,event):
         wx.Exit()     
+        cmd = '..\\closeCMD'
+        os.system(cmd)  
         if self.connectThread != None:
             cmd = '..\\getProId'
             os.system(cmd)
@@ -548,6 +550,8 @@ device = MonkeyRunner.waitForConnection()\n\n'''
     #关闭窗口执行的事件
     def closeWinEVT(self,event):
         wx.Exit()
+        cmd = '..\\closeCMD'
+        os.system(cmd)  
         if self.connectThread != None:
             cmd = '..\\getProId'
             os.system(cmd)
