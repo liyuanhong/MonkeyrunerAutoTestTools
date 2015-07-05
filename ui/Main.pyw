@@ -289,7 +289,8 @@ device = MonkeyRunner.waitForConnection()\n\n'''
          #连接手机并开始屏幕的同步显示
     def startConnect(self,frame,buttonCon,img,width,height,bitmap,backgroundImage,panel1,panel2Txt1):
         #通过judge判断设置是否连接，如果连接着就会返回一个3个元素的数组，没有则返回2个元素的数组
-        judge = os.popen(self.adbPath + 'adb devices').readlines()
+        readObj = os.popen(self.adbPath + 'adb devices')
+        judge = readObj.readlines()
         if len(judge) == 3:
             buttonCon.Enable(False)
             path = 'D:\\screenshot\\'

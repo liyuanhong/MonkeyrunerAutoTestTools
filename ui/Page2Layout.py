@@ -5,6 +5,7 @@ import sys
 
 import wx
 
+from services import JudgeCrashService
 from services.ShowLogService import ShowLogService
 from services.StartCMD import StartCMD
 
@@ -35,6 +36,7 @@ class Page2Layout(object):
         self.levelCMD = ''
         self.packageCMD = ''
         self.writeCMD = '> ' + self.logPath + 'log.txt'
+        self.packageName = ''
         
         
         self.addPage1Layout()
@@ -54,6 +56,7 @@ class Page2Layout(object):
         label.SetFont(wx.Font(10, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_BOLD))
         self.packageFilter = wx.ComboBox(filterPanel,wx.ID_ANY,'',(40,30),(400,25))
         self.packageFilter.SetItems(self.getPackageList())
+        self.packageFilter.Bind(wx.EVT_COMBOBOX,self.filterPackageEVT)
         self.refreshPackageListtBut = wx.Button(filterPanel,wx.ID_ANY,u'刷新',(445,30),wx.Size(70,25))
         self.refreshPackageListtBut.Bind(wx.EVT_BUTTON,self.refreshPackageListtButEVT)
         label = wx.StaticText(filterPanel,wx.ID_ANY,u'过滤：',pos = (0,65))
@@ -81,6 +84,10 @@ class Page2Layout(object):
         self.radioNotClearBut = wx.RadioButton(panel2,wx.ID_ANY,u'是',(260,33)) 
         self.radioClearBut.Bind(wx.EVT_RADIOBUTTON,self.clearCacheEVT)
         self.radioNotClearBut.Bind(wx.EVT_RADIOBUTTON,self.clearCacheEVT)
+        label = wx.StaticText(panel2,wx.ID_ANY,u'应用程序崩溃判断开关：',pos = (5,61))
+        label.SetFont(wx.Font(10, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_BOLD))
+        self.radioCrashJudgeOpenBut = wx.RadioButton(panel2,wx.ID_ANY,u'关闭',(200,61),style = wx.RB_GROUP)
+        self.radioCrashJudgeCloseBut = wx.RadioButton(panel2,wx.ID_ANY,u'打开',(260,61)) 
         
 #         self.closeLogcatBut = wx.Button(panel2,wx.ID_ANY,u'结束日志',(0,0),wx.Size(70,25))
 #         self.closeLogcatBut.Bind(wx.EVT_BUTTON,self.endLogcatEVT)
@@ -94,72 +101,47 @@ class Page2Layout(object):
         page2BoxSizer.Add(page2BoxSizer2)
         page2BoxSizer2.Add(panel2)
         page2BoxSizer2.Add(panel3)
-  
-  
-#         cmd = self.adbPath + 'adb shell pm list package'
-#         a = os.popen(cmd).readlines()        
-#         for i in range(0,len(a)):
-#             print a[i].replace('\n','').replace("package:",'')
-            
-#         cmd1 = 'adb logcat -c && adb logcat *:V | find \"com.example.testprogram\"'
-#         print cmd1
-
-
-#         self.pid = os.popen(self.adbPath + 'getpid.cmd').readlines()
-#         print self.pid
-#         cmd2 = self.adbPath + 'adb logcat *:E | find ' +  '\"' + self.pid[0].replace('\n','') + '\" > log.txt'
-#         a = StartCMD(cmd2)
-#         a.start()
 
     def endLogcatEVT(self,event):
         cmd = '..\\closeCMD'
         os.system(cmd)  
             
-    def capLogcatButEVT(self,event):
-        try:
+    def capLogcatButEVT(self,event):           
+        if self.isCapturing == False:
+            self.capLogcatBut.SetLabel(u'结束抓取')
             self.logArea.SetValue('')
             file = open(self.logPath + 'log.txt','w')
             file.write('')
             file.close()
-            if self.isCapturing == False:
-                self.capLogcatBut.SetLabel(u'结束抓取')
-                self.pid = os.popen(self.adbPath + 'getpid.cmd').readlines()
-#                 print self.pid
-#                 cmd2 = self.adbPath + 'adb logcat *:E | find ' +  '\"' + self.pid[0].replace('\n','') + '\" > ' + self.logPath + 'log.txt'
-#                 self.cmd = self.adbPath + 'adb logcat -c && adb logcat  > ' + self.logPath + 'log.txt'
-                capService = StartCMD(self.cmd)
-                capService.start()
-                 
-                self.showLogSer = ShowLogService(self,self.logPath,self.logArea)
-                self.showLogSer.start()            
-                self.isCapturing = True
-        
-            
-            elif self.isCapturing == True:
-                self.capLogcatBut.SetLabel(u'抓取日志')
-                cmd = '..\\closeCMD'
-                os.system(cmd)
-                self.showLogSer.stop()
-                self.isCapturing = False
-        except Exception , e:
-            print e
-            print '----'
+            capService = StartCMD(self.cmd)
+            capService.start()      
+            self.showLogSer = ShowLogService(self,self.logPath,self.logArea)
+            self.showLogSer.start()    
+            self.isCapturing = True          
+        elif self.isCapturing == True:
+            self.capLogcatBut.SetLabel(u'抓取日志')            
+            cmd = '..\\closeCMD'
+            os.system(cmd)
+            self.showLogSer.stop()
+            self.isCapturing = False
             
     def getPackageList(self):
             cmd = self.adbPath + 'adb shell pm list package'
-            packageList = os.popen(cmd).readlines()
-            packageList.insert(0,'')
-            for i in range(0,len(packageList)):
-                packageList[i] = packageList[i].replace('\n','').replace("package:",'')
-            return packageList
+            readObj = os.popen(cmd)
+            self.packageList = readObj.readlines()
+            self.packageList.insert(0,'')
+            for i in range(0,len(self.packageList)):
+                self.packageList[i] = self.packageList[i].replace('\n','').replace("package:",'')
+            return self.packageList
         
     def refreshPackageListtButEVT(self,event):
             cmd = self.adbPath + 'adb shell pm list package'
-            packageList = os.popen(cmd).readlines()
-            packageList.insert(0,'')
-            for i in range(0,len(packageList)):
-                packageList[i] = packageList[i].replace('\n','').replace("package:",'')
-            self.packageFilter.SetItems(packageList)
+            readObj = os.popen(cmd)
+            self.packageList = readObj.readlines()
+            self.packageList.insert(0,'')
+            for i in range(0,len(self.packageList)):
+                self.packageList[i] = self.packageList[i].replace('\n','').replace("package:",'')
+            self.packageFilter.SetItems(self.packageList)
             
     def autoScrollCtrEVT(self,event):
         if event.GetId() == self.radioScrollBut.GetId():
@@ -215,8 +197,32 @@ class Page2Layout(object):
             self.setCmdTxt()
             
     def setCmdTxt(self):
-        self.cmd = self.cmd = self.cacheCMD + self.logcatCMD + self.levelCMD + self.writeCMD
+        self.cmd = self.cmd = self.cacheCMD + self.logcatCMD + self.levelCMD + self.packageCMD + self.writeCMD
         self.adbShellTxt.SetValue(self.cmd)
+        
+    def filterPackageEVT(self,event):
+        cmd = '''@echo off
+adb shell "ps | grep '''       
+        index = self.packageFilter.GetSelection()
+        package = self.packageList[index]
+        self.packageName = package
+        cmd = cmd + package + '\"'
+        file2 = open(self.adbPath + 'getPidInfo.cmd','w')
+        file2.write(cmd)
+        file2.close()               
+        readObj = os.popen(self.adbPath + 'getpid.cmd')
+        self.pid = readObj.readlines()       
+        readObj.close()
+        self.packageCMD = '| find ' +  '\"' + self.pid[0].replace('\n','') + '\" '
+        self.setCmdTxt()
+        
+        j = JudgeCrashService.JudgeCrashService(self)
+        j.stop() 
+        j.start() 
+        
+    
+        
+        
         
         
             
