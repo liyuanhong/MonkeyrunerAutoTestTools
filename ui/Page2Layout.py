@@ -39,6 +39,12 @@ class Page2Layout(object):
         self.packageCMD = ''
         self.writeCMD = '> ' + self.logPath + 'log.txt'
         self.packageName = ''
+        #将要执行的monkey命令
+        self.monkey = self.adbPath + 'adb shell monkey'
+        self.monkeyCMD1 = ''
+        self.monkeyCMD2 = ''
+        self.monkeyCMD3 = ''
+        self.monkeyCMD4 = ''
         
         
         self.addPage1Layout()
@@ -93,11 +99,11 @@ class Page2Layout(object):
         self.radioCrashJudgeCloseBut.Bind(wx.EVT_RADIOBUTTON,self.crashJudgeEVT)
         self.radioCrashJudgeOpenBut.Bind(wx.EVT_RADIOBUTTON,self.crashJudgeEVT)
         
-#         self.closeLogcatBut = wx.Button(panel2,wx.ID_ANY,u'结束日志',(0,0),wx.Size(70,25))
-#         self.closeLogcatBut.Bind(wx.EVT_BUTTON,self.endLogcatEVT)
-        
         panel3 = wx.Panel(self.page2,wx.ID_ANY,size = wx.Size(355,320),style = wx.BORDER_SIMPLE)
-        panel3.SetBackgroundColour("#0000ff")
+        self.monkeyCMDArea =  wx.TextCtrl(panel3,wx.ID_ANY,size = wx.Size(350,100),pos = (0,0),style = wx.BORDER_SIMPLE | wx.TE_MULTILINE)
+        self.monkeyCMDArea.SetValue(self.monkey)
+        label = wx.StaticText(panel3,wx.ID_ANY,u'monkey测试使用命令行更方便灵活，这里不做集成。',pos = (0,100))
+        
         
         page2BoxSizer.Add(page2BoxSizer1)
         page2BoxSizer1.Add(filterPanel)

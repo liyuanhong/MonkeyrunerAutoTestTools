@@ -1,2 +1,2 @@
 @echo off
-adb shell "ps | grep com.example.testprogram"
+adb shell "ps | grep "
