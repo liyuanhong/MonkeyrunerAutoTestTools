@@ -291,6 +291,7 @@ device = MonkeyRunner.waitForConnection()\n\n'''
         #通过judge判断设置是否连接，如果连接着就会返回一个3个元素的数组，没有则返回2个元素的数组
         readObj = os.popen(self.adbPath + 'adb devices')
         judge = readObj.readlines()
+        readObj.close()
         if len(judge) == 3:
             buttonCon.Enable(False)
             path = 'D:\\screenshot\\'

@@ -24,6 +24,11 @@ class JudgeCrashService(threading.Thread):
             info = readObj.readlines()   
             readObj.close()
             if len(info) == 0:
+                self.parent.showLogSer.stop()
+                self.parent.capLogcatBut.SetLabel(u'抓取日志') 
+                cmd = '..\\closeCMD'
+                os.system(cmd)
+                self.parent.isCapturing = False
                 dialog = wx.MessageDialog(self.parent.parent.frame,self.parent.packageName + '已崩溃'.decode('UTF-8'),'消息'.decode('UTF-8'),wx.OK_DEFAULT)
                 dialog.ShowModal()
                 self.ctr = 0

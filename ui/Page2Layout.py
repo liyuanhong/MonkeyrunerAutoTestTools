@@ -29,6 +29,8 @@ class Page2Layout(object):
         self.pid = 0
         #设置日志区域是否自动滚动(1表示自动滚动，0表示不自动滚动)
         self.isAutoScroll = 1
+        #是否开启崩溃判断，0表示不开启，1表示开启
+        self.crashJudge = 0
         #将要执行的命令
         self.cmd = self.adbPath + 'adb logcat ' + '> ' + self.logPath + 'log.txt'
         self.logcatCMD = self.adbPath + 'adb logcat '
@@ -86,8 +88,10 @@ class Page2Layout(object):
         self.radioNotClearBut.Bind(wx.EVT_RADIOBUTTON,self.clearCacheEVT)
         label = wx.StaticText(panel2,wx.ID_ANY,u'应用程序崩溃判断开关：',pos = (5,61))
         label.SetFont(wx.Font(10, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_BOLD))
-        self.radioCrashJudgeOpenBut = wx.RadioButton(panel2,wx.ID_ANY,u'关闭',(200,61),style = wx.RB_GROUP)
-        self.radioCrashJudgeCloseBut = wx.RadioButton(panel2,wx.ID_ANY,u'打开',(260,61)) 
+        self.radioCrashJudgeCloseBut = wx.RadioButton(panel2,wx.ID_ANY,u'关闭',(200,61),style = wx.RB_GROUP)
+        self.radioCrashJudgeOpenBut = wx.RadioButton(panel2,wx.ID_ANY,u'打开',(260,61)) 
+        self.radioCrashJudgeCloseBut.Bind(wx.EVT_RADIOBUTTON,self.crashJudgeEVT)
+        self.radioCrashJudgeOpenBut.Bind(wx.EVT_RADIOBUTTON,self.crashJudgeEVT)
         
 #         self.closeLogcatBut = wx.Button(panel2,wx.ID_ANY,u'结束日志',(0,0),wx.Size(70,25))
 #         self.closeLogcatBut.Bind(wx.EVT_BUTTON,self.endLogcatEVT)
@@ -106,42 +110,67 @@ class Page2Layout(object):
         cmd = '..\\closeCMD'
         os.system(cmd)  
             
-    def capLogcatButEVT(self,event):           
-        if self.isCapturing == False:
-            self.capLogcatBut.SetLabel(u'结束抓取')
-            self.logArea.SetValue('')
-            file = open(self.logPath + 'log.txt','w')
-            file.write('')
-            file.close()
-            capService = StartCMD(self.cmd)
-            capService.start()      
-            self.showLogSer = ShowLogService(self,self.logPath,self.logArea)
-            self.showLogSer.start()    
-            self.isCapturing = True          
-        elif self.isCapturing == True:
-            self.capLogcatBut.SetLabel(u'抓取日志')            
-            cmd = '..\\closeCMD'
-            os.system(cmd)
-            self.showLogSer.stop()
-            self.isCapturing = False
+    def capLogcatButEVT(self,event):   
+        readObj = os.popen(self.adbPath + 'adb devices')
+        judge = readObj.readlines()
+        readObj.close()
+        if len(judge) == 3:        
+            if self.isCapturing == False:
+                self.capLogcatBut.SetLabel(u'结束抓取')
+                self.logArea.SetValue('')
+                file = open(self.logPath + 'log.txt','w')
+                file.write('')
+                file.close()
+                capService = StartCMD(self.cmd)
+                capService.start()      
+                self.showLogSer = ShowLogService(self,self.logPath,self.logArea)
+                self.showLogSer.start()    
+                self.isCapturing = True    
+                if self.crashJudge == 1:
+                    crashJudege = JudgeCrashService.JudgeCrashService(self)
+                    crashJudege.stop() 
+                    crashJudege.start() 
+                elif self.crashJudge == 0:
+                    pass      
+            elif self.isCapturing == True:
+                self.capLogcatBut.SetLabel(u'抓取日志')            
+                cmd = '..\\closeCMD'
+                os.system(cmd)
+                self.showLogSer.stop()
+                self.isCapturing = False
+        else:
+            dialog = wx.MessageDialog(self.parent.frame,'连接已中断，请连接手机！'.decode('UTF-8'),'消息'.decode('UTF-8'),wx.OK_DEFAULT)
+            dialog.ShowModal()
             
     def getPackageList(self):
             cmd = self.adbPath + 'adb shell pm list package'
             readObj = os.popen(cmd)
             self.packageList = readObj.readlines()
+            try:
+                readObj.close()
+            except Exception,e:
+                print e
             self.packageList.insert(0,'')
             for i in range(0,len(self.packageList)):
                 self.packageList[i] = self.packageList[i].replace('\n','').replace("package:",'')
             return self.packageList
         
     def refreshPackageListtButEVT(self,event):
+        readObj = os.popen(self.adbPath + 'adb devices')
+        judge = readObj.readlines()
+        readObj.close()
+        if len(judge) == 3:
             cmd = self.adbPath + 'adb shell pm list package'
             readObj = os.popen(cmd)
             self.packageList = readObj.readlines()
+            readObj.close()
             self.packageList.insert(0,'')
             for i in range(0,len(self.packageList)):
                 self.packageList[i] = self.packageList[i].replace('\n','').replace("package:",'')
             self.packageFilter.SetItems(self.packageList)
+        else:
+            dialog = wx.MessageDialog(self.parent.frame,'连接已中断，请连接手机！'.decode('UTF-8'),'消息'.decode('UTF-8'),wx.OK_DEFAULT)
+            dialog.ShowModal()
             
     def autoScrollCtrEVT(self,event):
         if event.GetId() == self.radioScrollBut.GetId():
@@ -201,24 +230,33 @@ class Page2Layout(object):
         self.adbShellTxt.SetValue(self.cmd)
         
     def filterPackageEVT(self,event):
-        cmd = '''@echo off
-adb shell "ps | grep '''       
-        index = self.packageFilter.GetSelection()
-        package = self.packageList[index]
-        self.packageName = package
-        cmd = cmd + package + '\"'
-        file2 = open(self.adbPath + 'getPidInfo.cmd','w')
-        file2.write(cmd)
-        file2.close()               
-        readObj = os.popen(self.adbPath + 'getpid.cmd')
-        self.pid = readObj.readlines()       
+        readObj = os.popen(self.adbPath + 'adb devices')
+        judge = readObj.readlines()
         readObj.close()
-        self.packageCMD = '| find ' +  '\"' + self.pid[0].replace('\n','') + '\" '
-        self.setCmdTxt()
+        if len(judge) == 3:
+            cmd = '''@echo off
+adb shell "ps | grep '''       
+            index = self.packageFilter.GetSelection()
+            package = self.packageList[index]
+            self.packageName = package
+            cmd = cmd + package + '\"'
+            file2 = open(self.adbPath + 'getPidInfo.cmd','w')
+            file2.write(cmd)
+            file2.close()               
+            readObj = os.popen(self.adbPath + 'getpid.cmd')
+            self.pid = readObj.readlines()       
+            readObj.close()
+            self.packageCMD = '| find ' +  '\"' + self.pid[0].replace('\n','') + '\" '
+            self.setCmdTxt()
+        else:
+            dialog = wx.MessageDialog(self.parent.frame,'连接已中断，请连接手机！'.decode('UTF-8'),'消息'.decode('UTF-8'),wx.OK_DEFAULT)
+            dialog.ShowModal()
         
-        j = JudgeCrashService.JudgeCrashService(self)
-        j.stop() 
-        j.start() 
+    def crashJudgeEVT(self,event):
+        if event.GetId() == self.radioCrashJudgeOpenBut.GetId():
+            self.crashJudge = 1
+        elif event.GetId() == self.radioCrashJudgeCloseBut.GetId():
+            self.crashJudge = 0
         
     
         
