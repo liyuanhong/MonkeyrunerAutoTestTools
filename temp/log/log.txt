@@ -1,0 +1,95 @@
+--------- beginning of /dev/log/system
+D/MSimSignalClusterView(  775): subscription is invalid
+D/MSimSignalClusterView(  775): subscription is invalid
+D/MSimSignalClusterView(  775): subscription is invalid
+D/MSimSignalClusterView(  775): subscription is invalid
+D/MSimSignalClusterView(  775): subscription is invalid
+D/StatusBar.MSimNetworkController(  775): changing data overlay icon id to 2130903389
+D/StatusBar.MSimNetworkController(  775): MSimWifiHandler,msg=1
+D/StatusBar.MSimNetworkController(  775): MSimWifiHandler,DATA_ACTIVITY_NOTIFICATION
+D/StatusBar.MSimNetworkController(  775): MSimWifiHandler,msg=1
+D/StatusBar.MSimNetworkController(  775): MSimWifiHandler,DATA_ACTIVITY_NOTIFICATION
+D/StatusBar.MSimNetworkController(  775): refreshViews subscription =0mMSimDataConnected =false
+--------- beginning of /dev/log/main
+W/SignalStrength(  775): getLTELevel - rsrp:2147483647 snr:2147483647 rsrpIconLevel:-1 snrIconLevel:-1
+W/SignalStrength(  775): getLTELevel - rssi:99 rssiIconLevel:0
+W/SignalStrength(  775): getGsmLevel=0
+W/SignalStrength(  775): getLevel=0
+D/StatusBar.MSimNetworkController(  775): refreshViews mMSimDataActivity =0
+D/StatusBar.MSimNetworkController(  775): refreshViews connected={ wifi } level=0 mMSimcombinedSignalIconId=0x7f030164/com.android.systemui:drawable/stat_sys_wifi_signal_3 mMSimcombinedActivityIconId=0x7f03015c mAirplaneMode=false mMSimDataActivity=0 mMSimPhoneSignalIconId=0x7f0300df mMSimDataDirectionIconId=0x0 mMSimDataSignalIconId=0x7f0300df mMSimDataTypeIconId=0x0 mNoMSimIconId=0x7f0300c8 mWifiIconId=0x7f030164 mBluetoothTetherIconId=0x1080551
+D/StatusBar.MSimNetworkController(  775): refreshViews update icon subscription===0 mMSimPhoneSignalIconId[subscription]===2130903263 mMSimPhoneSignalTypeIconId[subscription]===0 mMSimMobileActivityIconId[subscription]===0 mMSimDataTypeIconId[subscription]===0
+D/MSimSignalClusterView(  775): subscription is invalid
+D/MSimSignalClusterView(  775): subscription is invalid
+D/MSimSignalClusterView(  775): subscription is invalid
+D/MSimSignalClusterView(  775): subscription is invalid
+D/MSimSignalClusterView(  775): subscription is invalid
+D/MSimSignalClusterView(  775): subscription is invalid
+D/StatusBar.MSimNetworkController(  775): changing data overlay icon id to 2130903388
+D/StatusBar.MSimNetworkController(  775): MSimWifiHandler,msg=1
+D/StatusBar.MSimNetworkController(  775): MSimWifiHandler,DATA_ACTIVITY_NOTIFICATION
+D/StatusBar.MSimNetworkController(  775): MSimWifiHandler,msg=1
+D/StatusBar.MSimNetworkController(  775): MSimWifiHandler,DATA_ACTIVITY_NOTIFICATION
+D/StatusBar.MSimNetworkController(  775): refreshViews subscription =0mMSimDataConnected =false
+D/StateMachine(  623): handleMessage: E msg.what=131155
+D/StateMachine(  623): processMsg: ConnectedState
+D/WifiStateMachine(  623): ConnectedState{ what=131155 when=-4ms arg1=6 }
+D/StateMachine(  623): processMsg: L2ConnectedState
+D/WifiStateMachine(  623): L2ConnectedState{ what=131155 when=-4ms arg1=6 }
+E/WifiHW  (  623): wifi_send_command : SIGNAL_POLL ; interface index=0;
+W/SignalStrength(  775): getLTELevel - rsrp:2147483647 snr:2147483647 rsrpIconLevel:-1 snrIconLevel:-1
+W/SignalStrength(  775): getLTELevel - rssi:99 rssiIconLevel:0
+W/SignalStrength(  775): getGsmLevel=0
+W/SignalStrength(  775): getLevel=0
+D/StateMachine(  623): handleMessage: X
+D/StatusBar.MSimNetworkController(  775): refreshViews mMSimDataActivity =0
+D/StatusBar.MSimNetworkController(  775): refreshViews connected={ wifi } level=0 mMSimcombinedSignalIconId=0x7f030164/com.android.systemui:drawable/stat_sys_wifi_signal_3 mMSimcombinedActivityIconId=0x0 mAirplaneMode=false mMSimDataActivity=0 mMSimPhoneSignalIconId=0x7f0300df mMSimDataDirectionIconId=0x0 mMSimDataSignalIconId=0x7f0300df mMSimDataTypeIconId=0x0 mNoMSimIconId=0x7f0300c8 mWifiIconId=0x7f030164 mBluetoothTetherIconId=0x1080551
+D/StatusBar.MSimNetworkController(  775): refreshViews update icon subscription===0 mMSimPhoneSignalIconId[subscription]===2130903263 mMSimPhoneSignalTypeIconId[subscription]===0 mMSimMobileActivityIconId[subscription]===0 mMSimDataTypeIconId[subscription]===0
+D/MSimSignalClusterView(  775): subscription is invalid
+D/MSimSignalClusterView(  775): subscription is invalid
+D/MSimSignalClusterView(  775): subscription is invalid
+D/MSimSignalClusterView(  775): subscription is invalid
+D/MSimSignalClusterView(  775): subscription is invalid
+D/MSimSignalClusterView(  775): subscription is invalid
+D/StatusBar.MSimNetworkController(  775): changing data overlay icon id to 0
+D/StatusBar.MSimNetworkController(  775): MSimWifiHandler,msg=1
+D/StatusBar.MSimNetworkController(  775): MSimWifiHandler,DATA_ACTIVITY_NOTIFICATION
+D/StatusBar.MSimNetworkController(  775): MSimWifiHandler,msg=1
+D/StatusBar.MSimNetworkController(  775): MSimWifiHandler,DATA_ACTIVITY_NOTIFICATION
+D/StatusBar.MSimNetworkController(  775): refreshViews subscription =0mMSimDataConnected =false
+W/SignalStrength(  775): getLTELevel - rsrp:2147483647 snr:2147483647 rsrpIconLevel:-1 snrIconLevel:-1
+W/SignalStrength(  775): getLTELevel - rssi:99 rssiIconLevel:0
+W/SignalStrength(  775): getGsmLevel=0
+W/SignalStrength(  775): getLevel=0
+D/StatusBar.MSimNetworkController(  775): refreshViews mMSimDataActivity =0
+D/StatusBar.MSimNetworkController(  775): refreshViews connected={ wifi } level=0 mMSimcombinedSignalIconId=0x7f030164/com.android.systemui:drawable/stat_sys_wifi_signal_3 mMSimcombinedActivityIconId=0x7f03015d mAirplaneMode=false mMSimDataActivity=0 mMSimPhoneSignalIconId=0x7f0300df mMSimDataDirectionIconId=0x0 mMSimDataSignalIconId=0x7f0300df mMSimDataTypeIconId=0x0 mNoMSimIconId=0x7f0300c8 mWifiIconId=0x7f030164 mBluetoothTetherIconId=0x1080551
+D/StatusBar.MSimNetworkController(  775): refreshViews update icon subscription===0 mMSimPhoneSignalIconId[subscription]===2130903263 mMSimPhoneSignalTypeIconId[subscription]===0 mMSimMobileActivityIconId[subscription]===0 mMSimDataTypeIconId[subscription]===0
+D/MSimSignalClusterView(  775): subscription is invalid
+D/MSimSignalClusterView(  775): subscription is invalid
+D/MSimSignalClusterView(  775): subscription is invalid
+D/MSimSignalClusterView(  775): subscription is invalid
+D/MSimSignalClusterView(  775): subscription is invalid
+D/MSimSignalClusterView(  775): subscription is invalid
+D/StatusBar.MSimNetworkController(  775): changing data overlay icon id to 2130903389
+D/StatusBar.MSimNetworkController(  775): MSimWifiHandler,msg=1
+D/StatusBar.MSimNetworkController(  775): MSimWifiHandler,DATA_ACTIVITY_NOTIFICATION
+D/StatusBar.MSimNetworkController(  775): MSimWifiHandler,msg=1
+D/StatusBar.MSimNetworkController(  775): MSimWifiHandler,DATA_ACTIVITY_NOTIFICATION
+D/StatusBar.MSimNetworkController(  775): refreshViews subscription =0mMSimDataConnected =false
+W/SignalStrength(  775): getLTELevel - rsrp:2147483647 snr:2147483647 rsrpIconLevel:-1 snrIconLevel:-1
+W/SignalStrength(  775): getLTELevel - rssi:99 rssiIconLevel:0
+W/SignalStrength(  775): getGsmLevel=0
+W/SignalStrength(  775): getLevel=0
+D/StatusBar.MSimNetworkController(  775): refreshViews mMSimDataActivity =0
+D/StatusBar.MSimNetworkController(  775): refreshViews connected={ wifi } level=0 mMSimcombinedSignalIconId=0x7f030164/com.android.systemui:drawable/stat_sys_wifi_signal_3 mMSimcombinedActivityIconId=0x7f03015c mAirplaneMode=false mMSimDataActivity=0 mMSimPhoneSignalIconId=0x7f0300df mMSimDataDirectionIconId=0x0 mMSimDataSignalIconId=0x7f0300df mMSimDataTypeIconId=0x0 mNoMSimIconId=0x7f0300c8 mWifiIconId=0x7f030164 mBluetoothTetherIconId=0x1080551
+D/StatusBar.MSimNetworkController(  775): refreshViews update icon subscription===0 mMSimPhoneSignalIconId[subscription]===2130903263 mMSimPhoneSignalTypeIconId[subscription]===0 mMSimMobileActivityIconId[subscription]===0 mMSimDataTypeIconId[subscription]===0
+D/MSimSignalClusterView(  775): subscription is invalid
+D/MSimSignalClusterView(  775): subscription is invalid
+D/MSimSignalClusterView(  775): subscription is invalid
+D/MSimSignalClusterView(  775): subscription is invalid
+D/MSimSignalClusterView(  775): subscription is invalid
+D/MSimSignalClusterView(  775): subscription is invalid
+D/StatusBar.MSimNetworkController(  775): changing data overlay icon id to 2130903388
+D/StatusBar.MSimNetworkController(  775): MSimWifiHandler,msg=1
+D/StatusBar.MSimNetworkController(  775): MSimWifiHandler,DATA_ACTIVITY_NOTIFICATION
+I/nativeProcess( 1653): iqiyi message: create--runOnSubprocess isProcessExist true
+I/nativeProcess( 1653): iqiyi message: ==== do something  executeCmd isProcessExist true =====

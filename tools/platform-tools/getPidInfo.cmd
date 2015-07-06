@@ -1,2 +1,2 @@
 @echo off
-adb shell "ps | grep "
+adb shell "ps | grep com.qiyi.video"

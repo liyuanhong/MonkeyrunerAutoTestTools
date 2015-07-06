@@ -245,15 +245,19 @@ adb shell "ps | grep '''
             index = self.packageFilter.GetSelection()
             package = self.packageList[index]
             self.packageName = package
-            cmd = cmd + package + '\"'
-            file2 = open(self.adbPath + 'getPidInfo.cmd','w')
-            file2.write(cmd)
-            file2.close()               
-            readObj = os.popen(self.adbPath + 'getpid.cmd')
-            self.pid = readObj.readlines()       
-            readObj.close()
-            self.packageCMD = '| find ' +  '\"' + self.pid[0].replace('\n','') + '\" '
-            self.setCmdTxt()
+            if package == '':
+                self.packageCMD = ' '
+                self.setCmdTxt()
+            else:
+                cmd = cmd + package + '\"'
+                file2 = open(self.adbPath + 'getPidInfo.cmd','w')
+                file2.write(cmd)
+                file2.close()               
+                readObj = os.popen(self.adbPath + 'getpid.cmd')
+                self.pid = readObj.readlines()       
+                readObj.close()
+                self.packageCMD = '| find ' +  '\"' + self.pid[0].replace('\n','') + '\" '
+                self.setCmdTxt()
         else:
             dialog = wx.MessageDialog(self.parent.frame,'连接已中断，请连接手机！'.decode('UTF-8'),'消息'.decode('UTF-8'),wx.OK_DEFAULT)
             dialog.ShowModal()
