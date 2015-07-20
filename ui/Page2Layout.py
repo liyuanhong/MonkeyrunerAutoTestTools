@@ -255,7 +255,7 @@ adb shell "ps | grep '''
                 file2.close()               
                 readObj = os.popen(self.adbPath + 'getpid.cmd')
                 self.pid = readObj.readlines()       
-                readObj.close()
+                readObj.close()                
                 self.packageCMD = '| find ' +  '\"' + self.pid[0].replace('\n','') + '\" '
                 self.setCmdTxt()
         else:
