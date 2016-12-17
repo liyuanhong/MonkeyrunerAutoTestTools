@@ -139,7 +139,8 @@ device = MonkeyRunner.waitForConnection()\n\n'''
         self.panel1 = wx.Panel(page1,wx.ID_ANY,size = wx.Size(360,640))
         self.panel1.SetBackgroundColour("#aaaa00")
         
-        img = wx.Image('..\\pic\\阳光小秒拍.png'.decode('utf-8'),wx.BITMAP_TYPE_PNG,-1)
+        path = sys.path[0]
+        img = wx.Image(path + '\\..\\pic\\阳光小秒拍.png'.decode('utf-8'),wx.BITMAP_TYPE_PNG,-1)
         self.height = img.GetHeight()
         self.width = img.GetWidth()
         img.Rescale(self.width/2,self.height/2)
